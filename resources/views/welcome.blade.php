@@ -3,14 +3,14 @@
 @section('title', 'Welcome')
 
 @section('main-content')
-    <div class="w-full min-h-screen flex flex-col md:flex-row">
+    <div class="w-full min-h-screen flex flex-col lg:flex-row">
         <div style="background-image: url('/images/placeholder.svg')"
-            class='flex-1 md:flex-3 h-screen block bg-cover bg-center p-4 md:p-10'>
-            <h2 class="font-bold text-white text-xl text-center md:text-left md:text-2xl mb-4 md:mb-10">LDorm</h2>
-            <h1 class="font-bold text-white text-center md:text-left text-3xl md:text-8xl">Lolari Dorm Management System</h1>
+            class='flex-1 lg:flex-3 h-screen block bg-cover bg-center p-4 lg:p-10'>
+            <h2 class="font-bold text-white text-xl text-center lg:text-left lg:text-2xl mb-4 lg:mb-10">LDorm</h2>
+            <h1 class="font-bold text-white text-center lg:text-left text-3xl lg:text-8xl">Lolari Dorm Management System</h1>
         </div>
-        <div class="flex-3 md:flex-2 px-4 py-8 md:pt-40">
-            <div class="mx-auto md:w-[80%]">
+        <div class="flex-3 lg:flex-2 px-4 py-8 lg:pt-40">
+            <div class="mx-auto lg:w-[80%]">
                 <h1 class="text-2xl font-bold text-heading text-center">Log In</h1>
                 <hr class="h-px my-2 bg-neutral-quaternary border-0">
                 <p class="text-center w-[90%] mx-auto text-body">Welcome back! Please enter your details below</p>
