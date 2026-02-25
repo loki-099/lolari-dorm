@@ -49,7 +49,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-800">
+<body class="bg-gray-50 dark:bg-gray-800 w-full min-h-screen">
     <main>
         @yield('main-content')
     </main>
