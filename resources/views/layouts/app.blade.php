@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -21,28 +21,10 @@
     <link rel="mask-icon" href="https://flowbite-admin-dashboard.vercel.app/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@">
-    <meta name="twitter:creator" content="@">
-    <meta name="twitter:title" content="@yield('twitter-title', 'Lolari Dorm - Management Systen')">
-    <meta name="twitter:description" content="Get started with a free and open-source admin dashboard layout built with Tailwind CSS and Flowbite featuring charts, widgets, CRUD layouts, authentication pages, and more">
-    <meta name="twitter:image" content="https://flowbite-admin-dashboard.vercel.app/">
-
-    <!-- Facebook -->
-    <meta property="og:url" content="https://flowbite-admin-dashboard.vercel.app/">
-    <meta property="og:title" content="@yield('og-title', 'Lolari Dorm - Management System')">
-    <meta property="og:description" content="Get started with a free and open-source admin dashboard layout built with Tailwind CSS and Flowbite featuring charts, widgets, CRUD layouts, authentication pages, and more">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://flowbite-admin-dashboard.vercel.app/images/og-image.png">
-    <meta property="og:image:type" content="image/png">
 
     <script>
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark')
         }
     </script>
 
