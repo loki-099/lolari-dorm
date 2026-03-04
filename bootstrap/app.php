@@ -11,7 +11,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->web(append: [
+            \App\Http\Middleware\RedirectBasedOnRole::class,
+        ]);
+
+        $middleware->alias([
+            'check.staff.role' => \App\Http\Middleware\CheckStaffRole::class,
+            'redirect.role' => \App\Http\Middleware\RedirectBasedOnRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
