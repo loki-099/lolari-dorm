@@ -35,6 +35,75 @@ class RoomController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('staff.rooms.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'number' => 'required|string|unique:rooms,number',
+            'type' => 'required|in:single,double,triple',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:available,occupied,maintenance',
+        ]);
+
+        Room::create($validated);
+
+        return redirect()->route('staff.rooms.index')
+            ->with('success', 'Room created successfully!');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Room $room)
+    {
+        return view('staff.rooms.edit', compact('room'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Room $room)
+    {
+        $validated = $request->validate([
+            'number' => 'required|string|unique:rooms,number,' . $room->id,
+            'type' => 'required|in:single,double,triple',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:available,occupied,maintenance',
+        ]);
+
+        $room->update($validated);
+
+        return redirect()->route('staff.rooms.show', $room)
+            ->with('success', 'Room updated successfully!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Room $room)
+    {
+        // Prevent deletion if room has active assignments
+        if ($room->assignments()->whereNull('end_date')->exists()) {
+            return redirect()->route('staff.rooms.index')
+                ->with('error', 'Cannot delete room with active assignments. Please end the assignment first.');
+        }
+
+        $room->delete();
+
+        return redirect()->route('staff.rooms.index')
+            ->with('success', 'Room deleted successfully!');
+    }
+
+    /**
      * Show the form for assigning a boarder to a room.
      */
     public function assignForm(Request $request)

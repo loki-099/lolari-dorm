@@ -38,7 +38,7 @@ class BoarderController extends Controller
 
         $boarder = Boarder::create($validated);
 
-        return redirect()->route('staff.assignments.create', ['boarder' => $boarder->id])
+        return redirect()->route('staff.rooms.assign-form', ['boarder' => $boarder->id])
             ->with('success', 'Boarder created successfully! Now assign a room.');
     }
 
@@ -82,7 +82,16 @@ class BoarderController extends Controller
      */
     public function destroy(Boarder $boarder)
     {
-        // Soft delete or prevent deletion based on business logic
-        return back()->with('error', 'Cannot delete boarders directly.');
+        // Prevent deletion if boarder has active assignments
+        if ($boarder->assignments()->whereNull('end_date')->exists()) {
+            return redirect()->route('staff.boarders.show', $boarder)
+                ->with('error', 'Cannot delete boarder with active room assignment. End the assignment first.');
+        }
+
+        $name = $boarder->name;
+        $boarder->delete();
+
+        return redirect()->route('staff.boarders.index')
+            ->with('success', "Boarder '{$name}' has been deleted successfully.");
     }
 }

@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-2xl mx-auto">
     <div class="bg-white rounded-lg shadow p-6">
-        <form action="{{ route('staff.rooms.assign') }}" method="POST">
+        <form action="{{ route('staff.rooms.assign') }}" method="POST" id="assignForm">
             @csrf
 
             <!-- Boarder Selection -->
@@ -54,11 +54,20 @@
                 <a href="{{ route('staff.dashboard') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
                     Cancel
                 </a>
-                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium">
+                <button type="submit" id="submitBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium">
                     Assign Room
                 </button>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById('assignForm').addEventListener('submit', function(e) {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.cursor = 'not-allowed';
+    });
+</script>
 @endsection

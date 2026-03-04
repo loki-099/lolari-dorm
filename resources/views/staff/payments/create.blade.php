@@ -7,7 +7,7 @@
     <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
         <h3 class="text-2xl font-bold text-gray-900 mb-6">Record New Payment</h3>
         
-        <form action="{{ route('staff.payments.store') }}" method="POST" class="space-y-5">
+        <form action="{{ route('staff.payments.store') }}" method="POST" class="space-y-5" id="paymentForm">
             @csrf
 
             <!-- Boarder Selection -->
@@ -86,7 +86,7 @@
                     </svg>
                     Cancel
                 </a>
-                <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-all">
+                <button type="submit" id="submitBtn" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-all">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
@@ -96,4 +96,13 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.cursor = 'not-allowed';
+    });
+</script>
 @endsection

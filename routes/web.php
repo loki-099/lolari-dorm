@@ -30,8 +30,8 @@ Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')
     Route::resource('/boarders', BoarderController::class);
 
     // Rooms
-    Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
-    Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
+    Route::resource('/rooms', RoomController::class)->except('update');
+    Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
     Route::get('/rooms/assign/form', [RoomController::class, 'assignForm'])->name('rooms.assign-form');
     Route::post('/rooms/assign', [RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
 

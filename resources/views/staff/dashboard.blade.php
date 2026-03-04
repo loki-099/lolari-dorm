@@ -58,26 +58,26 @@
     <!-- Quick Actions Card -->
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- New Boarder Button -->
-            <a href="{{ route('staff.boarders.create') }}" class="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('staff.boarders.create') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                 </svg>
                 <span>New Boarder</span>
             </a>
 
             <!-- Log Payment Button -->
-            <a href="{{ route('staff.payments.create') }}" class="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('staff.payments.create') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <span>Log Payment</span>
             </a>
 
             <!-- Assign Room Button -->
-            <a href="{{ route('staff.rooms.assign-form') }}" class="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-medium text-white bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:ring-4 focus:ring-purple-300 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('staff.rooms.assign-form') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:ring-4 focus:ring-purple-300 transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 <span>Assign Room</span>

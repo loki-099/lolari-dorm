@@ -60,9 +60,16 @@
                                     <span class="text-gray-500">-</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 space-x-3">
+                            <td class="px-6 py-4 space-x-3 flex items-center gap-2">
                                 <a href="{{ route('staff.boarders.show', $boarder) }}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View</a>
                                 <a href="{{ route('staff.boarders.edit', $boarder) }}" class="text-green-600 hover:text-green-800 font-medium transition-colors">Edit</a>
+                                @if(!$boarder->assignments()->whereNull('end_date')->exists())
+                                    <form action="{{ route('staff.boarders.destroy', $boarder) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this boarder? This action cannot be undone.');" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-800 font-medium transition-colors">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty

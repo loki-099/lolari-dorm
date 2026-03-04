@@ -1,21 +1,21 @@
 @extends('staff.layouts.app')
 
-@section('title', 'Edit Boarder')
+@section('title', 'Edit Room')
 
 @section('content')
 <div class="max-w-2xl mx-auto">
     <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
-        <h3 class="text-2xl font-bold text-gray-900 mb-6">Edit Boarder Information</h3>
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Edit Room {{ $room->number }}</h3>
         
-        <form action="{{ route('staff.boarders.update', $boarder) }}" method="POST" class="space-y-5" id="boarderForm">
+        <form action="{{ route('staff.rooms.update', $room) }}" method="POST" class="space-y-5" id="roomForm">
             @csrf
             @method('PUT')
 
-            <!-- Name Field -->
+            <!-- Room Number Field -->
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-900 mb-2">Full Name <span class="text-red-500">*</span></label>
-                <input type="text" id="name" name="name" value="{{ old('name', $boarder->name) }}" class="w-full px-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('name') border-red-500 @enderror" required>
-                @error('name')
+                <label for="number" class="block text-sm font-medium text-gray-900 mb-2">Room Number <span class="text-red-500">*</span></label>
+                <input type="text" id="number" name="number" value="{{ old('number', $room->number) }}" placeholder="101, 102, A-01" class="w-full px-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('number') border-red-500 @enderror" required>
+                @error('number')
                     <p class="text-red-500 text-sm mt-2 flex items-center gap-2">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zm-11-1a1 1 0 11-2 0 1 1 0 012 0zM10 9a1 1 0 100-2 1 1 0 000 2zm3 1a1 1 0 110-2 1 1 0 010 2z" clip-rule="evenodd"></path></svg>
                         {{ $message }}
@@ -23,11 +23,15 @@
                 @enderror
             </div>
 
-            <!-- Contact Field -->
+            <!-- Room Type Field -->
             <div>
-                <label for="contact" class="block text-sm font-medium text-gray-900 mb-2">Contact Number</label>
-                <input type="text" id="contact" name="contact" value="{{ old('contact', $boarder->contact) }}" placeholder="+63 9XX XXX XXXX" class="w-full px-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('contact') border-red-500 @enderror">
-                @error('contact')
+                <label for="type" class="block text-sm font-medium text-gray-900 mb-2">Room Type <span class="text-red-500">*</span></label>
+                <select name="type" id="type" class="w-full px-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('type') border-red-500 @enderror" required>
+                    <option value="single" @selected(old('type', $room->type) === 'single')>Single Room (1 person)</option>
+                    <option value="double" @selected(old('type', $room->type) === 'double')>Double Room (2 people)</option>
+                    <option value="triple" @selected(old('type', $room->type) === 'triple')>Triple Room (3 people)</option>
+                </select>
+                @error('type')
                     <p class="text-red-500 text-sm mt-2 flex items-center gap-2">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zm-11-1a1 1 0 11-2 0 1 1 0 012 0zM10 9a1 1 0 100-2 1 1 0 000 2zm3 1a1 1 0 110-2 1 1 0 010 2z" clip-rule="evenodd"></path></svg>
                         {{ $message }}
@@ -35,12 +39,14 @@
                 @enderror
             </div>
 
-            <!-- Documents Path Field -->
+            <!-- Monthly Price Field -->
             <div>
-                <label for="documents_path" class="block text-sm font-medium text-gray-900 mb-2">Documents Path</label>
-                <input type="text" id="documents_path" name="documents_path" value="{{ old('documents_path', $boarder->documents_path) }}" placeholder="/documents/boarder_001" class="w-full px-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('documents_path') border-red-500 @enderror">
-                <p class="text-gray-500 text-xs mt-1">Path where documents are stored</p>
-                @error('documents_path')
+                <label for="price" class="block text-sm font-medium text-gray-900 mb-2">Monthly Rate (₱) <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-600 text-sm font-semibold">₱</span>
+                    <input type="number" id="price" name="price" value="{{ old('price', $room->price) }}" step="0.01" min="0" placeholder="0.00" class="w-full pl-7 pr-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('price') border-red-500 @enderror" required>
+                </div>
+                @error('price')
                     <p class="text-red-500 text-sm mt-2 flex items-center gap-2">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zm-11-1a1 1 0 11-2 0 1 1 0 012 0zM10 9a1 1 0 100-2 1 1 0 000 2zm3 1a1 1 0 110-2 1 1 0 010 2z" clip-rule="evenodd"></path></svg>
                         {{ $message }}
@@ -52,22 +58,22 @@
             <div>
                 <label for="status" class="block text-sm font-medium text-gray-900 mb-2">Status <span class="text-red-500">*</span></label>
                 <select name="status" id="status" class="w-full px-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('status') border-red-500 @enderror" required>
-                    <option value="active" @selected(old('status', $boarder->status) === 'active')>
+                    <option value="available" @selected(old('status', $room->status) === 'available')>
                         <span class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                            Active
+                            Available
                         </span>
                     </option>
-                    <option value="inactive" @selected(old('status', $boarder->status) === 'inactive')>
+                    <option value="occupied" @selected(old('status', $room->status) === 'occupied')>
                         <span class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-gray-500 rounded-full"></span>
-                            Inactive
+                            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                            Occupied
                         </span>
                     </option>
-                    <option value="suspended" @selected(old('status', $boarder->status) === 'suspended')>
+                    <option value="maintenance" @selected(old('status', $room->status) === 'maintenance')>
                         <span class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-red-500 rounded-full"></span>
-                            Suspended
+                            Maintenance
                         </span>
                     </option>
                 </select>
@@ -81,7 +87,7 @@
 
             <!-- Submit Buttons -->
             <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
-                <a href="{{ route('staff.boarders.show', $boarder) }}" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 transition-all">
+                <a href="{{ route('staff.rooms.show', $room) }}" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 transition-all">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
@@ -91,7 +97,7 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Update Boarder
+                    Update Room
                 </button>
             </div>
         </form>
@@ -99,7 +105,7 @@
 </div>
 
 <script>
-    document.getElementById('boarderForm').addEventListener('submit', function(e) {
+    document.getElementById('roomForm').addEventListener('submit', function(e) {
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.5';
