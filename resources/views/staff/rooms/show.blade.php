@@ -78,7 +78,7 @@
 
         @if($activeAssignment)
             <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Boarder Name</p>
                         <p class="font-semibold text-gray-900 mt-1">
@@ -92,8 +92,16 @@
                         <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->boarder->contact ?? '-' }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-600 font-semibold uppercase">Start Date</p>
+                        <p class="text-xs text-gray-600 font-semibold uppercase">Occupy Date</p>
                         <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->start_date->format('M d, Y') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-600 font-semibold uppercase">End Date</p>
+                        <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->end_date ? $activeAssignment->end_date->format('M d, Y') : 'Indefinite' }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-600 font-semibold uppercase">Payment Due Day</p>
+                        <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->due_day }}{{ $activeAssignment->due_day == 1 ? 'st' : ($activeAssignment->due_day == 2 ? 'nd' : ($activeAssignment->due_day == 3 ? 'rd' : 'th')) }} of month</p>
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Duration</p>
@@ -126,6 +134,7 @@
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Boarder Name</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Check-in</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Check-out</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">Due Day</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Status</th>
                         </tr>
                     </thead>
@@ -138,6 +147,7 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">{{ $assignment->start_date->format('M d, Y') }}</td>
+                                <td class="px-4 py-3">{{ $assignment->due_day }}{{ $assignment->due_day == 1 ? 'st' : ($assignment->due_day == 2 ? 'nd' : ($assignment->due_day == 3 ? 'rd' : 'th')) }}</td>
                                 <td class="px-4 py-3">{{ $assignment->end_date ? $assignment->end_date->format('M d, Y') : '-' }}</td>
                                 <td class="px-4 py-3">
                                     @if($assignment->end_date === null)

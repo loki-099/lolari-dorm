@@ -75,7 +75,7 @@
 
         @if($activeAssignment)
             <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Room</p>
                         <p class="text-2xl font-bold text-blue-600 mt-1">{{ $activeAssignment->room->number }}</p>
@@ -89,8 +89,16 @@
                         <p class="text-lg font-bold text-green-600 mt-1">₱{{ number_format($activeAssignment->room->price, 2) }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-600 font-semibold uppercase">Start Date</p>
+                        <p class="text-xs text-gray-600 font-semibold uppercase">Payment Due Day</p>
+                        <p class="text-lg font-semibold text-gray-900 mt-1">{{ $activeAssignment->due_day }}{{ $activeAssignment->due_day == 1 ? 'st' : ($activeAssignment->due_day == 2 ? 'nd' : ($activeAssignment->due_day == 3 ? 'rd' : 'th')) }} of month</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-600 font-semibold uppercase">Occupy Date</p>
                         <p class="text-lg font-semibold text-gray-900 mt-1">{{ $activeAssignment->start_date->format('M d, Y') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-600 font-semibold uppercase">End Date</p>
+                        <p class="text-lg font-semibold text-gray-900 mt-1">{{ $activeAssignment->end_date ? $activeAssignment->end_date->format('M d, Y') : 'Indefinite' }}</p>
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Days Occupied</p>
@@ -126,6 +134,7 @@
                         <th scope="col" class="px-6 py-3">Room</th>
                         <th scope="col" class="px-6 py-3">Start Date</th>
                         <th scope="col" class="px-6 py-3">End Date</th>
+                        <th scope="col" class="px-6 py-3">Due Day</th>
                         <th scope="col" class="px-6 py-3">Duration</th>
                     </tr>
                 </thead>
@@ -143,6 +152,7 @@
                                     </span>
                                 @endif
                             </td>
+                            <td class="px-6 py-4">{{ $assignment->due_day }}{{ $assignment->due_day == 1 ? 'st' : ($assignment->due_day == 2 ? 'nd' : ($assignment->due_day == 3 ? 'rd' : 'th')) }}</td>
                             <td class="px-6 py-4">
                                 @if($assignment->end_date)
                                     {{ $assignment->start_date->diffInDays($assignment->end_date) }} days

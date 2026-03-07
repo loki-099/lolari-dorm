@@ -126,6 +126,8 @@ class RoomController extends Controller
             'boarder_id' => 'required|exists:boarders,id',
             'room_id' => 'required|exists:rooms,id',
             'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'due_day' => 'required|integer|min:1|max:31',
         ]);
 
         // Create assignment
@@ -133,6 +135,8 @@ class RoomController extends Controller
             'boarder_id' => $validated['boarder_id'],
             'room_id' => $validated['room_id'],
             'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'due_day' => $validated['due_day'],
         ]);
 
         // Update room status to occupied

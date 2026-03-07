@@ -5,6 +5,7 @@ use App\Http\Controllers\Staff\DashboardController;
 use App\Http\Controllers\Staff\BoarderController;
 use App\Http\Controllers\Staff\RoomController;
 use App\Http\Controllers\Staff\PaymentController;
+use App\Http\Controllers\Staff\ReportsController;
 use App\Http\Controllers\Staff\AnalyticsController;
 use App\Http\Controllers\Auth\LoginController;
 
@@ -40,6 +41,9 @@ Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')
     Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
     Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store')->middleware('permission:process-payment');
     Route::get('/payments/{transaction}', [PaymentController::class, 'show'])->name('payments.show');
+
+    // Reports
+    Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index')->middleware('permission:view-basic-analytics');
 
     // Analytics
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
