@@ -15,20 +15,32 @@
                 <hr class="h-px my-2 bg-neutral-quaternary border-0">
                 <p class="text-center w-[90%] mx-auto text-body">Welcome back! Please enter your details below</p>
                 <div class="px-4 py-6 bg-gray-100 dark:bg-gray-700 mt-6 rounded-xl">
-                    <form class="max-w-sm mx-auto" action="{{ route('admin.dashboard') }}"> {{-- Route to Controller in the future --}}
+                    <form class="max-w-sm mx-auto" action="{{ route('login') }}" method="POST">
+                        @csrf
                         <div class="mb-5">
                             <label for="email-alternative" class="block mb-2.5 text-sm font-medium text-heading">Your
                                 email</label>
-                            <input type="email" id="email-alternative"
-                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body"
-                                placeholder="name@flowbite.com" required />
+                            <input type="email" id="email-alternative" name="email"
+                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body @error('email') border-red-500 @enderror"
+                                placeholder="name@flowbite.com" value="{{ old('email') }}" required />
+                            @error('email')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mb-5">
                             <label for="password-alternative" class="block mb-2.5 text-sm font-medium text-heading">Your
                                 password</label>
-                            <input type="password" id="password-alternative"
-                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body"
+                            <input type="password" id="password-alternative" name="password"
+                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body @error('password') border-red-500 @enderror"
                                 placeholder="••••••••" required />
+                            @error('password')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-5 flex items-center">
+                            <input type="checkbox" id="remember" name="remember" 
+                                class="w-4 h-4 text-brand bg-gray-100 border-gray-300 rounded focus:ring-brand" />
+                            <label for="remember" class="ml-2 text-sm font-medium text-heading">Remember me</label>
                         </div>
                         <button type="submit"
                             class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none w-full">Submit</button>
