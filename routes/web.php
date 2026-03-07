@@ -8,6 +8,7 @@ use App\Http\Controllers\Staff\PaymentController;
 use App\Http\Controllers\Staff\ReportsController;
 use App\Http\Controllers\Staff\AnalyticsController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ExpenseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,3 +50,7 @@ Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
 });
 
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
