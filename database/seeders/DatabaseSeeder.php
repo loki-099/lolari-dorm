@@ -20,15 +20,20 @@ class DatabaseSeeder extends Seeder
 
         // Create a test staff user
         $staffUser = User::factory()->create([
-            'name' => 'Staff User',
+            'first_name' => 'Staff',
+            'last_name' => 'User',
             'email' => 'staff@example.com',
+            'role' => 'staff',
         ]);
         $staffUser->assignRole('staff');
 
         // Create an admin user  
         $adminUser = User::factory()->create([
-            'name' => 'Admin User',
+            'first_name' => 'Admin',
+            'last_name' => 'User',
             'email' => 'admin@example.com',
+            'role' => 'admin',
         ]);
+        $adminUser->assignRole('admin');
     }
 }
