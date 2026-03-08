@@ -11,11 +11,13 @@ class BoarderDashboardController extends Controller
     //
     public function index()
     {
-        return view('boarder.dashboard');
+        $user = auth()->user();
+        return view('boarder.dashboard', compact('user'));
     }
 
     public function sample()
     {
-        return view('boarder.sample');
+        $user = auth()->user();
+        return view('boarder.sample', compact('user'));
     }
 }

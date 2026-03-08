@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -41,6 +42,25 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Tamad',
             'email' => 'boarder@example.com',
             'role' => 'user',
+        ]);
+
+        Room::create([
+            'number' => '101',
+            'capacity' => '4',
+            'monthly_rent' => '5000',
+            'status' => 'available'
+        ]);
+        Room::create([
+            'number' => '102',
+            'capacity' => '4',
+            'monthly_rent' => '5000',
+            'status' => 'available'
+        ]);
+        Room::create([
+            'number' => '103',
+            'capacity' => '4',
+            'monthly_rent' => '5000',
+            'status' => 'available'
         ]);
     }
 }
