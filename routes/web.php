@@ -9,6 +9,7 @@ use App\Http\Controllers\Staff\ReportsController;
 use App\Http\Controllers\Staff\AnalyticsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\Boarder\BoarderDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,3 +55,10 @@ Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.ind
 Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
 Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+
+// BOARDER ROUTES
+Route::middleware(['auth'])->prefix('boarder')->name('boarder.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [BoarderDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/sample', [BoarderDashboardController::class, 'sample'])->name('sample');
+});

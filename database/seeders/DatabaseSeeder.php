@@ -35,5 +35,12 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
         $adminUser->assignRole('admin');
+
+        $boarderUser = User::factory()->create([
+            'first_name' => 'Juan',
+            'last_name' => 'Tamad',
+            'email' => 'boarder@example.com',
+            'role' => 'user',
+        ]);
     }
 }
