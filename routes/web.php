@@ -20,9 +20,12 @@ Route::post('/login', [LoginController::class, 'store'])->name('login');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // ADMIN ROUTES
-Route::get('/admin/dashboard', function() {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function() {
+        return view('admin.dashboard');
+    })->name('dashboard');
+});
 
 // STAFF ROUTES
 Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')->group(function () {
