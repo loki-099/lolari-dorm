@@ -40,7 +40,6 @@ class BoarderController extends Controller
             'contact' => 'nullable|string|max:20',
             'home_address' => 'nullable|string|max:500',
             'parent_contact' => 'nullable|string|max:20',
-            'documents_path' => 'nullable|string',
         ]);
 
         // Create user first
@@ -48,19 +47,19 @@ class BoarderController extends Controller
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
+            'contact_number' => $validated['contact'],
+            'role' => 'user',
             'password' => Hash::make('boarder123'), // Default password
         ]);
 
         // Assign boarder role
-        $user->assignRole('boarder');
+        // $user->assignRole('boarder'); Complicated ahh role
 
         // Create boarder record
         $boarder = Boarder::create([
-            'user_id' => $user->id,
-            'contact' => $validated['contact'],
+            'user_id' => $user->id, 
             'home_address' => $validated['home_address'] ?? null,
             'parent_contact' => $validated['parent_contact'] ?? null,
-            'documents_path' => $validated['documents_path'] ?? null,
             'status' => 'active',
         ]);
 

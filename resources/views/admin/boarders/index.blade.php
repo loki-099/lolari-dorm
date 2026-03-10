@@ -45,7 +45,7 @@
                             {{ $boarder->user->email ?? '-' }}
                         </td>
                         <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
-                            {{ $boarder->contact ?? '-' }}
+                            {{ $boarder->user->contact_number ?? '-' }}
                         </td>
                         <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
                             {{ Str::limit($boarder->home_address, 30) ?? '-' }}
