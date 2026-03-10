@@ -18,7 +18,9 @@
     </script>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-    <div class="flex h-screen overflow-hidden" x-data="{ sidebarOpen: true }">
+    <div class="flex h-screen overflow-hidden"
+         x-data="{ sidebarOpen: window.innerWidth >= 1024 }"
+         x-init="window.addEventListener('resize', () => { if(window.innerWidth >= 1024) sidebarOpen = true })">
         <!-- Sidebar Navigation -->
         <aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-sm flex flex-col fixed h-screen z-40 lg:translate-x-0 transition-transform duration-300"
                :class="{ '-translate-x-full': !sidebarOpen }">
@@ -85,8 +87,11 @@
                 </div>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 100-2H4V5a1 1 0 00-1-1zm15.707 9.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L16.586 13H9a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 011.414-1.414l4 4z" clip-rule="evenodd"></path></svg>
+                    <button type="submit" 
+                        class="w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-bold text-red-600 dark:text-red-400 bg-white dark:bg-gray-800 border-2 border-red-100 dark:border-red-900/50 rounded-xl shadow-sm hover:bg-red-600 hover:text-white hover:border-red-600 dark:hover:bg-red-600 dark:hover:text-white transition-all duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
                         <span>Logout</span>
                     </button>
                 </form>
@@ -99,7 +104,7 @@
              @click="sidebarOpen = false"></div>
 
         <!-- Main Content Area -->
-        <main class="flex-1 flex flex-col lg:ml-64 w-full lg:w-auto overflow-hidden">
+        <main class="flex-1 flex flex-col lg:ml-64 min-w-0 overflow-hidden">
             <!-- Top Bar -->
             <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
                 <div class="px-4 md:px-6 py-4 flex items-center justify-between">
@@ -177,7 +182,7 @@
                     @endif
 
                     <!-- Page Content -->
-                    <div class="p-4 md:p-6">
+                    <div class="p-4 md:p-6 overflow-y-auto">
                         @yield('content')
                     </div>
                 </div>
