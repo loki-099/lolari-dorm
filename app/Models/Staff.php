@@ -12,8 +12,14 @@ class Staff extends Model
         'employment_date',
         'status',
     ];
-    
+
     protected $table = 'staffs';
+
+    // Relationships
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function transactions()
     {

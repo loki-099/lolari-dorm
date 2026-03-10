@@ -149,6 +149,20 @@ class BoarderDashboardController extends Controller
         return view('boarder.dashboard', compact('user', 'rent_data'));
     }
 
+    // Transactions
+    public function transactions()
+    {
+        $user = auth()->user();
+        $transactions = Transaction::with('staff.user')
+            ->where('boarder_id', $user->boarder->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // dd($transactions);
+
+        return view('boarder.transactions', compact('user', 'transactions'));
+    }
+
     public function sample()
     {
         $user = auth()->user();

@@ -68,5 +68,6 @@ Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->nam
 Route::middleware(['role:boarder'])->prefix('boarder')->name('boarder.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [BoarderDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/transactions', [BoarderDashboardController::class, 'transactions'])->name('transactions');
     Route::get('/sample', [BoarderDashboardController::class, 'sample'])->name('sample');
 });
