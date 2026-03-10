@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Staff;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boarder;
@@ -17,7 +17,7 @@ class BoarderController extends Controller
     public function index()
     {
         $boarders = Boarder::with(['user', 'assignments.room'])->paginate(15);
-        return view('staff.boarders.index', compact('boarders'));
+        return view('admin.boarders.index', compact('boarders'));
     }
 
     /**
@@ -25,7 +25,7 @@ class BoarderController extends Controller
      */
     public function create()
     {
-        return view('staff.boarders.create');
+        return view('admin.boarders.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class BoarderController extends Controller
             'status' => 'active',
         ]);
 
-        return redirect()->route('staff.rooms.assign-form', ['boarder' => $boarder->id])
+        return redirect()->route('admin.rooms.assign-form', ['boarder' => $boarder->id])
             ->with('success', 'Boarder created successfully! Now assign a room.');
     }
 
@@ -74,7 +74,7 @@ class BoarderController extends Controller
     public function show(Boarder $boarder)
     {
         $boarder->load('user', 'assignments.room', 'transactions');
-        return view('staff.boarders.show', compact('boarder'));
+        return view('admin.boarders.show', compact('boarder'));
     }
 
     /**
@@ -83,7 +83,7 @@ class BoarderController extends Controller
     public function edit(Boarder $boarder)
     {
         $boarder->load('user');
-        return view('staff.boarders.edit', compact('boarder'));
+        return view('admin.boarders.edit', compact('boarder'));
     }
 
     /**
@@ -118,7 +118,7 @@ class BoarderController extends Controller
             'status' => $validated['status'],
         ]);
 
-        return redirect()->route('staff.boarders.show', $boarder)
+        return redirect()->route('admin.boarders.show', $boarder)
             ->with('success', 'Boarder updated successfully.');
     }
 
@@ -129,7 +129,7 @@ class BoarderController extends Controller
     {
         // Prevent deletion if boarder has active assignments
         if ($boarder->assignments()->whereNull('end_date')->exists()) {
-            return redirect()->route('staff.boarders.show', $boarder)
+            return redirect()->route('admin.boarders.show', $boarder)
                 ->with('error', 'Cannot delete boarder with active room assignment. End the assignment first.');
         }
 
@@ -138,7 +138,8 @@ class BoarderController extends Controller
         // Delete user (will cascade to boarder due to foreign key)
         $boarder->user->delete();
 
-        return redirect()->route('staff.boarders.index')
+        return redirect()->route('admin.boarders.index')
             ->with('success', "Boarder '{$name}' has been deleted successfully.");
     }
 }
+
