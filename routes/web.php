@@ -13,7 +13,7 @@ use App\Http\Controllers\Boarder\BoarderDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('redirect.role');
+})->middleware('redirect.role')->name('home');
 
 // AUTH ROUTES
 Route::post('/login', [LoginController::class, 'store'])->name('login');
@@ -30,6 +30,11 @@ Route::middleware(['auth', 'check.staff.role'])->prefix('admin')->name('admin.')
     Route::put('/rooms/{room}', [App\Http\Controllers\Staff\RoomController::class, 'update'])->name('rooms.update');
     Route::get('/rooms/assign/form', [App\Http\Controllers\Staff\RoomController::class, 'assignForm'])->name('rooms.assign-form');
     Route::post('/rooms/assign', [App\Http\Controllers\Staff\RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
+Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function() {
+        return view('admin.dashboard');
+    })->name('dashboard');
 });
 
 // STAFF ROUTES
@@ -65,7 +70,7 @@ Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('e
 Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 
 // BOARDER ROUTES
-Route::middleware(['auth'])->prefix('boarder')->name('boarder.')->group(function () {
+Route::middleware(['role:user'])->prefix('boarder')->name('boarder.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [BoarderDashboardController::class, 'index'])->name('dashboard');
     Route::get('/sample', [BoarderDashboardController::class, 'sample'])->name('sample');
