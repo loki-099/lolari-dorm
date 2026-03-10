@@ -67,7 +67,7 @@ class BoarderDashboardController extends Controller
         // DETERMINE STATUS AND DATA TO SHOW
         // -----------------------------
         $status = 'Paid';
-        $rentInfo = $lastPaidPeriod ?? [];
+        $rentInfo = $lastPaidPeriod ?? $firstUnpaidPeriod ?? [];
 
         if ($firstUnpaidPeriod) {
             $upcomingWindowStart = Carbon::parse($firstUnpaidPeriod['due_date'])->subDays(7);
@@ -83,12 +83,17 @@ class BoarderDashboardController extends Controller
         }
 
         // Include amount and room number
-        $rent_data = collect(array_merge($rentInfo, [
+        $rent_data = collect([
+            'billing_period_start' => $rentInfo['billing_period_start'] ?? null,
+            'billing_period_end' => $rentInfo['billing_period_end'] ?? null,
+            'due_date' => $rentInfo['due_date'] ?? null,
+            'billing_month' => $rentInfo['billing_month'] ?? null,
             'room_number' => $room->room_number,
             'amount' => $room->monthly_rent,
             'status' => $status,
-        ]));
+        ]);
 
+        dd($rent_data);
         return view('boarder.dashboard', compact('user', 'rent_data'));
     }
 
