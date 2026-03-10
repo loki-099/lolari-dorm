@@ -15,7 +15,7 @@ class CheckStaffRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->hasRole('staff')) {
+        if (auth()->check() && (auth()->user()->hasRole('staff') || auth()->user()->hasRole('admin'))) {
             return $next($request);
         }
 

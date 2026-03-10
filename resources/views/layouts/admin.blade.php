@@ -22,7 +22,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="dark:bg-dark-backdrop">
     <nav class="fixed top-0 z-50 w-full bg-neutral-primary-soft border-b border-default">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
@@ -37,7 +37,7 @@
                                 d="M5 7h14M5 12h14M5 17h10" />
                         </svg>
                     </button>
-                    <a href="{{ route('boarder.dashboard') }}" class="flex ms-2 md:me-24">
+                    <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
                         <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Admin
                             Dashboard</span>
                     </a>
@@ -113,12 +113,12 @@
         class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
-            <a href="{{ route('boarder.dashboard') }}" class="flex items-center ps-2.5 mb-5">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center ps-2.5 mb-5">
                 <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Boarder Dashboard</span>
             </a>
             <ul class="space-y-2 font-medium pt-4">
                 <li>
-                    <a href="{{ route('boarder.sample') }}"
+                    <a href="{{ route('admin.dashboard') }}"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
                         <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@
                     </button>
                     <ul id="dropdown-users" class="hidden py-2 space-y-2">
                         <li>
-                            <a href="#"
+                            <a href="{{ route('admin.boarders.index') }}"
                                 class="flex items-center w-full p-2 text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">
                                 <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -214,8 +214,7 @@
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                        stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                 </svg>
                                 <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
                             </a>
