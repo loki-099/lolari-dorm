@@ -81,7 +81,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">Contact</p>
-                        <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $boarder->contact ?? '-' }}</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $boarder->user->contact_number ?? '-' }}</p>
                     </div>
                 </div>
             </div>

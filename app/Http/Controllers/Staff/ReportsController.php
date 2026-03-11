@@ -48,6 +48,11 @@ class ReportsController extends Controller
         $totalTransactions = Transaction::count();
 
         // Payment methods breakdown
+        $methodStats = Transaction::selectRaw('method, count(*) as count, sum(amount) as total')
+            ->groupBy('method')
+            ->get()
+            ->keyBy('method');
+
         $methodCounts = [
             'cash' => Transaction::where('payment_method', 'cash')->count(),
             'e_wallet' => Transaction::where('payment_method', 'e_wallet')->count(),
