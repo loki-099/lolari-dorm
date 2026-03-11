@@ -33,7 +33,7 @@
                                 d="M6 5V4a1 1 0 1 1 2 0v1h3V4a1 1 0 1 1 2 0v1h3V4a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v2H3V7a2 2 0 0 1 2-2h1ZM3 19v-8h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm5-6a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2H8Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        <p class="text-body text-xs">Billing Period: <span class="font-bold text-heading">{{ $rent_data['billing_period_start'] }} - {{ $rent_data['billing_period_end'] }}</span></p>
+                        <p class="text-body text-xs">Billing Period: <span class="font-bold text-heading">{{ $rent_data['billing_period_start'] ?? 'N/A' }} - {{ $rent_data['billing_period_end'] }}</span></p>
                     </span>
                     <span class="flex items-center gap-x-1">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"

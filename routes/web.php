@@ -40,7 +40,7 @@ Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(functi
 });
 
 // STAFF ROUTES
-Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')->group(function () {
+Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -53,27 +53,30 @@ Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')
     Route::get('/rooms/assign/form', [RoomController::class, 'assignForm'])->name('rooms.assign-form');
     Route::post('/rooms/assign', [RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
 
-    // Payments (Read-only for staff)
+    // Payments
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+
     Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store')->middleware('permission:process-payment');
     Route::get('/payments/{transaction}', [PaymentController::class, 'show'])->name('payments.show');
 
-    // Reports
+
     Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index')->middleware('permission:view-basic-analytics');
 
-    // Analytics
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
 });
 
-Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
-Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
-Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
-Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+    Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+});
 
 // BOARDER ROUTES
-Route::middleware(['role:user'])->prefix('boarder')->name('boarder.')->group(function () {
+Route::middleware(['auth', 'role:boarder'])->prefix('boarder')->name('boarder.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [BoarderDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/transactions', [BoarderDashboardController::class, 'transactions'])->name('transactions');
     Route::get('/sample', [BoarderDashboardController::class, 'sample'])->name('sample');
 });

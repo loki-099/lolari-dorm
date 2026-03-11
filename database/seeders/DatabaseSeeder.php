@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Assignment;
+use App\Models\Boarder;
 use App\Models\Room;
 use App\Models\Staff;
 use App\Models\User;
@@ -56,10 +58,10 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Juan',
             'last_name' => 'Tamad',
             'email' => 'boarder@example.com',
-            'role' => 'user',
+            'role' => 'boarder',
         ]);
 
-        Room::create([
+        $room101 =Room::create([
             'number' => '101',
             'capacity' => '4',
             'monthly_rent' => '5000',
@@ -76,6 +78,38 @@ class DatabaseSeeder extends Seeder
             'capacity' => '4',
             'monthly_rent' => '5000',
             'status' => 'available'
+        ]);
+
+        // Create a boarder user
+        $boarder = Boarder::create([
+            'user_id' => $boarderUser->id,
+            'home_address' => '123 Main St',
+            'parent_contact' => '09876543210',
+            'status' => 'active',
+        ]);
+
+        $staffUser = Staff::create([
+            'user_id' => $staffUser->id,
+            'employment_date' => now(),
+            'status' => 'active',
+        ]);
+
+        Assignment::create([
+            'boarder_id' => $boarder->id,
+            'room_id' => $room101->id,
+            'start_date' => now(),
+            'end_date' => now()->addYear(),
+        ]);
+
+        Transaction::create([
+            'room_id' => $room101->id,
+            'boarder_id' => $boarder->id,
+            'staff_id' => $staffUser->id,
+            'amount' => 5000,
+            'type' => 'rent',
+            'method' => 'cash',
+            'status' => 'completed',
+            'billing_month' => now()->startOfMonth(),
         ]);
     }
 }
