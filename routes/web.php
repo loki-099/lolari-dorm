@@ -21,7 +21,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // ADMIN ROUTES
 Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
-Route::middleware(['auth', 'check.staff.role', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);
 
@@ -33,7 +33,7 @@ Route::middleware(['auth', 'check.staff.role', 'role:admin'])->prefix('admin')->
 });
 
 // STAFF ROUTES
-Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')->group(function () {
+Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
