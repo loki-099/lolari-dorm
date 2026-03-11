@@ -59,7 +59,6 @@ Route::middleware(['auth', 'check.staff.role'])->prefix('staff')->name('staff.')
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
 });
 
-// EXPENSE ROUTES
 Route::middleware(['auth'])->group(function() {
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
@@ -68,7 +67,9 @@ Route::middleware(['auth'])->group(function() {
 });
 
 // BOARDER ROUTES
-Route::middleware(['auth', 'role:user'])->prefix('boarder')->name('boarder.')->group(function () {
+Route::middleware(['auth', 'role:boarder'])->prefix('boarder')->name('boarder.')->group(function () {
+    // Dashboard
     Route::get('/dashboard', [BoarderDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/transactions', [BoarderDashboardController::class, 'transactions'])->name('transactions');
     Route::get('/sample', [BoarderDashboardController::class, 'sample'])->name('sample');
 });

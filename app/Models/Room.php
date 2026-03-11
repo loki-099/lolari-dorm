@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Room extends Model
 {
-    protected $fillable = ['number', 'type', 'price', 'status'];
+    protected $fillable = [
+        'number',
+        'capacity',
+        'monthly_rent', 
+        'status',
+    ];    
 
     public function assignments(): HasMany
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Assignment::class, 'room_id');
     }
 }

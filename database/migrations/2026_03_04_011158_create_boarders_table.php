@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('boarders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('contact')->nullable();
-            $table->string('documents_path')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('home_address')->nullable();
+            $table->string('parent_contact')->nullable();
             $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->timestamps();
         });

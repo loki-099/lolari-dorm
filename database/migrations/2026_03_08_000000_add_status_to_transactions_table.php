@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('assignments', function (Blueprint $table) {
-            $table->integer('due_day')->default(1)->after('end_date')->comment('Day of month for payment due date (1-31)');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->enum('status', ['pending', 'completed', 'cancelled'])->default('pending')->after('method');
         });
     }
 
@@ -21,8 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('assignments', function (Blueprint $table) {
-            $table->dropColumn('due_day');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };
+

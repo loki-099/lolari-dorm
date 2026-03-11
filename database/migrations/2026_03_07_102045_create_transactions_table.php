@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('boarder_id')->constrained()->onDelete('cascade');
+            $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
+            $table->foreignId('boarder_id')->constrained('boarders')->onDelete('cascade');
+            $table->foreignId('staff_id')->constrained('staffs')->onDelete('cascade');
             $table->decimal('amount', 10, 2);
-            $table->enum('payment_method', ['cash', 'bank_transfer', 'check'])->default('cash');
-            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
-            $table->foreignId('staff_id')->constrained('users')->onDelete('cascade');
+            $table->enum('type', ['rent', 'utility'])->default('rent');
+            $table->enum('method', ['cash', 'bank_transfer', 'check', 'online'])->default('cash'); //Online = Gcash
+            $table->date('billing_month');
             $table->timestamps();
         });
     }
