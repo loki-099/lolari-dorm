@@ -20,18 +20,23 @@ Route::post('/login', [LoginController::class, 'store'])->name('login');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // ADMIN ROUTES
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-
+Route::middleware(['auth', 'check.staff.role'])->prefix('admin')->name('admin.')->group(function () {
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);
-
+    
+    // Transactions
+    Route::resource('/transactions', App\Http\Controllers\Admin\TransactionController::class);
+    
     // Rooms
     Route::resource('/rooms', App\Http\Controllers\Staff\RoomController::class)->except('update');
     Route::put('/rooms/{room}', [App\Http\Controllers\Staff\RoomController::class, 'update'])->name('rooms.update');
     Route::get('/rooms/assign/form', [App\Http\Controllers\Staff\RoomController::class, 'assignForm'])->name('rooms.assign-form');
     Route::post('/rooms/assign', [App\Http\Controllers\Staff\RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
+});
+
+Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 });
 
 // STAFF ROUTES

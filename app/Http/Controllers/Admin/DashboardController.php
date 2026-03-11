@@ -39,17 +39,26 @@ class DashboardController extends Controller
             ->whereYear('created_at', Carbon::now()->year)
             ->count();
 
-        // Get recent transactions with relationships (Philippine timezone)
         $recentTransactions = Transaction::with(['boarder', 'room', 'staff'])
             ->orderBy('created_at', 'desc')
             ->limit(10)
             ->get()
             ->map(function ($transaction) {
-                // Determine status: overdue if billing_month is in the past and not completed
+            
                 if ($transaction->status === 'completed') {
                     $transaction->display_status = 'Completed';
-                } elseif ($transaction->billing_month < Carbon::now('Asia/Manila')->startOfMonth()) {
-                    $transaction->display_status = 'Overdue';
+                } elseif ($transaction->billing_month) {
+                    try {
+                        $billingDate = Carbon::parse($transaction->billing_month);
+                        if ($billingDate->startOfMonth() < Carbon::now('Asia/Manila')->startOfMonth()) {
+                            $transaction->display_status = 'Overdue';
+                        } else {
+                            $transaction->display_status = 'Pending';
+                        }
+                    } catch (\Exception $e) {
+                        // If parsing fails, default to Pending
+                        $transaction->display_status = 'Pending';
+                    }
                 } else {
                     $transaction->display_status = 'Pending';
                 }
@@ -60,9 +69,7 @@ class DashboardController extends Controller
                 // Format payment method for display
                 $methodLabels = [
                     'cash' => 'Cash',
-                    'bank_transfer' => 'Bank Transfer',
-                    'check' => 'Check',
-                    'online' => 'G-Cash/PayMaya'
+                    'e_wallet' => 'E-wallet'
                 ];
                 $transaction->method_display = $methodLabels[$transaction->method] ?? $transaction->method;
 
@@ -72,8 +79,10 @@ class DashboardController extends Controller
                 // Format date in Philippine timezone
                 $transaction->transaction_date = $transaction->created_at->timezone('Asia/Manila')->format('M d, Y');
                 
-                // Format billing month for display
-                $transaction->billing_month_display = Carbon::parse($transaction->billing_month)->timezone('Asia/Manila')->format('F Y');
+                // Format billing month for display (already stored as "March 2026" format)
+                $transaction->billing_month_display = $transaction->billing_month 
+                    ? Carbon::parse($transaction->billing_month)->timezone('Asia/Manila')->format('F Y')
+                    : '-';
 
                 return $transaction;
             });

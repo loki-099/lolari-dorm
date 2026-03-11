@@ -57,16 +57,10 @@
                             Cash
                         </span>
                     </option>
-                    <option value="bank_transfer" @selected(old('payment_method') === 'bank_transfer')>
+                    <option value="e_wallet" @selected(old('payment_method') === 'e_wallet')>
                         <span class="flex items-center gap-2">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm1 8h2v-2H5zm3 0h2v-2H8zm3 0h2v-2h-2zm3 0h2v-2h-2zm3 0h2v-2h-2zm1 4H4v2h16zm0-8v2h2V6h-2z"></path></svg>
-                            Bank Transfer
-                        </span>
-                    </option>
-                    <option value="check" @selected(old('payment_method') === 'check')>
-                        <span class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg>
-                            Check
+                            E-wallet
                         </span>
                     </option>
                 </select>
