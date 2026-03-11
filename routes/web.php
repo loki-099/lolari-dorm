@@ -20,8 +20,10 @@ Route::post('/login', [LoginController::class, 'store'])->name('login');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // ADMIN ROUTES
-Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);
 
@@ -49,17 +51,17 @@ Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->grou
     // Payments
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
-    
+
     Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store')->middleware('permission:process-payment');
     Route::get('/payments/{transaction}', [PaymentController::class, 'show'])->name('payments.show');
 
-    
+
     Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index')->middleware('permission:view-basic-analytics');
-    
+
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
 });
 
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth'])->group(function () {
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
     Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
