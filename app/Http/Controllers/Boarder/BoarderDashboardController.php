@@ -146,7 +146,7 @@ class BoarderDashboardController extends Controller
 
         // dd($rent_data);
 
-        return view('boarder.dashboard', compact('user', 'rent_data'));
+        return view('boarder.dashboard', compact('user', 'assignment', 'room', 'rent_data'));
     }
 
     // Transactions
