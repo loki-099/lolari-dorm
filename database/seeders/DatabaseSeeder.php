@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Room;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,13 @@ class DatabaseSeeder extends Seeder
         ]);
         $staffUser->assignRole('staff');
 
+        // Create staff record in staffs table
+        Staff::create([
+            'user_id' => $staffUser->id,
+            'employment_date' => now()->toDateString(),
+            'status' => 'active',
+        ]);
+
         // Create an admin user  
         $adminUser = User::factory()->create([
             'first_name' => 'Admin',
@@ -36,6 +44,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
         $adminUser->assignRole('admin');
+
+        // Create staff record in staffs table for admin (if admin needs to record transactions)
+        Staff::create([
+            'user_id' => $adminUser->id,
+            'employment_date' => now()->toDateString(),
+            'status' => 'active',
+        ]);
 
         $boarderUser = User::factory()->create([
             'first_name' => 'Juan',

@@ -50,14 +50,12 @@ class ReportsController extends Controller
         // Payment methods breakdown
         $methodCounts = [
             'cash' => Transaction::where('payment_method', 'cash')->count(),
-            'bank_transfer' => Transaction::where('payment_method', 'bank_transfer')->count(),
-            'check' => Transaction::where('payment_method', 'check')->count(),
+            'e_wallet' => Transaction::where('payment_method', 'e_wallet')->count(),
         ];
 
         $methodAmounts = [
             'cash' => Transaction::where('payment_method', 'cash')->sum('amount'),
-            'bank_transfer' => Transaction::where('payment_method', 'bank_transfer')->sum('amount'),
-            'check' => Transaction::where('payment_method', 'check')->sum('amount'),
+            'e_wallet' => Transaction::where('payment_method', 'e_wallet')->sum('amount'),
         ];
 
         return view('staff.reports.index', compact(
