@@ -31,13 +31,6 @@ class DatabaseSeeder extends Seeder
         ]);
         $staffUser->assignRole('staff');
 
-        // Create staff record in staffs table
-        Staff::create([
-            'user_id' => $staffUser->id,
-            'employment_date' => now()->toDateString(),
-            'status' => 'active',
-        ]);
-
         // Create an admin user  
         $adminUser = User::factory()->create([
             'first_name' => 'Admin',
