@@ -16,7 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'admin' => \App\Http\Middleware\EnsureAdmin::class,
             'check.staff.role' => \App\Http\Middleware\CheckStaffRole::class,
             'redirect.role' => \App\Http\Middleware\RedirectBasedOnRole::class,
             'permission' => \App\Http\Middleware\CheckPermission::class,

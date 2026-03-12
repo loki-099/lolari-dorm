@@ -8,7 +8,6 @@ use App\Models\Boarder;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -25,8 +24,8 @@ class PaymentController extends Controller
         }
 
         // Filter by payment method
-        if ($request->has('method') && $request->payment_method) {
-            $query->where('payment_method', $request->payment_method);
+        if ($request->has('method') && $request->method) {
+            $query->where('payment_method', $request->method);
         }
 
         $transactions = $query->orderBy('created_at', 'desc')->paginate(20);
@@ -78,14 +77,14 @@ class PaymentController extends Controller
         );
         $staffId = $staff->id;
 
-        // Create transaction record with billing_month as date format (Y-m-d)
+        // Create transaction record
         Transaction::create([
             'boarder_id' => $validated['boarder_id'],
             'room_id' => $roomId,
             'amount' => $validated['amount'],
             'payment_method' => $validated['payment_method'],
             'status' => 'completed',
-            'billing_month' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+            'billing_month' => now()->format('F Y'),
             'staff_id' => $staffId,
         ]);
 

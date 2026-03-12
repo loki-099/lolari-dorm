@@ -125,7 +125,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">Billing Month</p>
-                        <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $transaction->billing_month ? $transaction->billing_month->format('M Y') : '-' }}</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $transaction->billing_month ?? '-' }}</p>
                     </div>
                 </div>
             </div>

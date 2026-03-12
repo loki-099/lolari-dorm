@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $staffUser->assignRole('staff');
 
         // Create staff record in staffs table
-        $staff = Staff::create([
+        Staff::create([
             'user_id' => $staffUser->id,
             'employment_date' => now()->toDateString(),
             'status' => 'active',
@@ -89,6 +89,12 @@ class DatabaseSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $staffUser = Staff::create([
+            'user_id' => $staffUser->id,
+            'employment_date' => now(),
+            'status' => 'active',
+        ]);
+
         Assignment::create([
             'boarder_id' => $boarder->id,
             'room_id' => $room101->id,
@@ -99,7 +105,7 @@ class DatabaseSeeder extends Seeder
         Transaction::create([
             'room_id' => $room101->id,
             'boarder_id' => $boarder->id,
-            'staff_id' => $staff->id,
+            'staff_id' => $staffUser->id,
             'amount' => 5000,
             'type' => 'rent',
             'method' => 'cash',

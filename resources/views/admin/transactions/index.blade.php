@@ -107,7 +107,7 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
-                            {{ $transaction->billing_month ? $transaction->billing_month->format('M Y') : '-' }}
+                            {{ $transaction->billing_month ?? '-' }}
                         </td>
                         <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
                             @if($transaction->staff && $transaction->staff->user)

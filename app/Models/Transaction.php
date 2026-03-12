@@ -18,10 +18,6 @@ class Transaction extends Model
         'billing_month'
     ];
 
-    protected $casts = [
-        'billing_month' => 'date',
-    ];
-
     public function boarder(): BelongsTo
     {
         return $this->belongsTo(Boarder::class);
