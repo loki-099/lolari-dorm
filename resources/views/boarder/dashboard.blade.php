@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <hr class="h-px my-4 bg-neutral-quaternary border-0">
-                <p class="text-body">Capacity: {{ $room->capacity }}</p>
+                <p class="text-body">Capacity: 1/{{ $room->capacity }}</p>
                 <p class="text-body">Started Date: {{ $assignment->start_date->format('F d, Y') }}</p>
             </div>
         </div>
@@ -89,7 +89,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-body text-sm">Electricity Bill</h2>
-                        <h1 class="text-heading font-bold text-2xl md:text-3xl">₱{{ (int) $rent_data['amount'] }}</h1>
+                        <h1 class="text-heading font-bold text-2xl md:text-3xl">₱952</h1>
 
                     </div>
                     <div
@@ -123,7 +123,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-body text-sm">Water Bill</h2>
-                        <h1 class="text-heading font-bold text-2xl md:text-3xl">₱{{ (int) $rent_data['amount'] }}</h1>
+                        <h1 class="text-heading font-bold text-2xl md:text-3xl">₱165</h1>
 
                     </div>
                     <div
@@ -157,7 +157,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-body text-sm">Internet Bill</h2>
-                        <h1 class="text-heading font-bold text-2xl md:text-3xl">₱{{ (int) $rent_data['amount'] }}</h1>
+                        <h1 class="text-heading font-bold text-2xl md:text-3xl">₱200</h1>
 
                     </div>
                     <div
