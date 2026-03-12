@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\Boarder;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -93,13 +94,19 @@ class TransactionController extends Controller
         // Staff will be assigned when staff members create transactions
         $staffId = null;
 
+        // Convert billing_month to date format (Y-m-d) using Carbon startOfMonth
+        $billingMonth = null;
+        if (!empty($validated['billing_month'])) {
+            $billingMonth = Carbon::parse($validated['billing_month'])->startOfMonth()->format('Y-m-d');
+        }
+
         Transaction::create([
             'boarder_id' => $validated['boarder_id'],
             'room_id' => $roomId,
             'amount' => $validated['amount'],
             'payment_method' => $validated['payment_method'],
             'status' => $validated['status'],
-            'billing_month' => $validated['billing_month'] ?? null,
+            'billing_month' => $billingMonth,
             'staff_id' => $staffId,
         ]);
 
@@ -139,10 +146,22 @@ class TransactionController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'payment_method' => 'required|in:cash,e_wallet',
             'status' => 'required|in:pending,completed,failed',
-            'billing_month' => 'nullable|string',
+            'billing_month' => 'nullable',
         ]);
 
-        $transaction->update($validated);
+        // Convert billing_month to date format (Y-m-d) using Carbon startOfMonth
+        $billingMonth = null;
+        if (!empty($validated['billing_month'])) {
+            $billingMonth = Carbon::parse($validated['billing_month'])->startOfMonth()->format('Y-m-d');
+        }
+
+        $transaction->update([
+            'boarder_id' => $validated['boarder_id'],
+            'amount' => $validated['amount'],
+            'payment_method' => $validated['payment_method'],
+            'status' => $validated['status'],
+            'billing_month' => $billingMonth,
+        ]);
 
         return redirect()->route('admin.transactions.show', $transaction)
             ->with('success', 'Transaction updated successfully!');
