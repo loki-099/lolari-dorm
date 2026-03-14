@@ -108,10 +108,10 @@
             <label for="billing_month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Billing Month
             </label>
-            <input type="text" id="billing_month" name="billing_month" value="{{ old('billing_month', $transaction->billing_month) }}" 
+            <input type="text" id="billing_month" name="billing_month" value="{{ old('billing_month', $transaction->billing_month?->format('m-d-Y')) }}" 
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 @error('billing_month') border-red-500 @enderror" 
-                placeholder="e.g., March 2024">
-            <p class="text-gray-500 text-xs mt-1">Optional: Specify the billing period for this transaction</p>
+                placeholder="03-01-2026">
+            <p class="text-gray-500 text-xs mt-1">Optional: First day of billing month (MM-DD-YYYY, e.g., 03-01-2026 for March 2026)</p>
             @error('billing_month')
                 <p class="text-red-500 text-sm mt-2 flex items-center gap-2">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zm-11-1a1 1 0 11-2 0 1 1 0 012 0zM10 9a1 1 0 100-2 1 1 0 000 2zm3 1a1 1 0 110-2 1 1 0 010 2z" clip-rule="evenodd"></path></svg>

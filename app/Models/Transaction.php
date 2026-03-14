@@ -32,4 +32,8 @@ class Transaction extends Model
     {
         return $this->belongsTo(Staff::class);
     }
+
+    protected $casts = [
+        'billing_month' => 'date',
+    ];
 }

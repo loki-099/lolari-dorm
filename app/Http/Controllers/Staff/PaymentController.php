@@ -24,8 +24,8 @@ class PaymentController extends Controller
         }
 
         // Filter by payment method
-        if ($request->has('method') && $request->method) {
-            $query->where('payment_method', $request->method);
+        if ($request->has('payment_method') && $request->payment_method) {
+            $query->where('payment_method', $request->payment_method);
         }
 
         $transactions = $query->orderBy('created_at', 'desc')->paginate(20);

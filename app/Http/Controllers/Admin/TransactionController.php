@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\Boarder;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -33,7 +34,8 @@ class TransactionController extends Controller
 
         // Filter by billing month
         if ($request->has('billing_month') && $request->billing_month) {
-            $query->where('billing_month', $request->billing_month);
+            $bm = Carbon::createFromFormat('m-d-Y', $request->billing_month);
+            $query->where('billing_month', $bm->format('Y-m-d'));
         }
 
         // Search by boarder name
@@ -77,8 +79,13 @@ class TransactionController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'payment_method' => 'required|in:cash,e_wallet',
             'status' => 'required|in:pending,completed,failed',
-            'billing_month' => 'nullable|string',
+            'billing_month' => 'nullable|date_format:m-d-Y',
         ]);
+
+        $billingMonth = $validated['billing_month'] ?? null;
+        if ($billingMonth) {
+            $billingMonth = Carbon::createFromFormat('m-d-Y', $billingMonth)->format('Y-m-d');
+        }
 
         // Get the boarder's current room assignment
         $boarder = Boarder::with('assignments.room')->findOrFail($validated['boarder_id']);
@@ -99,7 +106,7 @@ class TransactionController extends Controller
             'amount' => $validated['amount'],
             'payment_method' => $validated['payment_method'],
             'status' => $validated['status'],
-            'billing_month' => $validated['billing_month'] ?? null,
+            'billing_month' => $billingMonth,
             'staff_id' => $staffId,
         ]);
 
@@ -139,9 +146,14 @@ class TransactionController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'payment_method' => 'required|in:cash,e_wallet',
             'status' => 'required|in:pending,completed,failed',
-            'billing_month' => 'nullable|string',
+            'billing_month' => 'nullable|date_format:m-d-Y',
         ]);
 
+        $billingMonth = $validated['billing_month'] ?? null;
+        if ($billingMonth) {
+            $billingMonth = Carbon::createFromFormat('m-d-Y', $billingMonth)->format('Y-m-d');
+        }
+        $validated['billing_month'] = $billingMonth;
         $transaction->update($validated);
 
         return redirect()->route('admin.transactions.show', $transaction)
