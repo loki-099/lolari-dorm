@@ -34,11 +34,11 @@
 
             <!-- Method Filter -->
             <div>
-                <label for="method" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Payment Method</label>
-                <select name="method" id="method" class="w-full px-4 py-2 text-sm text-gray-900 dark:text-white dark:bg-gray-700 bg-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-500 focus:border-transparent">
+                <label for="payment_method" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Payment Method</label>
+                <select name="payment_method" id="payment_method" class="w-full px-4 py-2 text-sm text-gray-900 dark:text-white dark:bg-gray-700 bg-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-500 focus:border-transparent">
                     <option value="">All Methods</option>
-                    @foreach(['cash', 'bank_transfer', 'check'] as $m)
-                        <option value="{{ $m }}" @selected(request('method') === $m)>{{ str_replace('_', ' ', ucfirst($m)) }}</option>
+                    @foreach(['cash', 'e_wallet'] as $m)
+@selected(request('payment_method') === $m)
                     @endforeach
                 </select>
             </div>

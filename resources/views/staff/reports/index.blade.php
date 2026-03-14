@@ -118,8 +118,7 @@
                 @php
                     $methods = [
                         'cash' => 'Cash',
-                        'bank_transfer' => 'Bank Transfer',
-                        'check' => 'Check'
+                        'e_wallet' => 'E-wallet'
                     ];
                 @endphp
                 @foreach($methods as $key => $label)

@@ -48,21 +48,19 @@ class ReportsController extends Controller
         $totalTransactions = Transaction::count();
 
         // Payment methods breakdown
-        $methodStats = Transaction::selectRaw('method, count(*) as count, sum(amount) as total')
-            ->groupBy('method')
+Transaction::selectRaw('payment_method, count(*) as count, sum(amount) as total')
+            ->groupBy('payment_method')
             ->get()
-            ->keyBy('method');
+            ->keyBy('payment_method');
 
         $methodCounts = [
-            'cash' => $methodStats['cash']->count ?? 0,
-            'bank_transfer' => $methodStats['bank_transfer']->count ?? 0,
-            'check' => $methodStats['check']->count ?? 0,
+            'cash' => Transaction::where('payment_method', 'cash')->count(),
+            'e_wallet' => Transaction::where('payment_method', 'e_wallet')->count(),
         ];
 
         $methodAmounts = [
-            'cash' => $methodStats['cash']->total ?? 0,
-            'bank_transfer' => $methodStats['bank_transfer']->total ?? 0,
-            'check' => $methodStats['check']->total ?? 0,
+            'cash' => Transaction::where('payment_method', 'cash')->sum('amount'),
+            'e_wallet' => Transaction::where('payment_method', 'e_wallet')->sum('amount'),
         ];
 
         return view('staff.reports.index', compact(

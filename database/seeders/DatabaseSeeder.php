@@ -6,8 +6,8 @@ use App\Models\Assignment;
 use App\Models\Boarder;
 use App\Models\Room;
 use App\Models\Staff;
-use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -40,6 +40,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
         $adminUser->assignRole('admin');
+
+        // Create staff record in staffs table for admin (if admin needs to record transactions)
+        Staff::create([
+            'user_id' => $adminUser->id,
+            'employment_date' => now()->toDateString(),
+            'status' => 'active',
+        ]);
 
         $boarderUser = User::factory()->create([
             'first_name' => 'Juan',
@@ -94,7 +101,7 @@ class DatabaseSeeder extends Seeder
             'staff_id' => $staffUser->id,
             'amount' => 5000,
             'type' => 'rent',
-            'method' => 'cash',
+'payment_method' => 'cash',
             'status' => 'completed',
             'billing_month' => now()->startOfMonth(),
         ]);

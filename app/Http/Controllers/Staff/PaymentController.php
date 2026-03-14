@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\Boarder;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,13 +24,13 @@ class PaymentController extends Controller
         }
 
         // Filter by payment method
-        if ($request->has('method') && $request->method) {
-            $query->where('payment_method', $request->method);
+        if ($request->has('payment_method') && $request->payment_method) {
+            $query->where('payment_method', $request->payment_method);
         }
 
         $transactions = $query->orderBy('created_at', 'desc')->paginate(20);
         $statuses = ['pending', 'completed', 'failed'];
-        $methods = ['cash', 'bank_transfer', 'check'];
+        $methods = ['cash', 'e_wallet'];
 
         return view('staff.payments.index', compact('transactions', 'statuses', 'methods'));
     }
@@ -56,16 +57,35 @@ class PaymentController extends Controller
         $validated = $request->validate([
             'boarder_id' => 'required|exists:boarders,id',
             'amount' => 'required|numeric|min:0.01',
-            'payment_method' => 'required|in:cash,bank_transfer,check',
+            'payment_method' => 'required|in:cash,e_wallet',
         ]);
+
+        // Get the boarder's current room assignment
+        $boarder = Boarder::with('assignments.room')->findOrFail($validated['boarder_id']);
+        $currentAssignment = $boarder->assignments()
+            ->whereNull('end_date')
+            ->orWhere('end_date', '>=', now()->toDateString())
+            ->first();
+        
+        $roomId = $currentAssignment ? $currentAssignment->room_id : null;
+
+        // Get the staff ID from the staffs table using the authenticated user's ID
+        // If no staff record exists, create one
+        $staff = Staff::firstOrCreate(
+            ['user_id' => Auth::id()],
+            ['employment_date' => now()->toDateString(), 'status' => 'active']
+        );
+        $staffId = $staff->id;
 
         // Create transaction record
         Transaction::create([
             'boarder_id' => $validated['boarder_id'],
+            'room_id' => $roomId,
             'amount' => $validated['amount'],
             'payment_method' => $validated['payment_method'],
             'status' => 'completed',
-            'staff_id' => Auth::id(),
+            'billing_month' => now()->format('F Y'),
+            'staff_id' => $staffId,
         ]);
 
         return redirect()->route('staff.payments.index')
