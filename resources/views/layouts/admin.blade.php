@@ -171,49 +171,16 @@
                     </ul>
                 </li>
                 <li>
-                    <button type="button"
-                        class="flex items-center w-full px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-                        aria-controls="dropdown-finances" data-collapse-toggle="dropdown-finances">
-                        <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
+                    <a href="{{ route('admin.transactions.index') }}"
+                        class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+                        <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
-                        <span class="ms-3 whitespace-nowrap">Finances</span>
-                        <svg class="ml-3 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    <ul id="dropdown-finances" class="hidden py-2 space-y-2">
-                        <li>
-                            <a href="#"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">
-                                <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                </svg>
-                                <span class="flex-1 ms-3 whitespace-nowrap">Payments</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">
-                                <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                                </svg>
-                                <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
-                            </a>
-                        </li>
-                    </ul>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
+                    </a>
                 </li>
                 <li>
                     <a href="#"

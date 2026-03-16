@@ -27,6 +27,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);
 
+    // Transactions
+    Route::resource('/transactions', \App\Http\Controllers\Admin\TransactionController::class);
+
     // Rooms
     Route::resource('/rooms', App\Http\Controllers\Staff\RoomController::class)->except('update');
     Route::put('/rooms/{room}', [App\Http\Controllers\Staff\RoomController::class, 'update'])->name('rooms.update');
