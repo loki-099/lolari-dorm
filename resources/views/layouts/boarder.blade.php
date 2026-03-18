@@ -143,7 +143,7 @@
         </div>
     </aside>
 
-    <div class="p-4 sm:ml-64 mt-14 dark:bg-dark-backdrop">
+    <div class="p-4 sm:ml-64 mt-16 dark:bg-dark-backdrop">
         @yield('content')
     </div>
 
