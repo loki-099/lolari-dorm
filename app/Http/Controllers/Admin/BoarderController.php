@@ -48,7 +48,7 @@ class BoarderController extends Controller
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'contact_number' => $validated['contact'],
-            'role' => 'user',
+'role' => 'boarder',
             'password' => Hash::make('boarder123'), // Default password
         ]);
 
