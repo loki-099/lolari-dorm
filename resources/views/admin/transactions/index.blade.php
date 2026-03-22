@@ -101,12 +101,6 @@
                                     <p class="text-gray-600 dark:text-gray-400 font-medium">No transactions found</p>
                                     <p class="text-gray-500 dark:text-gray-500 text-sm mt-1">Get started by creating a new transaction</p>
                                 </div>
-                                <a href="{{ route('admin.transactions.create') }}" class="mt-4 inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                    </svg>
-                                    Create First Transaction
-                                </a>
                             </div>
                         </td>
                     </tr>
