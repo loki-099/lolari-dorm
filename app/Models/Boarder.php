@@ -25,4 +25,9 @@ class Boarder extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(BoarderActivity::class);
+    }
 }
