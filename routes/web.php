@@ -27,6 +27,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);
 
+    // Staffs
+    Route::resource('/staffs', App\Http\Controllers\Admin\StaffController::class);
+
     // Transactions
     Route::resource('/transactions', \App\Http\Controllers\Admin\TransactionController::class);
 

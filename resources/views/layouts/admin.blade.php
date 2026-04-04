@@ -156,7 +156,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ route('admin.staffs.index') }}"
                                 class="flex items-center w-full p-2 text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">
                                 <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"

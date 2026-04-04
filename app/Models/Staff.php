@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Staff extends Model
 {
-    //
     protected $fillable = [
         'user_id',
         'employment_date',
@@ -14,6 +13,10 @@ class Staff extends Model
     ];
 
     protected $table = 'staffs';
+
+    protected $casts = [
+        'employment_date' => 'date',
+    ];
 
     // Relationships
     public function user()
