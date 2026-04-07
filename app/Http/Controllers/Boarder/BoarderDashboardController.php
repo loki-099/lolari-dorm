@@ -28,15 +28,7 @@ class BoarderDashboardController extends Controller
         // If no room assignment exists
         if (!$assignment) {
 
-            $rent_data = collect([
-                'room_number' => null,
-                'amount' => null,
-                'billing_period_start' => null,
-                'billing_period_end' => null,
-                'due_date' => null,
-                'billing_month' => null,
-                'status' => null
-            ]);
+            $rent_data = null;
 
             return view('boarder.dashboard', compact('user', 'rent_data'));
         }

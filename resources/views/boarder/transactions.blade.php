@@ -3,12 +3,12 @@
 @section('content')
     <div class="p-4 border-1 border-default border-dashed rounded-base min-h-screen">
         @if ($transactions)
-            <div class="bg-neutral-primary-soft block p-6 border border-default rounded-base shadow-xs">
+            <div class="bg-neutral-primary-soft block p-6 border border-default rounded-base shadow-md">
                 <div class="mb-4"> 
                     <h2 class="text-xl font-bold text-heading">Transaction History</h2>
                     <p class="text-body text-sm">View all transactions history.</p>
                 </div>
-                <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+                <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-md rounded-base border border-default">
                     <table class="w-full text-sm text-left rtl:text-right text-body">
                         <thead class="text-sm text-body bg-neutral-tertiary border-b rounded-base border-default">
                             <tr>
