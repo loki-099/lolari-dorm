@@ -5,7 +5,7 @@
 @section('content')
 <div class="space-y-6">
     <!-- Boarder Info Card -->
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800 mt-2">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $boarder->user->first_name }} {{ $boarder->user->last_name }}</h2>
@@ -35,7 +35,7 @@
                     </svg>
                     Edit
                 </a>
-                @if(!$boarder->assignments()->whereNull('end_date')->exists())
+                @if(!$boarder->assignments()->where('status', 'active')->exists())
                     <form action="{{ route('admin.boarders.destroy', $boarder) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this boarder? This action cannot be undone.');" class="inline">
                         @csrf
                         @method('DELETE')
@@ -144,7 +144,10 @@
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Current Assignment</h3>
         @php
-            $activeAssignment = $boarder->assignments->where('end_date', null)->first();
+            $activeAssignment = $boarder->assignments
+                ->where('status', 'active')
+                ->sortByDesc('start_date')
+                ->first();
         @endphp
 
         @if($activeAssignment)
@@ -155,16 +158,8 @@
                         <p class="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">{{ $activeAssignment->room->number }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Type</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white mt-1 capitalize">{{ $activeAssignment->room->type }}</p>
-                    </div>
-                    <div>
                         <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Monthly Rate</p>
-                        <p class="text-lg font-bold text-green-600 dark:text-green-400 mt-1">₱{{ number_format($activeAssignment->room->price, 2) }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Payment Due Day</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white mt-1">{{ $activeAssignment->due_day }}{{ $activeAssignment->due_day == 1 ? 'st' : ($activeAssignment->due_day == 2 ? 'nd' : ($activeAssignment->due_day == 3 ? 'rd' : 'th')) }} of month</p>
+                        <p class="text-lg font-bold text-green-600 dark:text-green-400 mt-1">₱{{ number_format($activeAssignment->room->monthly_rent, 2) }}</p>
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Occupy Date</p>
@@ -176,7 +171,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Days Occupied</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white mt-1">{{ $activeAssignment->start_date->diffInDays(now()) }}</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white mt-1">{{ (int) $activeAssignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }}</p>
                     </div>
                 </div>
             </div>
@@ -186,7 +181,7 @@
                     <p class="text-gray-700 dark:text-gray-300 font-medium">No active room assignment</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">This boarder needs to be assigned to a room</p>
                 </div>
-                <a href="{{ route('admin.rooms.assign-form', ['boarder' => $boarder->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 transition-all whitespace-nowrap">
+                <a href="{{ route('admin.assignments.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 transition-all whitespace-nowrap">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
@@ -208,12 +203,16 @@
                         <th scope="col" class="px-6 py-3">Room</th>
                         <th scope="col" class="px-6 py-3">Start Date</th>
                         <th scope="col" class="px-6 py-3">End Date</th>
-                        <th scope="col" class="px-6 py-3">Due Day</th>
                         <th scope="col" class="px-6 py-3">Duration</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @forelse($boarder->assignments as $assignment)
+                    @php
+                        $assignmentHistory = $boarder->assignments
+                            ->where('status', 'inactive')
+                            ->sortByDesc('start_date');
+                    @endphp
+                    @forelse($assignmentHistory as $assignment)
                         <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Room {{ $assignment->room->number }}</td>
                             <td class="px-6 py-4">{{ $assignment->start_date->format('M d, Y') }}</td>
@@ -221,23 +220,22 @@
                                 @if($assignment->end_date)
                                     {{ $assignment->end_date->format('M d, Y') }}
                                 @else
-                                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-blue-800 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
-                                        Ongoing
+                                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-gray-800 bg-gray-100 dark:bg-gray-700/50 dark:text-gray-200 rounded-full">
+                                        Past
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4">{{ $assignment->due_day }}{{ $assignment->due_day == 1 ? 'st' : ($assignment->due_day == 2 ? 'nd' : ($assignment->due_day == 3 ? 'rd' : 'th')) }}</td>
                             <td class="px-6 py-4">
                                 @if($assignment->end_date)
-                                    {{ $assignment->start_date->diffInDays($assignment->end_date) }} days
+                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays($assignment->end_date->startOfDay()) }} days
                                 @else
-                                    {{ $assignment->start_date->diffInDays(now()) }} days
+                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }} days
                                 @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-8 text-center">
+                            <td colspan="4" class="px-6 py-8 text-center">
                                 <div class="flex flex-col items-center gap-2">
                                     <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>

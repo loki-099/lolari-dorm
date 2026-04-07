@@ -100,7 +100,7 @@
                     <!-- Price -->
                     <div class="border-t border-b border-gray-200 dark:border-gray-700 py-4 mb-4">
                         <p class="text-gray-600 dark:text-gray-400 text-sm">Monthly Rate</p>
-                        <p class="text-2xl font-bold text-gray-900 dark:text-white">₱{{ number_format($room->price, 2) }}</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">₱{{ number_format($room->monthly_rent, 2) }}</p>
                     </div>
 
                     <!-- Room Stats -->
@@ -116,8 +116,7 @@
                         <!-- Current Occupancy -->
                         @php
                             $currentAssignment = $room->assignments()
-                                ->whereNull('end_date')
-                                ->orWhere('end_date', '>=', now())
+                                ->where('status', 'active')
                                 ->latest('start_date')
                                 ->first();
                         @endphp

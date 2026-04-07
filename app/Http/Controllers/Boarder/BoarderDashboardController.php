@@ -19,10 +19,15 @@ class BoarderDashboardController extends Controller
 
         // Get boarder
         $boarder = Boarder::where('user_id', $user->id)->first();
+        if (!$boarder) {
+            return view('boarder.dashboard', compact('user'))->with('rent_data', null);
+        }
 
-        // Get assignment + room
+        // Get active assignment + room
         $assignment = Assignment::with('room')
             ->where('boarder_id', $boarder->id)
+            ->where('status', 'active')
+            ->latest('start_date')
             ->first();
 
         // If no room assignment exists
@@ -60,6 +65,7 @@ class BoarderDashboardController extends Controller
 
             // Check if payment exists
             $payment = Transaction::where('room_id', $room->id)
+                ->where('boarder_id', $boarder->id)
                 ->where('billing_month', $billingMonth)
                 ->first();
 
@@ -128,7 +134,7 @@ class BoarderDashboardController extends Controller
 
         $rent_data = collect([
             'room_number' => $room->number ?? null,
-            'amount' => $room->monthly_rent ?? null,
+            'amount' => $room->monthly_rent ?? ($room->price ?? null),
             'billing_period_start' => $rentInfo['billing_period_start'] ?? null,
             'billing_period_end' => $rentInfo['billing_period_end'] ?? null,
             'due_date' => $rentInfo['due_date'] ?? null,

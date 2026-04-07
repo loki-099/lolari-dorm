@@ -92,7 +92,7 @@ class RoomController extends Controller
     public function destroy(Room $room)
     {
         // Prevent deletion if room has active assignments
-        if ($room->assignments()->whereNull('end_date')->exists()) {
+        if ($room->assignments()->where('status', 'active')->exists()) {
             return redirect()->route('staff.rooms.index')
                 ->with('error', 'Cannot delete room with active assignments. Please end the assignment first.');
         }
@@ -127,8 +127,18 @@ class RoomController extends Controller
             'room_id' => 'required|exists:rooms,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
-            'due_day' => 'required|integer|min:1|max:31',
         ]);
+
+        $activeAssignmentInSameRoom = Assignment::where('boarder_id', $validated['boarder_id'])
+            ->where('room_id', $validated['room_id'])
+            ->where('status', 'active')
+            ->exists();
+
+        if ($activeAssignmentInSameRoom) {
+            return back()
+                ->withInput()
+                ->withErrors(['room_id' => 'This boarder is already assigned to the selected room.']);
+        }
 
         // Create assignment
         Assignment::create([
@@ -136,7 +146,7 @@ class RoomController extends Controller
             'room_id' => $validated['room_id'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
-            'due_day' => $validated['due_day'],
+            'due_day' => 1,
         ]);
 
         // Update room status to occupied

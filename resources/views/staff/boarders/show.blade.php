@@ -70,7 +70,7 @@
     <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Current Assignment</h3>
         @php
-            $activeAssignment = $boarder->assignments->where('end_date', null)->first();
+            $activeAssignment = $boarder->assignments->where('status', 'active')->sortByDesc('start_date')->first();
         @endphp
 
         @if($activeAssignment)
@@ -86,11 +86,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Monthly Rate</p>
-                        <p class="text-lg font-bold text-green-600 mt-1">₱{{ number_format($activeAssignment->room->price, 2) }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-600 font-semibold uppercase">Payment Due Day</p>
-                        <p class="text-lg font-semibold text-gray-900 mt-1">{{ $activeAssignment->due_day }}{{ $activeAssignment->due_day == 1 ? 'st' : ($activeAssignment->due_day == 2 ? 'nd' : ($activeAssignment->due_day == 3 ? 'rd' : 'th')) }} of month</p>
+                        <p class="text-lg font-bold text-green-600 mt-1">₱{{ number_format($activeAssignment->room->monthly_rent, 2) }}</p>
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Occupy Date</p>
@@ -102,7 +98,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Days Occupied</p>
-                        <p class="text-lg font-semibold text-gray-900 mt-1">{{ $activeAssignment->start_date->diffInDays(now()) }}</p>
+                        <p class="text-lg font-semibold text-gray-900 mt-1">{{ (int) $activeAssignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }}</p>
                     </div>
                 </div>
             </div>
@@ -134,7 +130,6 @@
                         <th scope="col" class="px-6 py-3">Room</th>
                         <th scope="col" class="px-6 py-3">Start Date</th>
                         <th scope="col" class="px-6 py-3">End Date</th>
-                        <th scope="col" class="px-6 py-3">Due Day</th>
                         <th scope="col" class="px-6 py-3">Duration</th>
                     </tr>
                 </thead>
@@ -152,12 +147,11 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4">{{ $assignment->due_day }}{{ $assignment->due_day == 1 ? 'st' : ($assignment->due_day == 2 ? 'nd' : ($assignment->due_day == 3 ? 'rd' : 'th')) }}</td>
                             <td class="px-6 py-4">
                                 @if($assignment->end_date)
-                                    {{ $assignment->start_date->diffInDays($assignment->end_date) }} days
+                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays($assignment->end_date->startOfDay()) }} days
                                 @else
-                                    {{ $assignment->start_date->diffInDays(now()) }} days
+                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }} days
                                 @endif
                             </td>
                         </tr>

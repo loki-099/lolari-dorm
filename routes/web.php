@@ -10,6 +10,7 @@ use App\Http\Controllers\Staff\AnalyticsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\Boarder\BoarderDashboardController;
+use App\Http\Controllers\AssignmentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,10 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    // Assign Boarder to Room
+    Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
+    Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
 
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);

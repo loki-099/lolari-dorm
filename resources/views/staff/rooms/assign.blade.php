@@ -5,6 +5,12 @@
 @section('content')
 <div class="max-w-2xl mx-auto">
     <div class="bg-white rounded-lg shadow p-6">
+        @if (session('success'))
+            <div class="mb-4 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <form action="{{ route('staff.rooms.assign') }}" method="POST" id="assignForm">
             @csrf
 
@@ -32,7 +38,7 @@
                 <select name="room_id" id="room_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg @error('room_id') border-red-500 @enderror" required>
                     <option value="">-- Choose a Room --</option>
                     @foreach($availableRooms as $room)
-                        <option value="{{ $room->id }}">Room {{ $room->number }} ({{ ucfirst($room->type) }} - ₱{{ number_format($room->price, 2) }}/month)</option>
+                        <option value="{{ $room->id }}">Room {{ $room->number }} ({{ ucfirst($room->type) }} - ₱{{ number_format($room->monthly_rent, 2) }}/month)</option>
                     @endforeach
                 </select>
                 @error('room_id')
@@ -55,16 +61,6 @@
                 <input type="date" id="end_date" name="end_date" value="{{ old('end_date') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg @error('end_date') border-red-500 @enderror" required>
                 <p class="text-gray-500 text-xs mt-1">When the assignment will end</p>
                 @error('end_date')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- Due Day (Payment Due Date) -->
-            <div class="mb-6">
-                <label for="due_day" class="block text-sm font-medium text-gray-700 mb-1">Monthly Payment Due Day *</label>
-                <input type="number" id="due_day" name="due_day" min="1" max="31" value="{{ old('due_day', 1) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg @error('due_day') border-red-500 @enderror" required>
-                <p class="text-gray-500 text-xs mt-1">Day of the month when rent is due (1-31)</p>
-                @error('due_day')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>

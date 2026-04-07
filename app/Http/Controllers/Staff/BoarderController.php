@@ -128,7 +128,7 @@ class BoarderController extends Controller
     public function destroy(Boarder $boarder)
     {
         // Prevent deletion if boarder has active assignments
-        if ($boarder->assignments()->whereNull('end_date')->exists()) {
+        if ($boarder->assignments()->where('status', 'active')->exists()) {
             return redirect()->route('staff.boarders.show', $boarder)
                 ->with('error', 'Cannot delete boarder with active room assignment. End the assignment first.');
         }

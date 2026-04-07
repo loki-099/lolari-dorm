@@ -19,6 +19,11 @@ class Room extends Model
         return $this->hasMany(Assignment::class, 'room_id');
     }
 
+    public function activeAssignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class, 'room_id')->where('status', 'active');
+    }
+
     public function utilityBills(): HasMany
     {
         return $this->hasMany(UtilityBill::class, 'room_id');

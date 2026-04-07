@@ -21,6 +21,11 @@ class Boarder extends Model
         return $this->hasMany(Assignment::class);
     }
 
+    public function activeAssignment(): HasOne
+    {
+        return $this->hasOne(Assignment::class)->where('status', 'active')->latestOfMany();
+    }
+
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);

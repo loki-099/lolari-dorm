@@ -19,7 +19,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase mb-1">Monthly Rate</p>
-                        <p class="text-2xl font-bold text-green-600">₱{{ number_format($room->price, 2) }}</p>
+                        <p class="text-2xl font-bold text-green-600">₱{{ number_format($room->monthly_rent, 2) }}</p>
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase mb-1">Current Status</p>
@@ -72,7 +72,8 @@
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Current Occupant</h3>
         @php
             $activeAssignment = $room->assignments
-                ->where('end_date', null)
+                ->where('status', 'active')
+                ->sortByDesc('start_date')
                 ->first();
         @endphp
 
@@ -100,12 +101,8 @@
                         <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->end_date ? $activeAssignment->end_date->format('M d, Y') : 'Indefinite' }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-600 font-semibold uppercase">Payment Due Day</p>
-                        <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->due_day }}{{ $activeAssignment->due_day == 1 ? 'st' : ($activeAssignment->due_day == 2 ? 'nd' : ($activeAssignment->due_day == 3 ? 'rd' : 'th')) }} of month</p>
-                    </div>
-                    <div>
                         <p class="text-xs text-gray-600 font-semibold uppercase">Duration</p>
-                        <p class="font-semibold text-gray-900 mt-1">{{ $activeAssignment->start_date->diffInDays(now()) }} days</p>
+                        <p class="font-semibold text-gray-900 mt-1">{{ (int) $activeAssignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }} days</p>
                     </div>
                 </div>
             </div>
@@ -134,7 +131,6 @@
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Boarder Name</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Check-in</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Check-out</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">Due Day</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-900">Status</th>
                         </tr>
                     </thead>
@@ -147,10 +143,9 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">{{ $assignment->start_date->format('M d, Y') }}</td>
-                                <td class="px-4 py-3">{{ $assignment->due_day }}{{ $assignment->due_day == 1 ? 'st' : ($assignment->due_day == 2 ? 'nd' : ($assignment->due_day == 3 ? 'rd' : 'th')) }}</td>
                                 <td class="px-4 py-3">{{ $assignment->end_date ? $assignment->end_date->format('M d, Y') : '-' }}</td>
                                 <td class="px-4 py-3">
-                                    @if($assignment->end_date === null)
+                                    @if($assignment->status === 'active')
                                         <span class="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">
                                             <span class="w-2 h-2 bg-green-600 rounded-full"></span>
                                             Active

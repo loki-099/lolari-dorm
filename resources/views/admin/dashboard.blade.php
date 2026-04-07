@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-between mt-4">
-                    <a href="{{ route('staff.rooms.assign-form') }}" class="inline-flex items-center text-xs font-medium text-green-600 hover:underline dark:text-green-500">
+                    <a href="{{ route('admin.assignments.index') }}" class="inline-flex items-center text-xs font-medium text-green-600 hover:underline dark:text-green-500">
                         Assign room
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -96,7 +96,7 @@
                     </a>
 
                     <!-- Assign Room Button -->
-                    <a href="" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 border border-transparent rounded-lg transition-all">
+                    <a href="{{ route('admin.assignments.index') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 border border-transparent rounded-lg transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>

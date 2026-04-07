@@ -63,7 +63,7 @@ class BoarderController extends Controller
             'status' => 'active',
         ]);
 
-        return redirect()->route('admin.rooms.assign-form', ['boarder' => $boarder->id])
+        return redirect()->route('admin.assignments.index')
             ->with('success', 'Boarder created successfully! Now assign a room.');
     }
 
@@ -127,7 +127,7 @@ class BoarderController extends Controller
     public function destroy(Boarder $boarder)
     {
         // Prevent deletion if boarder has active assignments
-        if ($boarder->assignments()->whereNull('end_date')->exists()) {
+        if ($boarder->assignments()->where('status', 'active')->exists()) {
             return redirect()->route('admin.boarders.show', $boarder)
                 ->with('error', 'Cannot delete boarder with active room assignment. End the assignment first.');
         }

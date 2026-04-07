@@ -73,11 +73,9 @@
                         </td>
                         <td class="px-6 py-4">
                             @php
-                                $activeAssignment = $boarder->assignments()
-                                    ->where(function($q) {
-                                        $q->whereNull('end_date')->orWhere('end_date', '>=', now());
-                                    })
-                                    ->latest('start_date')
+                                $activeAssignment = $boarder->assignments
+                                    ->where('status', 'active')
+                                    ->sortByDesc('start_date')
                                     ->first();
                             @endphp
                             @if($activeAssignment)
@@ -90,7 +88,7 @@
                             <div class="flex items-center gap-3">
                                 <a href="{{ route('admin.boarders.show', $boarder) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors">View</a>
                                 <a href="{{ route('admin.boarders.edit', $boarder) }}" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium transition-colors">Edit</a>
-                                @if(!$boarder->assignments()->where(function($q) { $q->whereNull('end_date')->orWhere('end_date', '>=', now()); })->exists())
+                                @if($boarder->assignments->where('status', 'active')->isEmpty())
                                     <form action="{{ route('admin.boarders.destroy', $boarder) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this boarder? This action cannot be undone.');" class="inline">
                                         @csrf
                                         @method('DELETE')
