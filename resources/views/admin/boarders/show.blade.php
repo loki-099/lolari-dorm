@@ -171,7 +171,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Days Occupied</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white mt-1">{{ (int) $activeAssignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }}</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white mt-1">{{ (int) $activeAssignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }} day(s)</p>
                     </div>
                 </div>
             </div>

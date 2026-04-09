@@ -3,7 +3,7 @@
 @section('title', 'New Boarder')
 
 @section('content')
-<div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+<div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800 mt-2">
     <!-- Card Header -->
     <div class="mb-6">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Register New Boarder</h3>
