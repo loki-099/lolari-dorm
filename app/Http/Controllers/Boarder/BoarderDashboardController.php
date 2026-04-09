@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Boarder;
-use App\Models\Room;
 use Carbon\Carbon;
 use App\Models\Transaction;
 
@@ -39,112 +38,79 @@ class BoarderDashboardController extends Controller
         }
 
         $room = $assignment->room;
-
-        // Convert start_date to Carbon
-        $startDate = Carbon::parse($assignment->start_date);
-
-        // Today's date
         $today = Carbon::today();
+        $currentOccupancy = $room->assignments()->where('status', 'active')->count();
 
-        // Start checking billing cycles from start_date
-        $cycleStart = $startDate->copy();
-
+        $billingCycleStart = Carbon::parse($assignment->start_date)->startOfDay();
         $lastPaid = null;
         $nextUnpaid = null;
 
+        // Determine rent state per assignment anniversary cycle using completed rent transactions only.
         while (true) {
+            $billingPeriodStart = $billingCycleStart->copy();
+            $billingPeriodEnd = $billingCycleStart->copy()->addMonth();
+            $dueDate = $billingPeriodEnd->copy();
+            $billingMonthKey = $billingPeriodStart->copy()->startOfMonth();
 
-            // Billing month stored in DB
-            $billingMonth = $cycleStart->copy()->startOfMonth();
-
-            // Billing period end
-            $cycleEnd = $cycleStart->copy()->addMonth();
-
-            // Due date is the same as cycle end
-            $dueDate = $cycleEnd->copy();
-
-            // Check if payment exists
-            $payment = Transaction::where('room_id', $room->id)
+            $isPaid = Transaction::where('room_id', $room->id)
                 ->where('boarder_id', $boarder->id)
-                ->where('billing_month', $billingMonth)
-                ->first();
+                ->where('type', 'rent')
+                ->where('status', 'completed')
+                ->whereDate('billing_month', $billingMonthKey->toDateString())
+                ->exists();
 
-            if ($payment) {
+            $periodPayload = [
+                'billing_period_start' => $billingPeriodStart->toFormattedDateString(),
+                'billing_period_end' => $billingPeriodEnd->toFormattedDateString(),
+                'due_date' => $dueDate->toFormattedDateString(),
+                'billing_month' => $billingPeriodStart->format('M d, Y') . ' - ' . $billingPeriodEnd->format('M d, Y'),
+            ];
 
-                // Save last paid billing period
-                $lastPaid = [
-                    'billing_period_start' => $cycleStart->toFormattedDateString(),
-                    'billing_period_end' => $cycleEnd->toFormattedDateString(),
-                    'due_date' => $dueDate->toFormattedDateString(),
-                    'billing_month' => $billingMonth->toFormattedDateString()
-                ];
-
-                // Move to next billing cycle
-                $cycleStart->addMonth();
-            } else {
-
-                // First unpaid cycle
-                $nextUnpaid = [
-                    'billing_period_start' => $cycleStart->toFormattedDateString(),
-                    'billing_period_end' => $cycleEnd->toFormattedDateString(),
-                    'due_date' => $dueDate->toFormattedDateString(),
-                    'billing_month' => $billingMonth->toFormattedDateString()
-                ];
-
-                break;
+            if ($isPaid) {
+                $lastPaid = $periodPayload;
+                $billingCycleStart->addMonth();
+                continue;
             }
+
+            $nextUnpaid = $periodPayload;
+            break;
         }
 
-        /*
-    STATUS RULES
-    */
-
-        $status = null;
-        $rentInfo = null;
+        $status = 'Paid';
+        $rentInfo = $lastPaid ?? $nextUnpaid;
 
         if ($nextUnpaid) {
+            $nextUnpaidDueDate = Carbon::parse($nextUnpaid['due_date']);
+            $upcomingWindow = $nextUnpaidDueDate->copy()->subDays(7);
 
-            $dueDate = Carbon::parse($nextUnpaid['due_date']);
-
-            // Start of upcoming window
-            $upcomingWindow = $dueDate->copy()->subDays(7);
-
-            if ($today->greaterThan($dueDate)) {
-
-                // Rent is overdue
+            if ($today->greaterThan($nextUnpaidDueDate)) {
                 $status = 'Overdue';
                 $rentInfo = $nextUnpaid;
             } elseif ($today->greaterThanOrEqualTo($upcomingWindow)) {
-
-                // Show next billing cycle 7 days before due
                 $status = 'Upcoming';
                 $rentInfo = $nextUnpaid;
-            } else {
-
-                // Otherwise show the last paid billing
+            } elseif ($lastPaid) {
                 $status = 'Paid';
                 $rentInfo = $lastPaid;
+            } else {
+                $status = 'Upcoming';
+                $rentInfo = $nextUnpaid;
             }
-        } else {
-
-            // Everything paid
-            $status = 'Paid';
-            $rentInfo = $lastPaid;
         }
 
         $rent_data = collect([
             'room_number' => $room->number ?? null,
-            'amount' => $room->monthly_rent ?? ($room->price ?? null),
+            'amount' => $room->monthly_rent ?? null,
             'billing_period_start' => $rentInfo['billing_period_start'] ?? null,
             'billing_period_end' => $rentInfo['billing_period_end'] ?? null,
             'due_date' => $rentInfo['due_date'] ?? null,
             'billing_month' => $rentInfo['billing_month'] ?? null,
-            'status' => $status
+            'status' => $status,
         ]);
 
         // dd($rent_data);
 
-        return view('boarder.dashboard', compact('user', 'assignment', 'room', 'rent_data'));
+        return view('boarder.dashboard', compact('user', 'assignment', 'room', 'rent_data', 'currentOccupancy'));
     }
 
     // Transactions

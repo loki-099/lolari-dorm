@@ -79,8 +79,8 @@
                         </div>
                     </div>
                     <hr class="h-px my-4 bg-neutral-quaternary border-0">
-                    <p class="text-body">Capacity: 1/{{ $room->capacity }}</p>
-                    <p class="text-body">Started Date: {{ $assignment->start_date->format('F d, Y') }}</p>
+                    <p class="text-body">Occupancy: <span class="font-semibold text-heading">{{ $currentOccupancy ?? 1 }}/{{ $room->capacity }}</span></p>
+                    <p class="text-body">Started Date: <span class="font-semibold text-heading">{{ $assignment->start_date->format('F d, Y') }}</span></p>
                 </div>
             </div>
             <h1 class="text-heading text-2xl font-bold mt-8 mb-4">Utility Bills</h1>
