@@ -1,62 +1,82 @@
 @extends('staff.layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Staff Dashboard')
 
 @section('content')
-<div class="space-y-6">
-    <!-- Stat Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Occupancy Rate Card -->
-        <div class="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-lg dark:hover:shadow-gray-700/50 transition-shadow">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Occupancy Rate</h5>
-                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">{{ $occupancyRate }}%</p>
-                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ $occupiedRooms }}/{{ $totalRooms }} rooms occupied</p>
+<div class="px-4 pt-6 space-y-6">
+    
+    <!-- Stats Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Occupancy Rate Card -->
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Occupancy Rate</h5>
+                        <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">{{ $occupancyRate }}%</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ $occupiedRooms }}/{{ $totalRooms }} rooms occupied</p>
+                    </div>
+                    <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-full">
+                        <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.5 1.5H5a1.5 1.5 0 00-1.5 1.5v3H1.5a1.5 1.5 0 00-1.5 1.5v10a1.5 1.5 0 001.5 1.5h17a1.5 1.5 0 001.5-1.5V7.5a1.5 1.5 0 00-1.5-1.5H13V3a1.5 1.5 0 00-1.5-1.5z"></path>
+                        </svg>
+                    </div>
                 </div>
-                <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                    <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10.5 1.5H5a1.5 1.5 0 00-1.5 1.5v3H1.5a1.5 1.5 0 00-1.5 1.5v10a1.5 1.5 0 001.5 1.5h17a1.5 1.5 0 001.5-1.5V7.5a1.5 1.5 0 00-1.5-1.5H13V3a1.5 1.5 0 00-1.5-1.5z"></path>
-                    </svg>
+                <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700 mt-4">
+                    <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style="width: {{ $occupancyRate }}%"></div>
                 </div>
             </div>
-        </div>
 
-        <!-- Pending Payments Card -->
-        <div class="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-lg dark:hover:shadow-gray-700/50 transition-shadow">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Pending Payments</h5>
-                    <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">{{ $pendingPayments }}</p>
-                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Awaiting completion</p>
+            <!-- Pending Payments Card -->
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Pending Payments</h5>
+                        <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">{{ $pendingPayments }}</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Awaiting completion</p>
+                    </div>
+                    <div class="inline-flex items-center justify-center w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-full">
+                        <svg class="w-8 h-8 text-amber-600 dark:text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4z"></path>
+                        </svg>
+                    </div>
                 </div>
-                <div class="inline-flex items-center justify-center w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-full">
-                    <svg class="w-8 h-8 text-amber-600 dark:text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4z"></path>
-                    </svg>
+                <div class="flex items-center justify-between mt-4">
+                    <a href="{{ route('staff.payments.create') }}" class="inline-flex items-center text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
+                        View pending
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <!-- Available Rooms Card -->
-        <div class="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-lg dark:hover:shadow-gray-700/50 transition-shadow">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Available Rooms</h5>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{{ $availableRooms }}</p>
-                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Ready for assignment</p>
+            <!-- Available Rooms Card -->
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Available Rooms</h5>
+                        <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{{ $availableRooms }}</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Ready for assignment</p>
+                    </div>
+                    <div class="inline-flex items-center justify-center w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-full">
+                        <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 7H7v6h6V7z"></path>
+                        </svg>
+                    </div>
                 </div>
-                <div class="inline-flex items-center justify-center w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-full">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M13 7H7v6h6V7z"></path>
-                    </svg>
+                <div class="flex items-center justify-between mt-4">
+                    <a href="{{ route('staff.rooms.assign-form') }}" class="inline-flex items-center text-xs font-medium text-green-600 hover:underline dark:text-green-500">
+                        Assign room
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Quick Actions Card -->
-    <div class="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow">
+    <div class="p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- New Boarder Button -->
@@ -86,7 +106,7 @@
     </div>
 
     <!-- Recent Transactions Table -->
-    <div class="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow overflow-hidden">
+    <div class="p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow overflow-hidden">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Transactions</h3>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
