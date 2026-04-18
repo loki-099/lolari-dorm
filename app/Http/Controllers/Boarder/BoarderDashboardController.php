@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Boarder;
+use App\Models\UtilityBill;
 use Carbon\Carbon;
 use App\Models\Transaction;
 
@@ -40,6 +41,19 @@ class BoarderDashboardController extends Controller
         $room = $assignment->room;
         $today = Carbon::today();
         $currentOccupancy = $room->assignments()->where('status', 'active')->count();
+
+        // Fetch utility bills for the room
+        $utilityBills = UtilityBill::where('room_id', $room->id)
+            ->orderBy('billing_month', 'desc')
+            ->get()
+            ->groupBy('type');
+
+        // Ensure all bill types exist
+        $utilityBills = collect([
+            'electricity' => $utilityBills->get('electricity', collect()),
+            'water' => $utilityBills->get('water', collect()),
+            'internet' => $utilityBills->get('internet', collect()),
+        ]);
 
         $billingCycleStart = Carbon::parse($assignment->start_date)->startOfDay();
         $lastPaid = null;
@@ -110,7 +124,7 @@ class BoarderDashboardController extends Controller
 
         // dd($rent_data);
 
-        return view('boarder.dashboard', compact('user', 'assignment', 'room', 'rent_data', 'currentOccupancy'));
+        return view('boarder.dashboard', compact('user', 'assignment', 'room', 'rent_data', 'currentOccupancy', 'utilityBills'));
     }
 
     // Transactions

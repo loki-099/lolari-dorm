@@ -90,8 +90,11 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <h2 class="text-body text-sm">Electricity Bill</h2>
-                            <h1 class="text-heading font-bold text-2xl md:text-3xl">₱952</h1>
-
+                            @if($utilityBills['electricity']->count() > 0)
+                                <h1 class="text-heading font-bold text-2xl md:text-3xl">₱{{ number_format($utilityBills['electricity']->first()->amount, 0) }}</h1>
+                            @else
+                                <h1 class="text-heading font-bold text-2xl md:text-3xl">₱0</h1>
+                            @endif
                         </div>
                         <div
                             class="inline-flex items-center justify-center w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-full">
@@ -112,11 +115,23 @@
                                     d="M17.133 12.632v-1.8a5.406 5.406 0 0 0-4.154-5.262.955.955 0 0 0 .021-.106V3.1a1 1 0 0 0-2 0v2.364a.955.955 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C6.867 15.018 5 15.614 5 16.807 5 17.4 5 18 5.538 18h12.924C19 18 19 17.4 19 16.807c0-1.193-1.867-1.789-1.867-4.175ZM8.823 19a3.453 3.453 0 0 0 6.354 0H8.823Z" />
                             </svg>
                             <p class="text-body text-xs">Due Date: <span
-                                    class="font-bold text-heading">{{ $rent_data['due_date'] }}</span></p>
+                                    class="font-bold text-heading">{{ $utilityBills['electricity']->count() > 0 ? $utilityBills['electricity']->first()->due_date?->format('M d, Y') ?? 'N/A' : 'N/A' }}</span></p>
                         </span>
-                        <div
-                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2 text-center">
-                            Paid</div>
+                        @if($utilityBills['electricity']->count() > 0)
+                            @if($utilityBills['electricity']->first()->status === 'paid')
+                                <div
+                                    class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                    Paid</div>
+                            @else
+                                <div
+                                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                    Not Paid</div>
+                            @endif
+                        @else
+                            <div
+                                class="text-white bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 dark:focus:ring-gray-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                N/A</div>
+                        @endif
                     </div>
                 </div>
                 {{-- Water Bill --}}
@@ -124,8 +139,11 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <h2 class="text-body text-sm">Water Bill</h2>
-                            <h1 class="text-heading font-bold text-2xl md:text-3xl">₱165</h1>
-
+                            @if($utilityBills['water']->count() > 0)
+                                <h1 class="text-heading font-bold text-2xl md:text-3xl">₱{{ number_format($utilityBills['water']->first()->amount, 0) }}</h1>
+                            @else
+                                <h1 class="text-heading font-bold text-2xl md:text-3xl">₱0</h1>
+                            @endif
                         </div>
                         <div
                             class="inline-flex items-center justify-center w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-full">
@@ -146,11 +164,23 @@
                                     d="M17.133 12.632v-1.8a5.406 5.406 0 0 0-4.154-5.262.955.955 0 0 0 .021-.106V3.1a1 1 0 0 0-2 0v2.364a.955.955 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C6.867 15.018 5 15.614 5 16.807 5 17.4 5 18 5.538 18h12.924C19 18 19 17.4 19 16.807c0-1.193-1.867-1.789-1.867-4.175ZM8.823 19a3.453 3.453 0 0 0 6.354 0H8.823Z" />
                             </svg>
                             <p class="text-body text-xs">Due Date: <span
-                                    class="font-bold text-heading">{{ $rent_data['due_date'] }}</span></p>
+                                    class="font-bold text-heading">{{ $utilityBills['water']->count() > 0 ? $utilityBills['water']->first()->due_date?->format('M d, Y') ?? 'N/A' : 'N/A' }}</span></p>
                         </span>
-                        <div
-                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2 text-center">
-                            Paid</div>
+                        @if($utilityBills['water']->count() > 0)
+                            @if($utilityBills['water']->first()->status === 'paid')
+                                <div
+                                    class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                    Paid</div>
+                            @else
+                                <div
+                                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                    Not Paid</div>
+                            @endif
+                        @else
+                            <div
+                                class="text-white bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 dark:focus:ring-gray-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                N/A</div>
+                        @endif
                     </div>
                 </div>
                 {{-- Internet Bill --}}
@@ -158,8 +188,11 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <h2 class="text-body text-sm">Internet Bill</h2>
-                            <h1 class="text-heading font-bold text-2xl md:text-3xl">₱200</h1>
-
+                            @if($utilityBills['internet']->count() > 0)
+                                <h1 class="text-heading font-bold text-2xl md:text-3xl">₱{{ number_format($utilityBills['internet']->first()->amount, 0) }}</h1>
+                            @else
+                                <h1 class="text-heading font-bold text-2xl md:text-3xl">₱0</h1>
+                            @endif
                         </div>
                         <div
                             class="inline-flex items-center justify-center w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-full">
@@ -180,11 +213,23 @@
                                     d="M17.133 12.632v-1.8a5.406 5.406 0 0 0-4.154-5.262.955.955 0 0 0 .021-.106V3.1a1 1 0 0 0-2 0v2.364a.955.955 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C6.867 15.018 5 15.614 5 16.807 5 17.4 5 18 5.538 18h12.924C19 18 19 17.4 19 16.807c0-1.193-1.867-1.789-1.867-4.175ZM8.823 19a3.453 3.453 0 0 0 6.354 0H8.823Z" />
                             </svg>
                             <p class="text-body text-xs">Due Date: <span
-                                    class="font-bold text-heading">{{ $rent_data['due_date'] }}</span></p>
+                                    class="font-bold text-heading">{{ $utilityBills['internet']->count() > 0 ? $utilityBills['internet']->first()->due_date?->format('M d, Y') ?? 'N/A' : 'N/A' }}</span></p>
                         </span>
-                        <div
-                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2 text-center">
-                            Not Paid</div>
+                        @if($utilityBills['internet']->count() > 0)
+                            @if($utilityBills['internet']->first()->status === 'paid')
+                                <div
+                                    class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                    Paid</div>
+                            @else
+                                <div
+                                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                    Not Paid</div>
+                            @endif
+                        @else
+                            <div
+                                class="text-white bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 dark:focus:ring-gray-800 font-medium rounded-base text-sm px-4 py-2 text-center">
+                                N/A</div>
+                        @endif
                     </div>
                 </div>
             </div>
