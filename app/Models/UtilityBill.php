@@ -22,4 +22,9 @@ class UtilityBill extends Model
     {
         return $this->belongsTo(Room::class);
     }
+    
+    protected $casts = [
+        'billing_month' => 'date',
+        'due_date' => 'date',
+    ];
 }

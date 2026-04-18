@@ -44,6 +44,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Rooms (admin-only management)
     Route::resource('/rooms', App\Http\Controllers\Admin\RoomController::class);
+
+    // Bills
+    Route::resource('/bills', App\Http\Controllers\Admin\BillController::class);
 });
 
 // STAFF ROUTES

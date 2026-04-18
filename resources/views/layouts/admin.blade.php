@@ -10,7 +10,7 @@
     <script>
         // On page load or when changing themes, best to add inline in `head` to avoid FOUC
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
-            '(prefers-color-scheme: dark)').matches)) {
+                '(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark')
@@ -115,7 +115,8 @@
                     <a href="{{ route('admin.dashboard') }}"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
                         <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z" />
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -129,16 +130,17 @@
                         class="flex items-center w-full px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
                         aria-controls="dropdown-users" data-collapse-toggle="dropdown-users">
                         <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
                                 d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         <span class="ms-3 whitespace-nowrap">Users</span>
-                        <svg class="ml-3 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
+                        <svg class="ml-3 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 4 4 4-4" />
                         </svg>
                     </button>
                     <ul id="dropdown-users" class="hidden py-2 space-y-2">
@@ -146,8 +148,8 @@
                             <a href="{{ route('admin.boarders.index') }}"
                                 class="flex items-center w-full p-2 text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">
                                 <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    fill="none" viewBox="0 0 24 24">
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2"
                                         d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
@@ -159,8 +161,8 @@
                             <a href="{{ route('admin.staffs.index') }}"
                                 class="flex items-center w-full p-2 text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">
                                 <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    fill="none" viewBox="0 0 24 24">
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2"
                                         d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -173,10 +175,11 @@
                 <li>
                     <a href="{{ route('admin.transactions.index') }}"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-                        <svg class="shrink-0 w-4 h-4 transition duration-75 group-hover:text-fg-brand"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
                                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
@@ -186,8 +189,8 @@
                     <a href="{{ route('admin.rooms.index') }}"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
                         <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                            viewBox="0 0 24 24">
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                                 d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
@@ -198,24 +201,26 @@
                     <a href="#"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
                         <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
                                 d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Expenses</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('admin.bills.index') }}"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-                        <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                        <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 8h6m-6 4h6m-6 4h6M6 3v18l2-2 2 2 2-2 2 2 2-2 2 2V3l-2 2-2-2-2 2-2-2-2 2-2-2Z" />
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Bills</span>
                     </a>
                 </li>
             </ul>
@@ -233,7 +238,7 @@
 
         // Change the icons inside the button based on previous settings
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
-            '(prefers-color-scheme: dark)').matches)) {
+                '(prefers-color-scheme: dark)').matches)) {
             themeToggleLightIcon.classList.remove('hidden');
         } else {
             themeToggleDarkIcon.classList.remove('hidden');
@@ -241,7 +246,7 @@
 
         var themeToggleBtn = document.getElementById('theme-toggle');
 
-        themeToggleBtn.addEventListener('click', function () {
+        themeToggleBtn.addEventListener('click', function() {
 
             // toggle icons inside button
             themeToggleDarkIcon.classList.toggle('hidden');
