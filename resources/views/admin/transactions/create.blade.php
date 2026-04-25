@@ -48,7 +48,7 @@
                     required>
                     <option value="">Select a room</option>
                     @foreach($rooms as $room)
-                        <option value="{{ $room->id }}" {{ old('room_id') == $room->id ? 'selected' : '' }}>
+                        <option value="{{ $room->id }}" {{ old('room_id', request('room_id')) == $room->id ? 'selected' : '' }}>
                             Room {{ $room->number }}
                         </option>
                     @endforeach
@@ -72,7 +72,7 @@
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <span class="text-gray-500 dark:text-gray-400">₱</span>
                     </div>
-                    <input type="number" id="amount" name="amount" value="{{ old('amount') }}" step="0.01" min="0.01"
+                    <input type="number" id="amount" name="amount" value="{{ old('amount', request('amount')) }}" step="0.01" min="0.01"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-8 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 @error('amount') border-red-500 @enderror" 
                         placeholder="0.00" required>
                 </div>
@@ -138,8 +138,8 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 @error('type') border-red-500 @enderror" 
                     required>
                     <option value="">Select type</option>
-                    <option value="rent" {{ old('type') == 'rent' ? 'selected' : '' }}>Rent</option>
-                    <option value="utility" {{ old('type') == 'utility' ? 'selected' : '' }}>Utility</option>
+                    <option value="rent" {{ old('type', request('type')) == 'rent' ? 'selected' : '' }}>Rent</option>
+                    <option value="utility" {{ old('type', request('type')) == 'utility' ? 'selected' : '' }}>Utility</option>
                 </select>
                 @error('type')
                     <p class="text-red-500 text-sm mt-2 flex items-center gap-2">
@@ -175,7 +175,7 @@
             <label for="billing_month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Billing Month
             </label>
-            <input type="text" id="billing_month" name="billing_month" value="{{ old('billing_month') }}" 
+            <input type="text" id="billing_month" name="billing_month" value="{{ old('billing_month', request('billing_month')) }}" 
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 @error('billing_month') border-red-500 @enderror" 
                 placeholder="03-01-2026">
             <p class="text-gray-500 text-xs mt-1">(MM-DD-YYYY, e.g., 03-01-2026 for March 2026)</p>

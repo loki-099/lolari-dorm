@@ -144,7 +144,7 @@
                         </svg>
                         New Boarder
                     </a>
-                    <a href="{{ route('staff.payments.create') }}"
+                    <a href="{{ route('admin.transactions.create') }}"
                        class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
                               bg-green-50 border-green-200 text-green-700 hover:bg-green-100
                               dark:bg-green-900/20 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-900/40">
@@ -370,7 +370,7 @@
             </div>
 
             <div class="pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
-                <a href="#" class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all transactions →</a>
+                <a href="{{ route('admin.transactions.index') }}" class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all transactions →</a>
             </div>
         </div>
     </div>

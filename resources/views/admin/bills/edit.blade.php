@@ -47,7 +47,7 @@
                         <option value="{{ $room->id }}" {{ old('room_id', $bill->room_id) == $room->id ? 'selected' : '' }}>
                             Room {{ $room->number }}
                             @if($room->activeAssignments->count() > 0)
-                                ({{ $room->activeAssignments->map(fn($a) => $a->boarder->user->name)->join(', ') }})
+                                ({{ $room->activeAssignments->count() }})
                             @else
                                 (No boarder)
                             @endif

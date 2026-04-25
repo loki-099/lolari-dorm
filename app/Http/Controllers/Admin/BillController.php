@@ -66,7 +66,16 @@ class BillController extends Controller
             'status' => ['required', 'in:paid,unpaid'],
         ]);
 
-        UtilityBill::create($validated);
+        $bill = UtilityBill::create($validated);
+
+        if ($bill->status === 'paid') {
+            return redirect()->route('admin.transactions.create', [
+                'room_id' => $bill->room_id,
+                'amount' => $bill->amount,
+                'type' => 'utility',
+                'billing_month' => \Carbon\Carbon::parse($bill->billing_month)->format('m-d-Y'),
+            ])->with('success', 'Bill created successfully. Please record the payment transaction.');
+        }
 
         return redirect()
             ->route('admin.bills.index')
@@ -109,7 +118,17 @@ class BillController extends Controller
             'status' => ['required', 'in:paid,unpaid'],
         ]);
 
+        $wasUnpaid = $bill->status !== 'paid';
         $bill->update($validated);
+
+        if ($wasUnpaid && $bill->status === 'paid') {
+            return redirect()->route('admin.transactions.create', [
+                'room_id' => $bill->room_id,
+                'amount' => $bill->amount,
+                'type' => 'utility',
+                'billing_month' => \Carbon\Carbon::parse($bill->billing_month)->format('m-d-Y'),
+            ])->with('success', 'Bill updated to Paid. Please record the payment transaction.');
+        }
 
         return redirect()
             ->route('admin.bills.index')
