@@ -74,10 +74,10 @@
                             id="dropdown-user">
                             <div class="px-4 py-3 border-b border-default-medium" role="none">
                                 <p class="text-sm font-medium text-heading" role="none">
-                                    Neil Sims
+                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                                 </p>
                                 <p class="text-sm text-body truncate" role="none">
-                                    neil.sims@flowbite.com
+                                    {{ Auth::user()->email }}
                                 </p>
                             </div>
                             <ul class="p-2 text-sm text-body font-medium" role="none">

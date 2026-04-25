@@ -67,10 +67,13 @@ class BoarderDashboardController extends Controller
             $billingMonthKey = $billingPeriodStart->copy()->startOfMonth();
 
             $isPaid = Transaction::where('room_id', $room->id)
-                ->where('boarder_id', $boarder->id)
                 ->where('type', 'rent')
                 ->where('status', 'completed')
                 ->whereDate('billing_month', $billingMonthKey->toDateString())
+                ->whereHas('boarder.assignments', function ($query) use ($room) {
+                    $query->where('room_id', $room->id)
+                          ->where('status', 'active');
+                })
                 ->exists();
 
             $periodPayload = [
