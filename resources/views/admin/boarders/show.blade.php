@@ -29,6 +29,12 @@
                 </div>
             </div>
             <div class="flex gap-2">
+                <a href="{{ route('admin.assignments.index', ['boarder' => $boarder->id]) }}" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Assign Room
+                </a>
                 <a href="{{ route('admin.boarders.edit', $boarder) }}" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 rounded-lg dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition-all">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -217,20 +223,10 @@
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Room {{ $assignment->room->number }}</td>
                             <td class="px-6 py-4">{{ $assignment->start_date->format('M d, Y') }}</td>
                             <td class="px-6 py-4">
-                                @if($assignment->end_date)
-                                    {{ $assignment->end_date->format('M d, Y') }}
-                                @else
-                                    <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-gray-800 bg-gray-100 dark:bg-gray-700/50 dark:text-gray-200 rounded-full">
-                                        Past
-                                    </span>
-                                @endif
+                                {{ $assignment->updated_at->format('M d, Y') }}
                             </td>
                             <td class="px-6 py-4">
-                                @if($assignment->end_date)
-                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays($assignment->end_date->startOfDay()) }} days
-                                @else
-                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }} days
-                                @endif
+                                {{ max(1, (int) $assignment->start_date->startOfDay()->diffInDays($assignment->updated_at->startOfDay())) }} days
                             </td>
                         </tr>
                     @empty

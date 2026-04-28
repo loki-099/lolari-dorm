@@ -29,7 +29,7 @@
                     >
                         <option value="">-- Choose a Boarder --</option>
                         @foreach ($boarders as $boarder)
-                            <option value="{{ $boarder->id }}" @selected(old('boarder_id') == $boarder->id)>
+                            <option value="{{ $boarder->id }}" @selected(old('boarder_id', request('boarder')) == $boarder->id)>
                                 {{ $boarder->user?->first_name }} {{ $boarder->user?->last_name }}
                             </option>
                         @endforeach

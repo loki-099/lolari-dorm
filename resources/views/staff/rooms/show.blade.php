@@ -143,7 +143,7 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">{{ $assignment->start_date->format('M d, Y') }}</td>
-                                <td class="px-4 py-3">{{ $assignment->end_date ? $assignment->end_date->format('M d, Y') : '-' }}</td>
+                                <td class="px-4 py-3">{{ $assignment->status === 'inactive' ? $assignment->updated_at->format('M d, Y') : ($assignment->end_date ? $assignment->end_date->format('M d, Y') : '-') }}</td>
                                 <td class="px-4 py-3">
                                     @if($assignment->status === 'active')
                                         <span class="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">

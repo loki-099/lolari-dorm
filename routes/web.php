@@ -38,10 +38,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Transactions
     Route::resource('/transactions', \App\Http\Controllers\Admin\TransactionController::class);
 
-    // Room assignment
-    Route::get('/rooms/assign/form', [App\Http\Controllers\Staff\RoomController::class, 'assignForm'])->name('rooms.assign-form');
-    Route::post('/rooms/assign', [App\Http\Controllers\Staff\RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
-
     // Rooms (admin-only management)
     Route::resource('/rooms', App\Http\Controllers\Admin\RoomController::class);
 

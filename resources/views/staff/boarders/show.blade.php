@@ -139,7 +139,9 @@
                             <td class="px-6 py-4 font-medium text-gray-900">Room {{ $assignment->room->number }}</td>
                             <td class="px-6 py-4">{{ $assignment->start_date->format('M d, Y') }}</td>
                             <td class="px-6 py-4">
-                                @if($assignment->end_date)
+                                @if($assignment->status === 'inactive')
+                                    {{ $assignment->updated_at->format('M d, Y') }}
+                                @elseif($assignment->end_date)
                                     {{ $assignment->end_date->format('M d, Y') }}
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">
@@ -148,10 +150,12 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                @if($assignment->end_date)
-                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays($assignment->end_date->startOfDay()) }} days
+                                @if($assignment->status === 'inactive')
+                                    {{ max(1, (int) $assignment->start_date->startOfDay()->diffInDays($assignment->updated_at->startOfDay())) }} days
+                                @elseif($assignment->end_date)
+                                    {{ max(1, (int) $assignment->start_date->startOfDay()->diffInDays($assignment->end_date->startOfDay())) }} days
                                 @else
-                                    {{ (int) $assignment->start_date->startOfDay()->diffInDays(now()->startOfDay()) }} days
+                                    {{ max(1, (int) $assignment->start_date->startOfDay()->diffInDays(now()->startOfDay())) }} days
                                 @endif
                             </td>
                         </tr>
