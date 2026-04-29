@@ -10,6 +10,12 @@ class ActivityController extends Controller
 {
     public function index()
     {
+        $activities = \App\Models\BoarderActivity::with('boarder.user')->orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.activity.index', compact('activities'));
+    }
+
+    public function scan()
+    {
         return view('admin.activity.scan');
     }
 
@@ -42,5 +48,13 @@ class ActivityController extends Controller
                 'message' => 'Boarder not found or error recording activity: ' . $e->getMessage()
             ], 404);
         }
+    }
+
+    public function destroy(BoarderActivity $activity)
+    {
+        $activity->delete();
+
+        return redirect()->route('admin.activity.index')
+            ->with('success', 'Activity deleted successfully');
     }
 }

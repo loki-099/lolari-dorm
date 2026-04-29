@@ -250,26 +250,63 @@
 
             {{-- Tabs --}}
             <div class="flex border-b border-gray-200 dark:border-gray-700 mb-3">
-                <button data-movtab="checkin"
+                <button data-movtab="all"
                     class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 -mb-px flex items-center gap-1.5"
+                    type="button">
+                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    All Activities
+                </button>
+                {{-- <button data-movtab="checkin"
+                    class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 -mb-px flex items-center gap-1.5 cursor-pointer transition-colors"
                     type="button">
                     <svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                    Check-in
+                    Enter
                 </button>
                 <button data-movtab="checkout"
-                    class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 -mb-px flex items-center gap-1.5"
+                    class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 -mb-px flex items-center gap-1.5 cursor-pointer transition-colors"
                     type="button">
                     <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
-                    Check-out
-                </button>
+                    Leave
+                </button> --}}
+            </div>
+
+            {{-- All Activities Panel --}}
+            <div id="mov-all" class="mov-panel divide-y divide-gray-100 dark:divide-gray-700">
+                @forelse($recentAllActivities ?? [] as $movement)
+                <div class="flex items-center gap-3 py-2.5">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 @if($movement->activity_name === 'entry') bg-green-100 dark:bg-green-900/30 @else bg-red-100 dark:bg-red-900/30 @endif">
+                        <svg class="w-4 h-4 @if($movement->activity_name === 'entry') text-green-600 dark:text-green-400 @else text-red-600 dark:text-red-400 @endif" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            @if($movement->activity_name === 'entry')
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+                            @else
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
+                            @endif
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $movement->boarder_name ?? 'N/A' }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Room {{ $movement->room_number ?? 'N/A' }}</p>
+                    </div>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
+                </div>
+                @empty
+                <div class="flex flex-col items-center justify-center py-8 text-center">
+                    <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p class="text-sm text-gray-400 dark:text-gray-500">No activities recorded</p>
+                </div>
+                @endforelse
             </div>
 
             {{-- Check-in Panel --}}
-            <div id="mov-checkin" class="mov-panel divide-y divide-gray-100 dark:divide-gray-700">
+            <div id="mov-checkin" class="mov-panel hidden divide-y divide-gray-100 dark:divide-gray-700">
                 @forelse($recentCheckIns ?? [] as $movement)
                 <div class="flex items-center gap-3 py-2.5">
                     <div class="w-9 h-9 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
@@ -319,7 +356,7 @@
             </div>
 
             <div class="pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
-                <a href="#" class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all movements →</a>
+                <a href="{{ route('admin.activity.index') }}" class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all movements →</a>
             </div>
         </div>
 
@@ -550,20 +587,32 @@ $hasData = $monthlyRevenue->sum('revenue') > 0 ? 'true' : 'false';
         });
 
         // ── Movements tabs ────────────────────────────────────────────────────────
-        document.querySelectorAll('.mov-tab').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.mov-tab').forEach(function(t) {
-                    t.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
-                    t.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+        const movTabsContainer = document.querySelectorAll('.mov-tab');
+        if (movTabsContainer.length > 0) {
+            movTabsContainer.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabName = this.dataset.movtab;
+                    
+                    // Update button styling
+                    document.querySelectorAll('.mov-tab').forEach(function(t) {
+                        t.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
+                        t.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                    });
+                    this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
+                    this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                    
+                    // Toggle panels
+                    document.querySelectorAll('.mov-panel').forEach(function(p) {
+                        p.classList.add('hidden');
+                    });
+                    const targetPanel = document.getElementById('mov-' + tabName);
+                    if (targetPanel) {
+                        targetPanel.classList.remove('hidden');
+                    }
                 });
-                this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
-                this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-                document.querySelectorAll('.mov-panel').forEach(function(p) {
-                    p.classList.add('hidden');
-                });
-                document.getElementById('mov-' + this.dataset.movtab).classList.remove('hidden');
             });
-        });
+        }
 
     });
 </script>

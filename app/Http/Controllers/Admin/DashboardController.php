@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Room;
 use App\Models\Boarder;
 use App\Models\Transaction;
+use App\Models\BoarderActivity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -113,8 +114,63 @@ class DashboardController extends Controller
                 return $transaction;
             });
 
-        // Get recent activities (placeholder for future implementation)
-        $recentActivities = collect([]);
+        // Get recent check-ins and check-outs
+        $recentCheckIns = BoarderActivity::with('boarder.user')
+            ->where('activity_name', 'entry')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get()
+            ->map(function ($activity) {
+                $activity->boarder_name = $activity->boarder->user->first_name . ' ' . $activity->boarder->user->last_name;
+                $activity->room_number = $activity->boarder->assignments()
+                    ->where('status', 'active')
+                    ->latest('start_date')
+                    ->value('room_id');
+                // Get room number from room_id
+                if ($activity->room_number) {
+                    $activity->room_number = Room::find($activity->room_number)->number ?? 'N/A';
+                }
+                $activity->time_ago = $activity->created_at->diffForHumans();
+                return $activity;
+            });
+
+        $recentCheckOuts = BoarderActivity::with('boarder.user')
+            ->where('activity_name', 'exit')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get()
+            ->map(function ($activity) {
+                $activity->boarder_name = $activity->boarder->user->first_name . ' ' . $activity->boarder->user->last_name;
+                $activity->room_number = $activity->boarder->assignments()
+                    ->where('status', 'active')
+                    ->latest('start_date')
+                    ->value('room_id');
+                // Get room number from room_id
+                if ($activity->room_number) {
+                    $activity->room_number = Room::find($activity->room_number)->number ?? 'N/A';
+                }
+                $activity->time_ago = $activity->created_at->diffForHumans();
+                return $activity;
+            });
+
+        // Get all recent activities combined
+        $recentAllActivities = BoarderActivity::with('boarder.user')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($activity) {
+                $activity->boarder_name = $activity->boarder->user->first_name . ' ' . $activity->boarder->user->last_name;
+                $activity->room_number = $activity->boarder->assignments()
+                    ->where('status', 'active')
+                    ->latest('start_date')
+                    ->value('room_id');
+                // Get room number from room_id
+                if ($activity->room_number) {
+                    $activity->room_number = Room::find($activity->room_number)->number ?? 'N/A';
+                }
+                $activity->time_ago = $activity->created_at->diffForHumans();
+                return $activity;
+            });
 
         return view('admin.dashboard', compact(
             'occupancyRate',
@@ -127,7 +183,9 @@ class DashboardController extends Controller
             'totalBoarders',
             'newBoardersThisMonth',
             'recentTransactions',
-            'recentActivities',
+            'recentCheckIns',
+            'recentCheckOuts',
+            'recentAllActivities',
             'monthlyRevenue',          // ← new
         ));
     }
