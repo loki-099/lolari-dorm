@@ -43,6 +43,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Bills
     Route::resource('/bills', App\Http\Controllers\Admin\BillController::class);
+
+    Route::get('/qrcodescan', [App\Http\Controllers\ActivityController::class, 'index'])->name('activity.scan');
+    Route::post('/activity/record', [App\Http\Controllers\ActivityController::class, 'record'])->name('activity.record');
 });
 
 // STAFF ROUTES

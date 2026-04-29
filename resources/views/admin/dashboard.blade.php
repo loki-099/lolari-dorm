@@ -16,8 +16,8 @@
                 </div>
                 <div class="w-11 h-11 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-                        <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                        <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
                     </svg>
                 </div>
             </div>
@@ -36,15 +36,17 @@
                 </div>
                 <div class="w-11 h-11 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <rect x="2" y="5" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <line x1="2" y1="10" x2="22" y2="10" stroke-linecap="round"/>
+                        <rect x="2" y="5" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <line x1="2" y1="10" x2="22" y2="10" stroke-linecap="round" />
                     </svg>
                 </div>
             </div>
             <div class="mt-4">
                 <a href="{{ route('staff.payments.create') }}" class="inline-flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
                     View pending
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                    </svg>
                 </a>
             </div>
         </div>
@@ -59,15 +61,17 @@
                 </div>
                 <div class="w-11 h-11 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
-                        <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
             </div>
             <div class="mt-4">
                 <a href="{{ route('admin.assignments.index') }}" class="inline-flex items-center gap-1 text-xs font-medium text-green-600 hover:underline dark:text-green-500">
                     Assign room
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
+                    </svg>
                 </a>
             </div>
         </div>
@@ -86,9 +90,9 @@
                             ₱{{ number_format($totalRevenue ?? 0, 2) }}
                         </span>
                         @if($totalRevenue > 0)
-                            <span class="text-xs font-medium px-2 py-0.5 rounded-md bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                All time
-                            </span>
+                        <span class="text-xs font-medium px-2 py-0.5 rounded-md bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                            All time
+                        </span>
                         @endif
                     </div>
                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">From completed payments</p>
@@ -121,7 +125,7 @@
             {{-- Empty state shown via JS if all values are 0 --}}
             <div id="chartEmptyState" class="hidden absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" style="top:60px">
                 <svg class="w-10 h-10 text-gray-300 dark:text-gray-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
                 <p class="text-sm text-gray-400 dark:text-gray-500">No revenue recorded yet</p>
                 <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Data will appear once payments are completed</p>
@@ -136,31 +140,41 @@
                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Actions</h3>
                 <div class="flex flex-col gap-2">
                     <a href="{{ route('admin.boarders.create') }}"
-                       class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                        class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
                               bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100
                               dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/40">
                         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                         </svg>
                         New Boarder
                     </a>
                     <a href="{{ route('admin.transactions.create') }}"
-                       class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                        class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
                               bg-green-50 border-green-200 text-green-700 hover:bg-green-100
                               dark:bg-green-900/20 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-900/40">
                         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         Log Payment
                     </a>
                     <a href="{{ route('admin.assignments.index') }}"
-                       class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                        class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
                               bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100
                               dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-900/40">
                         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                         </svg>
                         Assign Room
+                    </a>
+                    <a href="{{ route('admin.activity.scan') }}"
+                        class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                              bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100
+                              dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-900/40">
+                        <svg class="w-4 h-4 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                        </svg>
+                        Record Activity
                     </a>
                 </div>
             </div>
@@ -240,7 +254,7 @@
                     class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 -mb-px flex items-center gap-1.5"
                     type="button">
                     <svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                     Check-in
                 </button>
@@ -248,7 +262,7 @@
                     class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 -mb-px flex items-center gap-1.5"
                     type="button">
                     <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                     Check-out
                 </button>
@@ -257,50 +271,50 @@
             {{-- Check-in Panel --}}
             <div id="mov-checkin" class="mov-panel divide-y divide-gray-100 dark:divide-gray-700">
                 @forelse($recentCheckIns ?? [] as $movement)
-                    <div class="flex items-center gap-3 py-2.5">
-                        <div class="w-9 h-9 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $movement->boarder_name ?? 'N/A' }}</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Room {{ $movement->room_number ?? 'N/A' }}</p>
-                        </div>
-                        <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
-                    </div>
-                @empty
-                    <div class="flex flex-col items-center justify-center py-8 text-center">
-                        <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <div class="flex items-center gap-3 py-2.5">
+                    <div class="w-9 h-9 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
-                        <p class="text-sm text-gray-400 dark:text-gray-500">No check-ins recorded</p>
                     </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $movement->boarder_name ?? 'N/A' }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Room {{ $movement->room_number ?? 'N/A' }}</p>
+                    </div>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
+                </div>
+                @empty
+                <div class="flex flex-col items-center justify-center py-8 text-center">
+                    <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p class="text-sm text-gray-400 dark:text-gray-500">No check-ins recorded</p>
+                </div>
                 @endforelse
             </div>
 
             {{-- Check-out Panel --}}
             <div id="mov-checkout" class="mov-panel hidden divide-y divide-gray-100 dark:divide-gray-700">
                 @forelse($recentCheckOuts ?? [] as $movement)
-                    <div class="flex items-center gap-3 py-2.5">
-                        <div class="w-9 h-9 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $movement->boarder_name ?? 'N/A' }}</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Room {{ $movement->room_number ?? 'N/A' }}</p>
-                        </div>
-                        <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
-                    </div>
-                @empty
-                    <div class="flex flex-col items-center justify-center py-8 text-center">
-                        <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <div class="flex items-center gap-3 py-2.5">
+                    <div class="w-9 h-9 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
-                        <p class="text-sm text-gray-400 dark:text-gray-500">No check-outs recorded</p>
                     </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $movement->boarder_name ?? 'N/A' }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Room {{ $movement->room_number ?? 'N/A' }}</p>
+                    </div>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
+                </div>
+                @empty
+                <div class="flex flex-col items-center justify-center py-8 text-center">
+                    <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p class="text-sm text-gray-400 dark:text-gray-500">No check-outs recorded</p>
+                </div>
                 @endforelse
             </div>
 
@@ -331,39 +345,39 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                         @forelse($recentTransactions as $transaction)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
-                                <td class="py-2.5 pr-3 text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                    {{ $transaction->boarder->full_name ?? ($transaction->boarder_id ?? 'N/A') }}
-                                </td>
-                                <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                    {{ $transaction->room->number ?? 'N/A' }}
-                                </td>
-                                <td class="py-2.5 pr-3 text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
-                                    ₱{{ number_format($transaction->amount, 2) }}
-                                </td>
-                                <td class="py-2.5 pr-3 whitespace-nowrap">
-                                    @if($transaction->display_status === 'Completed')
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Completed</span>
-                                    @elseif($transaction->display_status === 'Overdue')
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Overdue</span>
-                                    @else
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">Pending</span>
-                                    @endif
-                                </td>
-                                <td class="py-2.5 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                    {{ $transaction->transaction_date }}
-                                </td>
-                            </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                            <td class="py-2.5 pr-3 text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                {{ $transaction->boarder->full_name ?? ($transaction->boarder_id ?? 'N/A') }}
+                            </td>
+                            <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                {{ $transaction->room->number ?? 'N/A' }}
+                            </td>
+                            <td class="py-2.5 pr-3 text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                                ₱{{ number_format($transaction->amount, 2) }}
+                            </td>
+                            <td class="py-2.5 pr-3 whitespace-nowrap">
+                                @if($transaction->display_status === 'Completed')
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Completed</span>
+                                @elseif($transaction->display_status === 'Overdue')
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Overdue</span>
+                                @else
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">Pending</span>
+                                @endif
+                            </td>
+                            <td class="py-2.5 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                {{ $transaction->transaction_date }}
+                            </td>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="5" class="py-8 text-center">
-                                    <svg class="w-8 h-8 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                    </svg>
-                                    <p class="text-sm text-gray-400 dark:text-gray-500">No transactions yet</p>
-                                    <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Transactions will appear once payments are logged</p>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="5" class="py-8 text-center">
+                                <svg class="w-8 h-8 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <p class="text-sm text-gray-400 dark:text-gray-500">No transactions yet</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Transactions will appear once payments are logged</p>
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -379,153 +393,178 @@
 
 {{-- Pass PHP $monthlyRevenue collection to JS --}}
 @php
-    $chartLabels  = $monthlyRevenue->pluck('short')->toJson();
-    $chartRevenue = $monthlyRevenue->pluck('revenue')->toJson();
-    $chartAvg     = $monthlyRevenue->avg('revenue');
-    // Build a flat average line so first-time users still see a reference line (even if 0)
-    $chartTarget  = $monthlyRevenue->map(fn($m) => round($chartAvg, 2))->toJson();
-    $hasData      = $monthlyRevenue->sum('revenue') > 0 ? 'true' : 'false';
+$chartLabels = $monthlyRevenue->pluck('short')->toJson();
+$chartRevenue = $monthlyRevenue->pluck('revenue')->toJson();
+$chartAvg = $monthlyRevenue->avg('revenue');
+// Build a flat average line so first-time users still see a reference line (even if 0)
+$chartTarget = $monthlyRevenue->map(fn($m) => round($chartAvg, 2))->toJson();
+$hasData = $monthlyRevenue->sum('revenue') > 0 ? 'true' : 'false';
 @endphp
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-    // ── Revenue chart data injected from PHP ──────────────────────────────────
-    const allLabels  = {!! $chartLabels !!};   // all 12 months
-    const allRevenue = {!! $chartRevenue !!};  // matching revenue values
-    const allTarget  = {!! $chartTarget !!};   // rolling average line
-    const hasData    = {!! $hasData !!};
-
-    // Show empty state overlay when there is truly no data yet
-    if (!hasData) {
-        document.getElementById('chartEmptyState').classList.remove('hidden');
-    }
-
-    // Slice helper: returns last N entries from the full 12-month arrays
-    function slice(n) {
-        return {
-            labels:  allLabels.slice(-n),
-            revenue: allRevenue.slice(-n),
-            target:  allTarget.slice(-n),
+        // ── Revenue chart data injected from PHP ──────────────────────────────────
+        const allLabels = {
+            !!$chartLabels!!
+        }; // all 12 months
+        const allRevenue = {
+            !!$chartRevenue!!
+        }; // matching revenue values
+        const allTarget = {
+            !!$chartTarget!!
+        }; // rolling average line
+        const hasData = {
+            !!$hasData!!
         };
-    }
 
-    const isDark  = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const gridCol = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
-    const tickCol = isDark ? '#9ca3af' : '#6b7280';
+        // Show empty state overlay when there is truly no data yet
+        if (!hasData) {
+            document.getElementById('chartEmptyState').classList.remove('hidden');
+        }
 
-    const ctx   = document.getElementById('revenueChart').getContext('2d');
-    const init  = slice(6);
-    const chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: init.labels,
-            datasets: [
-                {
-                    label: 'Revenue',
-                    data: init.revenue,
-                    backgroundColor: '#3b82f6',
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    order: 2,
+        // Slice helper: returns last N entries from the full 12-month arrays
+        function slice(n) {
+            return {
+                labels: allLabels.slice(-n),
+                revenue: allRevenue.slice(-n),
+                target: allTarget.slice(-n),
+            };
+        }
+
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const gridCol = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+        const tickCol = isDark ? '#9ca3af' : '#6b7280';
+
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const init = slice(6);
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: init.labels,
+                datasets: [{
+                        label: 'Revenue',
+                        data: init.revenue,
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        order: 2,
+                    },
+                    {
+                        label: 'Average',
+                        data: init.target,
+                        type: 'line',
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'transparent',
+                        borderWidth: 1.5,
+                        borderDash: [4, 3],
+                        pointRadius: 0,
+                        tension: 0,
+                        order: 1,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) {
+                                const val = ctx.raw;
+                                if (val >= 1000) {
+                                    return ' ₱' + (val / 1000).toFixed(1) + 'k';
+                                }
+                                return ' ₱' + val.toLocaleString();
+                            },
+                        },
+                    },
                 },
-                {
-                    label: 'Average',
-                    data: init.target,
-                    type: 'line',
-                    borderColor: '#f59e0b',
-                    backgroundColor: 'transparent',
-                    borderWidth: 1.5,
-                    borderDash: [4, 3],
-                    pointRadius: 0,
-                    tension: 0,
-                    order: 1,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function (ctx) {
-                            const val = ctx.raw;
-                            if (val >= 1000) {
-                                return ' ₱' + (val / 1000).toFixed(1) + 'k';
-                            }
-                            return ' ₱' + val.toLocaleString();
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        border: {
+                            display: false
+                        },
+                        ticks: {
+                            color: tickCol,
+                            font: {
+                                size: 11
+                            },
+                            autoSkip: false,
+                            maxRotation: 0,
+                        },
+                    },
+                    y: {
+                        grid: {
+                            color: gridCol
+                        },
+                        border: {
+                            display: false
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            color: tickCol,
+                            font: {
+                                size: 11
+                            },
+                            callback: function(v) {
+                                if (v >= 1000) return '₱' + (v / 1000).toFixed(0) + 'k';
+                                return '₱' + v;
+                            },
                         },
                     },
                 },
             },
-            scales: {
-                x: {
-                    grid: { display: false },
-                    border: { display: false },
-                    ticks: {
-                        color: tickCol,
-                        font: { size: 11 },
-                        autoSkip: false,
-                        maxRotation: 0,
-                    },
-                },
-                y: {
-                    grid: { color: gridCol },
-                    border: { display: false },
-                    beginAtZero: true,
-                    ticks: {
-                        color: tickCol,
-                        font: { size: 11 },
-                        callback: function (v) {
-                            if (v >= 1000) return '₱' + (v / 1000).toFixed(0) + 'k';
-                            return '₱' + v;
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    // Range selector
-    document.getElementById('revRange').addEventListener('change', function () {
-        const d = slice(parseInt(this.value));
-        chart.data.labels           = d.labels;
-        chart.data.datasets[0].data = d.revenue;
-        chart.data.datasets[1].data = d.target;
-        chart.update();
-    });
-
-    // ── Stats tabs ────────────────────────────────────────────────────────────
-    document.querySelectorAll('.stats-tab').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            document.querySelectorAll('.stats-tab').forEach(function (t) {
-                t.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
-                t.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            });
-            this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
-            this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            document.querySelectorAll('.stats-panel').forEach(function (p) { p.classList.add('hidden'); });
-            document.getElementById('stats-' + this.dataset.tab).classList.remove('hidden');
         });
-    });
 
-    // ── Movements tabs ────────────────────────────────────────────────────────
-    document.querySelectorAll('.mov-tab').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            document.querySelectorAll('.mov-tab').forEach(function (t) {
-                t.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
-                t.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            });
-            this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
-            this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            document.querySelectorAll('.mov-panel').forEach(function (p) { p.classList.add('hidden'); });
-            document.getElementById('mov-' + this.dataset.movtab).classList.remove('hidden');
+        // Range selector
+        document.getElementById('revRange').addEventListener('change', function() {
+            const d = slice(parseInt(this.value));
+            chart.data.labels = d.labels;
+            chart.data.datasets[0].data = d.revenue;
+            chart.data.datasets[1].data = d.target;
+            chart.update();
         });
-    });
 
-});
+        // ── Stats tabs ────────────────────────────────────────────────────────────
+        document.querySelectorAll('.stats-tab').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.stats-tab').forEach(function(t) {
+                    t.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
+                    t.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                });
+                this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
+                this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                document.querySelectorAll('.stats-panel').forEach(function(p) {
+                    p.classList.add('hidden');
+                });
+                document.getElementById('stats-' + this.dataset.tab).classList.remove('hidden');
+            });
+        });
+
+        // ── Movements tabs ────────────────────────────────────────────────────────
+        document.querySelectorAll('.mov-tab').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mov-tab').forEach(function(t) {
+                    t.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
+                    t.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                });
+                this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400', 'dark:border-blue-400');
+                this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                document.querySelectorAll('.mov-panel').forEach(function(p) {
+                    p.classList.add('hidden');
+                });
+                document.getElementById('mov-' + this.dataset.movtab).classList.remove('hidden');
+            });
+        });
+
+    });
 </script>
 @endsection
