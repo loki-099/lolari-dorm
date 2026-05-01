@@ -35,8 +35,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Staffs
     Route::resource('/staffs', App\Http\Controllers\Admin\StaffController::class);
 
-    // Transactions
+// Transactions
     Route::resource('/transactions', \App\Http\Controllers\Admin\TransactionController::class);
+
+    // Expenses
+    Route::resource('/expenses', \App\Http\Controllers\Admin\ExpenseController::class);
 
     // Rooms (admin-only management)
     Route::resource('/rooms', App\Http\Controllers\Admin\RoomController::class);
