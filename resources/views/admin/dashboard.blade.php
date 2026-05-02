@@ -426,7 +426,67 @@
         </div>
     </div>
 
-</div>
+    {{-- Row 4: Expenses --}}
+    <div class="grid grid-cols-1 gap-4">
+        {{-- Recent Expenses --}}
+        <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Expenses</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Latest recorded expenses</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">Date</th>
+                            <th class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">Type</th>
+                            <th class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">Room</th>
+                            <th class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">Description</th>
+                            <th class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                        @forelse($recentExpenses as $expense)
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                            <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                {{ $expense->expense_date ? $expense->expense_date->format('M d, Y') : 'N/A' }}
+                            </td>
+                            <td class="py-2.5 pr-3 text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                {{ ucfirst($expense->expense_type) }}
+                            </td>
+                            <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                {{ $expense->room ? 'Room ' . $expense->room->number : 'N/A' }}
+                            </td>
+                            <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400">
+                                {{ \Illuminate\Support\Str::limit($expense->description, 30) }}
+                            </td>
+                            <td class="py-2.5 text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                                ₱{{ number_format($expense->amount, 2) }}
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="py-8 text-center">
+                                <svg class="w-8 h-8 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <p class="text-sm text-gray-400 dark:text-gray-500">No expenses yet</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Expenses will appear once they are logged</p>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
+                <a href="{{ route('admin.expenses.index') }}" class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all expenses →</a>
+            </div>
+        </div>
+    </div>
 
 {{-- Pass PHP $monthlyRevenue collection to JS --}}
 @php
@@ -443,18 +503,10 @@ $hasData = $monthlyRevenue->sum('revenue') > 0 ? 'true' : 'false';
     document.addEventListener('DOMContentLoaded', function() {
 
         // ── Revenue chart data injected from PHP ──────────────────────────────────
-        const allLabels = {
-            !!$chartLabels!!
-        }; // all 12 months
-        const allRevenue = {
-            !!$chartRevenue!!
-        }; // matching revenue values
-        const allTarget = {
-            !!$chartTarget!!
-        }; // rolling average line
-        const hasData = {
-            !!$hasData!!
-        };
+        const allLabels = {!! $chartLabels !!}; // all 12 months
+        const allRevenue = {!! $chartRevenue !!}; // matching revenue values
+        const allTarget = {!! $chartTarget !!}; // rolling average line
+        const hasData = {!! $hasData !!};
 
         // Show empty state overlay when there is truly no data yet
         if (!hasData) {

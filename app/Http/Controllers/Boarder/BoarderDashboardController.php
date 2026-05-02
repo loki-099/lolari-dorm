@@ -139,9 +139,21 @@ class BoarderDashboardController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // dd($transactions);
-
         return view('boarder.transactions', compact('user', 'transactions'));
+    }
+
+    public function activities()
+    {
+        $user = auth()->user();
+        $boarder = $user->boarder;
+
+        if (!$boarder) {
+            return redirect()->route('boarder.dashboard')->with('error', 'Boarder profile not found.');
+        }
+
+        $activities = $boarder->activities()->orderBy('created_at', 'desc')->get();
+
+        return view('boarder.activities', compact('user', 'boarder', 'activities'));
     }
 
     public function sample()

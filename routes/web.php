@@ -93,5 +93,6 @@ Route::middleware(['auth', 'role:boarder'])->prefix('boarder')->name('boarder.')
     // Dashboard
     Route::get('/dashboard', [BoarderDashboardController::class, 'index'])->name('dashboard');
     Route::get('/transactions', [BoarderDashboardController::class, 'transactions'])->name('transactions');
+    Route::get('/activities', [BoarderDashboardController::class, 'activities'])->name('activities');
     Route::get('/sample', [BoarderDashboardController::class, 'sample'])->name('sample');
 });

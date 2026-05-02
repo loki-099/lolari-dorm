@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\Boarder;
 use App\Models\Transaction;
 use App\Models\BoarderActivity;
+use App\Models\Expense;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -172,6 +173,12 @@ class DashboardController extends Controller
                 return $activity;
             });
 
+        // Get recent expenses
+        $recentExpenses = Expense::with(['room', 'staff'])
+            ->orderBy('expense_date', 'desc')
+            ->limit(10)
+            ->get();
+
         return view('admin.dashboard', compact(
             'occupancyRate',
             'occupiedRooms',
@@ -187,6 +194,7 @@ class DashboardController extends Controller
             'recentCheckOuts',
             'recentAllActivities',
             'monthlyRevenue',          // ← new
+            'recentExpenses'           // ← new
         ));
     }
 }
