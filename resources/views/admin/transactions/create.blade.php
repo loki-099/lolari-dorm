@@ -119,7 +119,7 @@
                     required>
                     <option value="">Select payment method</option>
                     <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
-                    <option value="e_wallet" {{ old('payment_method') == 'e_wallet' ? 'selected' : '' }}>E-wallet</option>
+                    <option value="online" {{ old('payment_method') == 'online' ? 'selected' : '' }}>E-wallet</option>
                 </select>
                 @error('payment_method')
                     <p class="text-red-500 text-sm mt-2 flex items-center gap-2">
