@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Boarder extends Model
 {
-    protected $fillable = ['user_id', 'home_address', 'parent_contact', 'status'];
+    protected $fillable = ['user_id', 'home_address', 'parent_contact', 'status', 'qrcode_value'];
 
     public function user(): BelongsTo
     {

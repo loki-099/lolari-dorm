@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Assignment extends Model
 {
-    protected $fillable = ['boarder_id', 'room_id', 'start_date', 'end_date', 'due_day', 'status'];
+    protected $fillable = ['boarder_id', 'room_id', 'start_date', 'end_date', 'due_day', 'status', 'created_at'];
 
     protected $casts = [
         'start_date' => 'date',

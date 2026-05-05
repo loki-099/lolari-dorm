@@ -16,6 +16,7 @@ class UtilityBill extends Model
         'billing_month',
         'due_date',
         'status',
+        'created_at'
     ];
 
     function room()

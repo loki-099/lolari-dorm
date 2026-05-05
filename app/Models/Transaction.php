@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaction extends Model
 {
-    protected $fillable = ['boarder_id', 'room_id', 'staff_id', 'amount', 'payment_method', 'status', 'billing_month', 'type'];
+    protected $fillable = ['boarder_id', 'room_id', 'staff_id', 'amount', 'payment_method', 'status', 'billing_month', 'type', 'created_at'];
 
     public function boarder(): BelongsTo
     {
