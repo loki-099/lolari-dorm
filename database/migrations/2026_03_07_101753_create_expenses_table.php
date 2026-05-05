@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
             $table->foreignId('staff_id')->constrained('staffs')->onDelete('cascade');
-            $table->enum('type', ['maintenance', 'others'])->default('maintenance');
+            $table->enum('expense_type', ['maintenance', 'others'])->default('maintenance');
             $table->string('description')->nullable();
             $table->decimal('amount', 10, 2);
             $table->timestamps();

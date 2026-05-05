@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('staff_id')->constrained('staffs')->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->enum('type', ['rent', 'utility'])->default('rent');
-            $table->enum('method', ['cash', 'bank_transfer', 'check', 'online'])->default('cash'); //Online = Gcash
+            $table->enum('payment_method', ['cash', 'bank_transfer', 'check', 'online'])->default('cash'); //Online = Gcash
             $table->date('billing_month');
             $table->timestamps();
         });
