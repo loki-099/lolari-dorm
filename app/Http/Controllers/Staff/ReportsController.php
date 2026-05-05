@@ -3,93 +3,134 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Models\Room;
 use App\Models\Boarder;
+use App\Models\Expense;
+use App\Models\Room;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
+use App\Models\UtilityBill;
+use Carbon\Carbon;
 
 class ReportsController extends Controller
 {
-    /**
-     * Display the staff reports page with analytics and summaries.
-     */
     public function index()
     {
-        // Revenue calculations
-        $totalRevenue = Transaction::where('status', 'completed')->sum('amount');
-        $completedPayments = Transaction::where('status', 'completed')->count();
-        $completedAmount = Transaction::where('status', 'completed')->sum('amount');
-        $pendingPayments = Transaction::where('status', 'pending')->count();
-        $pendingAmount = Transaction::where('status', 'pending')->sum('amount');
-        $failedPayments = Transaction::where('status', 'failed')->count();
-        $failedAmount = Transaction::where('status', 'failed')->sum('amount');
+        $today = Carbon::now('Asia/Manila');
 
-        // Room calculations
-        $totalRooms = Room::count();
-        $occupiedRooms = Room::where('status', 'occupied')->count();
-        $availableRooms = Room::where('status', 'available')->count();
-        $maintenanceRooms = Room::where('status', 'maintenance')->count();
+        $completedTransactions = Transaction::where('status', 'completed');
+        $pendingTransactions = Transaction::where('status', 'pending');
+        $failedTransactions = Transaction::where('status', 'failed');
 
-        $occupancyPercentage = $totalRooms > 0 ? round(($occupiedRooms / $totalRooms) * 100, 2) : 0;
-        $availablePercentage = $totalRooms > 0 ? round(($availableRooms / $totalRooms) * 100, 2) : 0;
-        $maintenancePercentage = $totalRooms > 0 ? round(($maintenanceRooms / $totalRooms) * 100, 2) : 0;
+        $totalRevenue = $completedTransactions->sum('amount');
+        $completedCount = $completedTransactions->count();
+        $pendingCount = $pendingTransactions->count();
+        $pendingAmount = $pendingTransactions->sum('amount');
+        $failedCount = $failedTransactions->count();
+        $failedAmount = $failedTransactions->sum('amount');
 
-        // Boarder calculations
-        $totalBoarders = Boarder::count();
-        $activeBoarders = Boarder::where('status', 'active')->count();
-        $inactiveBoarders = Boarder::where('status', 'inactive')->count();
-        $suspendedBoarders = Boarder::where('status', 'suspended')->count();
+        $totalExpenses = Expense::sum('amount');
+        $expenseCount = Expense::count();
+        $averageExpense = $expenseCount > 0 ? round($totalExpenses / $expenseCount, 2) : 0;
 
-        $activeBoardersPercentage = $totalBoarders > 0 ? round(($activeBoarders / $totalBoarders) * 100, 2) : 0;
-        $inactiveBoardersPercentage = $totalBoarders > 0 ? round(($inactiveBoarders / $totalBoarders) * 100, 2) : 0;
-        $suspendedBoardersPercentage = $totalBoarders > 0 ? round(($suspendedBoarders / $totalBoarders) * 100, 2) : 0;
+        $outstandingReceivables = $pendingAmount;
+        $overdueReceivables = Transaction::where('status', 'pending')
+            ->whereDate('billing_month', '<', $today->startOfMonth())
+            ->sum('amount');
 
-        // Transaction totals
-        $totalTransactions = Transaction::count();
-
-        // Payment methods breakdown
-        $methodStats = Transaction::selectRaw('method, count(*) as count, sum(amount) as total')
-            ->groupBy('method')
+        $utilityOutstanding = UtilityBill::where('status', 'unpaid')->sum('amount');
+        $utilityOverdue = UtilityBill::where('status', 'unpaid')
+            ->whereDate('due_date', '<', $today)
+            ->sum('amount');
+        $utilityByType = UtilityBill::selectRaw('type, count(*) as count, sum(amount) as total')
+            ->groupBy('type')
             ->get()
-            ->keyBy('method');
+            ->keyBy('type');
 
-        $methodCounts = [
-            'cash' => $methodStats['cash']->count ?? 0,
-            'bank_transfer' => $methodStats['bank_transfer']->count ?? 0,
-            'check' => $methodStats['check']->count ?? 0,
-        ];
+        $paymentMethods = Transaction::selectRaw('payment_method, count(*) as count, sum(amount) as total')
+            ->groupBy('payment_method')
+            ->get()
+            ->keyBy('payment_method');
 
-        $methodAmounts = [
-            'cash' => $methodStats['cash']->total ?? 0,
-            'bank_transfer' => $methodStats['bank_transfer']->total ?? 0,
-            'check' => $methodStats['check']->total ?? 0,
-        ];
+        $expenseByType = Expense::selectRaw('expense_type, count(*) as count, sum(amount) as total')
+            ->groupBy('expense_type')
+            ->orderByDesc('total')
+            ->get();
+
+        $topRooms = Transaction::where('status', 'completed')
+            ->selectRaw('room_id, count(*) as transactions_count, sum(amount) as total_amount')
+            ->groupBy('room_id')
+            ->orderByDesc('total_amount')
+            ->limit(5)
+            ->get();
+
+        $roomNumbers = Room::whereIn('id', $topRooms->pluck('room_id')->all())
+            ->pluck('number', 'id');
+
+        $monthlySummary = collect();
+        for ($i = 11; $i >= 0; $i--) {
+            $month = $today->copy()->startOfMonth()->subMonths($i);
+            $monthlySummary->push([
+                'label' => $month->format('M Y'),
+                'key' => $month->format('Y-m'),
+                'revenue' => 0,
+                'expenses' => 0,
+            ]);
+        }
+
+        $rawRevenue = Transaction::where('status', 'completed')
+            ->where('created_at', '>=', $today->copy()->subMonths(11)->startOfMonth())
+            ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(amount) as total')
+            ->groupByRaw('YEAR(created_at), MONTH(created_at)')
+            ->get()
+            ->keyBy(fn ($row) => $row->year . '-' . sprintf('%02d', $row->month));
+
+        $rawExpenses = Expense::where('expense_date', '>=', $today->copy()->subMonths(11)->startOfMonth())
+            ->selectRaw('YEAR(expense_date) as year, MONTH(expense_date) as month, SUM(amount) as total')
+            ->groupByRaw('YEAR(expense_date), MONTH(expense_date)')
+            ->get()
+            ->keyBy(fn ($row) => $row->year . '-' . sprintf('%02d', $row->month));
+
+        $monthlySummary = $monthlySummary->map(function ($item) use ($rawRevenue, $rawExpenses) {
+            $key = $item['key'];
+            $item['revenue'] = $rawRevenue->has($key) ? (float) $rawRevenue[$key]->total : 0;
+            $item['expenses'] = $rawExpenses->has($key) ? (float) $rawExpenses[$key]->total : 0;
+            return $item;
+        });
+
+        $latestTransactions = Transaction::with(['boarder.user', 'room', 'staff'])
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
+
+        $latestExpenses = Expense::with(['room', 'staff'])
+            ->orderByDesc('expense_date')
+            ->limit(10)
+            ->get();
+
+        $totalBoarders = Boarder::count();
 
         return view('staff.reports.index', compact(
             'totalRevenue',
-            'completedPayments',
-            'completedAmount',
-            'pendingPayments',
+            'completedCount',
+            'pendingCount',
             'pendingAmount',
-            'failedPayments',
+            'failedCount',
             'failedAmount',
-            'totalRooms',
-            'occupiedRooms',
-            'availableRooms',
-            'maintenanceRooms',
-            'occupancyPercentage',
-            'availablePercentage',
-            'maintenancePercentage',
-            'totalBoarders',
-            'activeBoarders',
-            'inactiveBoarders',
-            'suspendedBoarders',
-            'activeBoardersPercentage',
-            'inactiveBoardersPercentage',
-            'suspendedBoardersPercentage',
-            'totalTransactions',
-            'methodCounts',
-            'methodAmounts'
+            'totalExpenses',
+            'expenseCount',
+            'averageExpense',
+            'outstandingReceivables',
+            'overdueReceivables',
+            'utilityOutstanding',
+            'utilityOverdue',
+            'utilityByType',
+            'paymentMethods',
+            'expenseByType',
+            'topRooms',
+            'roomNumbers',
+            'monthlySummary',
+            'latestTransactions',
+            'latestExpenses',
+            'totalBoarders'
         ));
     }
 }

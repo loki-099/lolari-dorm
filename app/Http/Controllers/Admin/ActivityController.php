@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Boarder;
 use App\Models\BoarderActivity;
+use App\Http\Controllers\Controller;
 
 class ActivityController extends Controller
 {

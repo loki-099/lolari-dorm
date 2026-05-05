@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Assignment;
 use Illuminate\Http\Request;
@@ -9,6 +9,8 @@ use App\Models\Room;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+
 
 class AssignmentController extends Controller
 {

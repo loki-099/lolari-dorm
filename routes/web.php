@@ -1,16 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Staff\DashboardController;
-use App\Http\Controllers\Staff\BoarderController;
-use App\Http\Controllers\Staff\RoomController;
-use App\Http\Controllers\Staff\PaymentController;
-use App\Http\Controllers\Staff\ReportsController;
-use App\Http\Controllers\Staff\AnalyticsController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\Boarder\BoarderDashboardController;
-use App\Http\Controllers\AssignmentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,8 +18,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     // Assign Boarder to Room
-    Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
-    Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+    Route::get('/assignments', [App\Http\Controllers\Admin\AssignmentController::class, 'index'])->name('assignments.index');
+    Route::post('/assignments', [App\Http\Controllers\Admin\AssignmentController::class, 'store'])->name('assignments.store');
 
     // Boarders
     Route::resource('/boarders', App\Http\Controllers\Admin\BoarderController::class);
@@ -51,45 +43,81 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/reports', [App\Http\Controllers\Admin\ReportsController::class, 'index'])->name('reports.index');
 
     // Activities
-    Route::get('/activities', [App\Http\Controllers\ActivityController::class, 'index'])->name('activity.index');
-    Route::get('/qrcodescan', [App\Http\Controllers\ActivityController::class, 'scan'])->name('activity.scan');
-    Route::post('/activity/record', [App\Http\Controllers\ActivityController::class, 'record'])->name('activity.record');
-    Route::delete('/activities/{activity}', [App\Http\Controllers\ActivityController::class, 'destroy'])->name('activity.destroy');
+    Route::get('/activities', [App\Http\Controllers\Admin\ActivityController::class, 'index'])->name('activity.index');
+    Route::get('/qrcodescan', [App\Http\Controllers\Admin\ActivityController::class, 'scan'])->name('activity.scan');
+    Route::post('/activity/record', [App\Http\Controllers\Admin\ActivityController::class, 'record'])->name('activity.record');
+    Route::delete('/activities/{activity}', [App\Http\Controllers\Admin\ActivityController::class, 'destroy'])->name('activity.destroy');
 });
 
 // STAFF ROUTES
 Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Staff\DashboardController::class, 'index'])->name('dashboard');
+
+    // Assign Boarder to Room
+    Route::get('/assignments', [App\Http\Controllers\Staff\AssignmentController::class, 'index'])->name('assignments.index');
+    Route::post('/assignments', [App\Http\Controllers\Staff\AssignmentController::class, 'store'])->name('assignments.store');
 
     // Boarders
-    Route::resource('/boarders', BoarderController::class);
+    Route::resource('/boarders', App\Http\Controllers\Staff\BoarderController::class);
 
-    // Rooms
-    Route::resource('/rooms', RoomController::class)->except('update');
-    Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
-    Route::get('/rooms/assign/form', [RoomController::class, 'assignForm'])->name('rooms.assign-form');
-    Route::post('/rooms/assign', [RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
+    // Staffs
+    Route::resource('/staffs', App\Http\Controllers\Staff\StaffController::class);
 
-    // Payments
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
-    Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+// Transactions
+    Route::resource('/transactions', \App\Http\Controllers\Staff\TransactionController::class);
 
-    Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store')->middleware('permission:process-payment');
-    Route::get('/payments/{transaction}', [PaymentController::class, 'show'])->name('payments.show');
+    // Expenses
+    Route::resource('/expenses', \App\Http\Controllers\Staff\ExpenseController::class);
 
+    // Rooms (admin-only management)
+    Route::resource('/rooms', App\Http\Controllers\Staff\RoomController::class);
 
-    Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index')->middleware('permission:view-basic-analytics');
+    // Bills
+    Route::resource('/bills', App\Http\Controllers\Staff\BillController::class);
 
-    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
+    // Reports
+    Route::get('/reports', [App\Http\Controllers\Staff\ReportsController::class, 'index'])->name('reports.index');
+
+    // Activities
+    Route::get('/activities', [App\Http\Controllers\Staff\ActivityController::class, 'index'])->name('activity.index');
+    Route::get('/qrcodescan', [App\Http\Controllers\Staff\ActivityController::class, 'scan'])->name('activity.scan');
+    Route::post('/activity/record', [App\Http\Controllers\Staff\ActivityController::class, 'record'])->name('activity.record');
+    Route::delete('/activities/{activity}', [App\Http\Controllers\Staff\ActivityController::class, 'destroy'])->name('activity.destroy');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
-    Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
-    Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
-    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
-});
+// Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
+//     // Dashboard
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+//     // Boarders
+//     Route::resource('/boarders', BoarderController::class);
+
+//     // Rooms
+//     Route::resource('/rooms', RoomController::class)->except('update');
+//     Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
+//     Route::get('/rooms/assign/form', [RoomController::class, 'assignForm'])->name('rooms.assign-form');
+//     Route::post('/rooms/assign', [RoomController::class, 'assign'])->name('rooms.assign')->middleware('permission:assign-room');
+
+//     // Payments
+//     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+//     Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+
+//     Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store')->middleware('permission:process-payment');
+//     Route::get('/payments/{transaction}', [PaymentController::class, 'show'])->name('payments.show');
+
+
+//     Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index')->middleware('permission:view-basic-analytics');
+
+//     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index')->middleware('permission:view-basic-analytics');
+// });
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+//     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+//     Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+//     Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+// });
 
 // BOARDER ROUTES
 Route::middleware(['auth', 'role:boarder'])->prefix('boarder')->name('boarder.')->group(function () {

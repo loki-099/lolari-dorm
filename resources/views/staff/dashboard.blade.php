@@ -1,167 +1,787 @@
-@extends('staff.layouts.app')
-
-@section('title', 'Staff Dashboard')
+@extends('layouts.staff')
 
 @section('content')
-<div class="px-4 pt-6 space-y-6">
-    
-    <!-- Stats Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Occupancy Rate Card -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div class="px-4 pt-6 space-y-6">
+
+        {{-- Row 1: KPI Cards --}}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            {{-- Occupancy Rate --}}
+            <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Occupancy Rate</h5>
-                        <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">{{ $occupancyRate }}%</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ $occupiedRooms }}/{{ $totalRooms }} rooms occupied</p>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Occupancy
+                            Rate</p>
+                        <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-1">{{ $occupancyRate }}%</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $occupiedRooms }} / {{ $totalRooms }}
+                            rooms occupied</p>
                     </div>
-                    <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                        <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10.5 1.5H5a1.5 1.5 0 00-1.5 1.5v3H1.5a1.5 1.5 0 00-1.5 1.5v10a1.5 1.5 0 001.5 1.5h17a1.5 1.5 0 001.5-1.5V7.5a1.5 1.5 0 00-1.5-1.5H13V3a1.5 1.5 0 00-1.5-1.5z"></path>
+                    <div
+                        class="w-11 h-11 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
+                            stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22" />
                         </svg>
                     </div>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700 mt-4">
-                    <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style="width: {{ $occupancyRate }}%"></div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-4">
+                    <div class="bg-blue-600 dark:bg-blue-500 h-1.5 rounded-full" style="width: {{ $occupancyRate }}%"></div>
                 </div>
             </div>
 
-            <!-- Pending Payments Card -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            {{-- Pending Payments --}}
+            <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Pending Payments</h5>
-                        <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">{{ $pendingPayments }}</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Awaiting completion</p>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Pending
+                            Payments</p>
+                        <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-1">{{ $pendingPayments }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Awaiting completion</p>
                     </div>
-                    <div class="inline-flex items-center justify-center w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-full">
-                        <svg class="w-8 h-8 text-amber-600 dark:text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4z"></path>
+                    <div
+                        class="w-11 h-11 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor"
+                            stroke-width="1.8" viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <line x1="2" y1="10" x2="22" y2="10" stroke-linecap="round" />
                         </svg>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <a href="{{ route('staff.payments.create') }}" class="inline-flex items-center text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
+                <div class="mt-4">
+                    <a href=""
+                        class="inline-flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
                         View pending
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
                         </svg>
                     </a>
                 </div>
             </div>
 
-            <!-- Available Rooms Card -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            {{-- Available Rooms --}}
+            <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Available Rooms</h5>
-                        <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{{ $availableRooms }}</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Ready for assignment</p>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Available
+                            Rooms</p>
+                        <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-1">{{ $availableRooms }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Ready for assignment</p>
                     </div>
-                    <div class="inline-flex items-center justify-center w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-full">
-                        <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13 7H7v6h6V7z"></path>
+                    <div
+                        class="w-11 h-11 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
+                            stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <a href="{{ route('staff.rooms.assign-form') }}" class="inline-flex items-center text-xs font-medium text-green-600 hover:underline dark:text-green-500">
+                <div class="mt-4">
+                    <a href="{{ route('staff.assignments.index') }}"
+                        class="inline-flex items-center gap-1 text-xs font-medium text-green-600 hover:underline dark:text-green-500">
                         Assign room
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
                         </svg>
                     </a>
                 </div>
             </div>
         </div>
 
-    <!-- Quick Actions Card -->
-    <div class="p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- New Boarder Button -->
-            <a href="{{ route('staff.boarders.create') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 border border-transparent rounded-lg transition-all">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                </svg>
-                <span>New Boarder</span>
-            </a>
+        {{-- Row 2: Revenue Chart + Quick Actions & Stats --}}
+        <div class="grid grid-cols-1 xl:grid-cols-1 gap-4">
 
-            <!-- Log Payment Button -->
-            <a href="{{ route('staff.payments.create') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 border border-transparent rounded-lg transition-all">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>Log Payment</span>
-            </a>
-
-            <!-- Assign Room Button -->
-            <a href="{{ route('staff.rooms.assign-form') }}" class="inline-flex flex-col items-center justify-center gap-2 px-5 py-4 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 border border-transparent rounded-lg transition-all">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                </svg>
-                <span>Assign Room</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- Recent Transactions Table -->
-    <div class="p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow overflow-hidden">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Transactions</h3>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
-                <thead class="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">Date</th>
-                        <th scope="col" class="px-6 py-3 hidden sm:table-cell">Boarder</th>
-                        <th scope="col" class="px-6 py-3">Amount</th>
-                        <th scope="col" class="px-6 py-3 hidden md:table-cell">Method</th>
-                        <th scope="col" class="px-6 py-3">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @forelse($recentTransactions as $transaction)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $transaction->created_at->format('M d, Y') }}</td>
-                            <td class="px-6 py-4 text-gray-900 dark:text-white hidden sm:table-cell">{{ $transaction->boarder->name }}</td>
-                            <td class="px-6 py-4 font-semibold text-green-600 dark:text-green-400">₱{{ number_format($transaction->amount, 2) }}</td>
-                            <td class="px-6 py-4 text-gray-600 dark:text-gray-400 hidden md:table-cell">
-                                <span class="capitalize">{{ str_replace('_', ' ', $transaction->payment_method) }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                @if($transaction->status === 'completed')
-                                    <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-green-800 dark:text-green-300 bg-green-100 dark:bg-green-900/30 rounded-full border border-green-200 dark:border-green-800">
-                                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                                        Completed
-                                    </span>
-                                @elseif($transaction->status === 'pending')
-                                    <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 rounded-full border border-amber-200 dark:border-amber-800">
-                                        <span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
-                                        Pending
-                                    </span>
-                                @else
-                                    <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-red-800 dark:text-red-300 bg-red-100 dark:bg-red-900/30 rounded-full border border-red-200 dark:border-red-800">
-                                        <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                                        Failed
+            {{-- Revenue Chart --}}
+            @if (auth()->user()->role !== 'staff')
+                <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Total
+                                Revenue</p>
+                            <div class="flex items-baseline gap-2 mt-1">
+                                <span class="text-2xl font-bold text-gray-900 dark:text-white">
+                                    ₱{{ number_format($totalRevenue ?? 0, 2) }}
+                                </span>
+                                @if ($totalRevenue > 0)
+                                    <span
+                                        class="text-xs font-medium px-2 py-0.5 rounded-md bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                        All time
                                     </span>
                                 @endif
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-600 dark:text-gray-400 text-sm">
-                                <div class="flex items-center justify-center gap-2">
-                                    <svg class="w-5 h-5 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                    </svg>
-                                    No transactions yet
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                            </div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">From completed payments</p>
+                        </div>
+                        <select id="revRange"
+                            class="text-xs px-2.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="6">Last 6 months</option>
+                            <option value="12">Last 12 months</option>
+                            <option value="3">Last 3 months</option>
+                        </select>
+                    </div>
+
+                    {{-- Chart Legend --}}
+                    <div class="flex items-center gap-4 mb-3">
+                        <span class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                            <span class="w-2.5 h-2.5 rounded-sm bg-blue-500 inline-block"></span>Revenue
+                        </span>
+                        <span class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                            <span class="w-2.5 h-2.5 rounded-sm bg-amber-400 inline-block"></span>Average
+                        </span>
+                    </div>
+
+                    <div class="relative w-full" style="height: 220px;">
+                        <canvas id="revenueChart" role="img"
+                            aria-label="Monthly revenue bar chart for the last 12 months">
+                            Monthly revenue data.
+                        </canvas>
+                    </div>
+
+                    {{-- Empty state shown via JS if all values are 0 --}}
+                    <div id="chartEmptyState"
+                        class="hidden absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none"
+                        style="top:60px">
+                        <svg class="w-10 h-10 text-gray-300 dark:text-gray-600 mx-auto mb-2" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        <p class="text-sm text-gray-400 dark:text-gray-500">No revenue recorded yet</p>
+                        <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Data will appear once payments are
+                            completed</p>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Quick Actions + Stats --}}
+            <div class="flex flex-col gap-4">
+
+                {{-- Quick Actions --}}
+                <div
+                    class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Actions</h3>
+                    <div class="flex flex-col gap-2">
+                        <a href="{{ route('staff.boarders.create') }}"
+                            class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                              bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100
+                              dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/40">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            New Boarder
+                        </a>
+                        <a href="{{ route('staff.transactions.create') }}"
+                            class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                              bg-green-50 border-green-200 text-green-700 hover:bg-green-100
+                              dark:bg-green-900/20 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-900/40">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Log Payment
+                        </a>
+                        <a href="{{ route('staff.assignments.index') }}"
+                            class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                              bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100
+                              dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-900/40">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                            </svg>
+                            Assign Room
+                        </a>
+                        <a href="{{ route('staff.activity.scan') }}"
+                            class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors
+                              bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100
+                              dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-900/40">
+                            <svg class="w-4 h-4 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4h6v6H4V4Zm10 10h6v6h-6v-6Zm0-10h6v6h-6V4Zm-4 10h.01v.01H10V14Zm0 4h.01v.01H10V18Zm-3 2h.01v.01H7V20Zm0-4h.01v.01H7V16Zm-3 2h.01v.01H4V18Zm0-4h.01v.01H4V14Z" />
+                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 7h.01v.01H7V7Zm10 10h.01v.01H17V17Z" />
+                            </svg>
+                            Record Activity
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Stats This Month --}}
+                <div
+                    class="flex-1 p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Statistics this month</h3>
+
+                    {{-- Tabs --}}
+                    <div class="flex border-b border-gray-200 dark:border-gray-700 mb-3">
+                        <button data-tab="boarders"
+                            class="stats-tab px-4 py-2 text-xs font-medium border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 -mb-px"
+                            type="button">Boarders</button>
+                        <button data-tab="rooms"
+                            class="stats-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 -mb-px"
+                            type="button">Rooms</button>
+                    </div>
+
+                    {{-- Boarders Panel --}}
+                    <div id="stats-boarders" class="stats-panel space-y-1">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Total boarders</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $totalBoarders ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Active payments</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $completedPayments ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Pending payments</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $pendingPayments ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">New this month</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $newBoardersThisMonth ?? 0 }}</span>
+                        </div>
+                    </div>
+
+                    {{-- Rooms Panel --}}
+                    <div id="stats-rooms" class="stats-panel hidden space-y-1">
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Total rooms</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $totalRooms ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Occupied</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $occupiedRooms ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Available</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $availableRooms ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Occupancy rate</span>
+                            <span
+                                class="text-sm font-semibold text-gray-900 dark:text-white">{{ $occupancyRate ?? 0 }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-@endsection
+
+        {{-- Row 3: Movements + Transactions --}}
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+
+            {{-- Recent Boarder Movements --}}
+            <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Movements</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Latest check-ins and check-outs</p>
+                    </div>
+                </div>
+
+                {{-- Tabs --}}
+                <div class="flex border-b border-gray-200 dark:border-gray-700 mb-3">
+                    <button data-movtab="all"
+                        class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 -mb-px flex items-center gap-1.5"
+                        type="button">
+                        <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        All Activities
+                    </button>
+                    {{-- <button data-movtab="checkin"
+                    class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 -mb-px flex items-center gap-1.5 cursor-pointer transition-colors"
+                    type="button">
+                    <svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Enter
+                </button>
+                <button data-movtab="checkout"
+                    class="mov-tab px-4 py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 -mb-px flex items-center gap-1.5 cursor-pointer transition-colors"
+                    type="button">
+                    <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Leave
+                </button> --}}
+                </div>
+
+                {{-- All Activities Panel --}}
+                <div id="mov-all" class="mov-panel divide-y divide-gray-100 dark:divide-gray-700">
+                    @forelse($recentAllActivities ?? [] as $movement)
+                        <div class="flex items-center gap-3 py-2.5">
+                            <div
+                                class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 @if ($movement->activity_name === 'entry') bg-green-100 dark:bg-green-900/30 @else bg-red-100 dark:bg-red-900/30 @endif">
+                                <svg class="w-4 h-4 @if ($movement->activity_name === 'entry') text-green-600 dark:text-green-400 @else text-red-600 dark:text-red-400 @endif"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    @if ($movement->activity_name === 'entry')
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 12h14M12 5l7 7-7 7" />
+                                    @else
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 12H5M12 19l-7-7 7-7" />
+                                    @endif
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                    {{ $movement->boarder_name ?? 'N/A' }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Room
+                                    {{ $movement->room_number ?? 'N/A' }}</p>
+                            </div>
+                            <span
+                                class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
+                        </div>
+                    @empty
+                        <div class="flex flex-col items-center justify-center py-8 text-center">
+                            <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <p class="text-sm text-gray-400 dark:text-gray-500">No activities recorded</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                {{-- Check-in Panel --}}
+                <div id="mov-checkin" class="mov-panel hidden divide-y divide-gray-100 dark:divide-gray-700">
+                    @forelse($recentCheckIns ?? [] as $movement)
+                        <div class="flex items-center gap-3 py-2.5">
+                            <div
+                                class="w-9 h-9 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                    {{ $movement->boarder_name ?? 'N/A' }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Room
+                                    {{ $movement->room_number ?? 'N/A' }}</p>
+                            </div>
+                            <span
+                                class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
+                        </div>
+                    @empty
+                        <div class="flex flex-col items-center justify-center py-8 text-center">
+                            <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <p class="text-sm text-gray-400 dark:text-gray-500">No check-ins recorded</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                {{-- Check-out Panel --}}
+                <div id="mov-checkout" class="mov-panel hidden divide-y divide-gray-100 dark:divide-gray-700">
+                    @forelse($recentCheckOuts ?? [] as $movement)
+                        <div class="flex items-center gap-3 py-2.5">
+                            <div
+                                class="w-9 h-9 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 12H5M12 19l-7-7 7-7" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                    {{ $movement->boarder_name ?? 'N/A' }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Room
+                                    {{ $movement->room_number ?? 'N/A' }}</p>
+                            </div>
+                            <span
+                                class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $movement->time_ago ?? '' }}</span>
+                        </div>
+                    @empty
+                        <div class="flex flex-col items-center justify-center py-8 text-center">
+                            <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <p class="text-sm text-gray-400 dark:text-gray-500">No check-outs recorded</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                <div class="pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
+                    <a href="{{ route('staff.activity.index') }}"
+                        class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all movements
+                        →</a>
+                </div>
+            </div>
+
+            {{-- Recent Transactions --}}
+            <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Transactions</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Latest payment activity</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Boarder</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Room</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Amount</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Status</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                                    Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                            @forelse($recentTransactions as $transaction)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                                    <td
+                                        class="py-2.5 pr-3 text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                        {{ $transaction->boarder->full_name ?? ($transaction->boarder_id ?? 'N/A') }}
+                                    </td>
+                                    <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                        {{ $transaction->room->number ?? 'N/A' }}
+                                    </td>
+                                    <td
+                                        class="py-2.5 pr-3 text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                                        ₱{{ number_format($transaction->amount, 2) }}
+                                    </td>
+                                    <td class="py-2.5 pr-3 whitespace-nowrap">
+                                        @if ($transaction->display_status === 'Completed')
+                                            <span
+                                                class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Completed</span>
+                                        @elseif($transaction->display_status === 'Overdue')
+                                            <span
+                                                class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Overdue</span>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">Pending</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-2.5 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                        {{ $transaction->transaction_date }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="py-8 text-center">
+                                        <svg class="w-8 h-8 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <p class="text-sm text-gray-400 dark:text-gray-500">No transactions yet</p>
+                                        <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Transactions will appear
+                                            once payments are logged</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
+                    <a href="{{ route('staff.transactions.index') }}"
+                        class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all transactions
+                        →</a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Row 4: Expenses --}}
+        <div class="grid grid-cols-1 gap-4">
+            {{-- Recent Expenses --}}
+            <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Expenses</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Latest recorded expenses</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Date</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Type</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Room</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 pr-3">
+                                    Description</th>
+                                <th
+                                    class="pb-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                                    Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                            @forelse($recentExpenses as $expense)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                                    <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                        {{ $expense->expense_date ? $expense->expense_date->format('M d, Y') : 'N/A' }}
+                                    </td>
+                                    <td
+                                        class="py-2.5 pr-3 text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                        {{ ucfirst($expense->expense_type) }}
+                                    </td>
+                                    <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                        {{ $expense->room ? 'Room ' . $expense->room->number : 'N/A' }}
+                                    </td>
+                                    <td class="py-2.5 pr-3 text-sm text-gray-500 dark:text-gray-400">
+                                        {{ \Illuminate\Support\Str::limit($expense->description, 30) }}
+                                    </td>
+                                    <td
+                                        class="py-2.5 text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                                        ₱{{ number_format($expense->amount, 2) }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="py-8 text-center">
+                                        <svg class="w-8 h-8 mx-auto mb-2 text-gray-300 dark:text-gray-600" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <p class="text-sm text-gray-400 dark:text-gray-500">No expenses yet</p>
+                                        <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Expenses will appear
+                                            once they are logged</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
+                    <a href="{{ route('staff.expenses.index') }}"
+                        class="text-xs font-medium text-blue-600 hover:underline dark:text-blue-400">View all expenses
+                        →</a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Pass PHP $monthlyRevenue collection to JS --}}
+        @php
+            $chartLabels = $monthlyRevenue->pluck('short')->toJson();
+            $chartRevenue = $monthlyRevenue->pluck('revenue')->toJson();
+            $chartAvg = $monthlyRevenue->avg('revenue');
+            // Build a flat average line so first-time users still see a reference line (even if 0)
+            $chartTarget = $monthlyRevenue->map(fn($m) => round($chartAvg, 2))->toJson();
+            $hasData = $monthlyRevenue->sum('revenue') > 0 ? 'true' : 'false';
+        @endphp
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+                // ── Revenue chart data injected from PHP ──────────────────────────────────
+                const allLabels = {!! $chartLabels !!}; // all 12 months
+                const allRevenue = {!! $chartRevenue !!}; // matching revenue values
+                const allTarget = {!! $chartTarget !!}; // rolling average line
+                const hasData = {!! $hasData !!};
+
+                // Show empty state overlay when there is truly no data yet
+                if (!hasData) {
+                    document.getElementById('chartEmptyState').classList.remove('hidden');
+                }
+
+                // Slice helper: returns last N entries from the full 12-month arrays
+                function slice(n) {
+                    return {
+                        labels: allLabels.slice(-n),
+                        revenue: allRevenue.slice(-n),
+                        target: allTarget.slice(-n),
+                    };
+                }
+
+                const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const gridCol = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+                const tickCol = isDark ? '#9ca3af' : '#6b7280';
+
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                const init = slice(6);
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: init.labels,
+                        datasets: [{
+                                label: 'Revenue',
+                                data: init.revenue,
+                                backgroundColor: '#3b82f6',
+                                borderRadius: 4,
+                                borderSkipped: false,
+                                order: 2,
+                            },
+                            {
+                                label: 'Average',
+                                data: init.target,
+                                type: 'line',
+                                borderColor: '#f59e0b',
+                                backgroundColor: 'transparent',
+                                borderWidth: 1.5,
+                                borderDash: [4, 3],
+                                pointRadius: 0,
+                                tension: 0,
+                                order: 1,
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(ctx) {
+                                        const val = ctx.raw;
+                                        if (val >= 1000) {
+                                            return ' ₱' + (val / 1000).toFixed(1) + 'k';
+                                        }
+                                        return ' ₱' + val.toLocaleString();
+                                    },
+                                },
+                            },
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                border: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: tickCol,
+                                    font: {
+                                        size: 11
+                                    },
+                                    autoSkip: false,
+                                    maxRotation: 0,
+                                },
+                            },
+                            y: {
+                                grid: {
+                                    color: gridCol
+                                },
+                                border: {
+                                    display: false
+                                },
+                                beginAtZero: true,
+                                ticks: {
+                                    color: tickCol,
+                                    font: {
+                                        size: 11
+                                    },
+                                    callback: function(v) {
+                                        if (v >= 1000) return '₱' + (v / 1000).toFixed(0) + 'k';
+                                        return '₱' + v;
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+
+                // Range selector
+                document.getElementById('revRange').addEventListener('change', function() {
+                    const d = slice(parseInt(this.value));
+                    chart.data.labels = d.labels;
+                    chart.data.datasets[0].data = d.revenue;
+                    chart.data.datasets[1].data = d.target;
+                    chart.update();
+                });
+
+                // ── Stats tabs ────────────────────────────────────────────────────────────
+                document.querySelectorAll('.stats-tab').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.stats-tab').forEach(function(t) {
+                            t.classList.remove('border-blue-600', 'text-blue-600',
+                                'dark:text-blue-400', 'dark:border-blue-400');
+                            t.classList.add('border-transparent', 'text-gray-500',
+                                'dark:text-gray-400');
+                        });
+                        this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400',
+                            'dark:border-blue-400');
+                        this.classList.remove('border-transparent', 'text-gray-500',
+                            'dark:text-gray-400');
+                        document.querySelectorAll('.stats-panel').forEach(function(p) {
+                            p.classList.add('hidden');
+                        });
+                        document.getElementById('stats-' + this.dataset.tab).classList.remove('hidden');
+                    });
+                });
+
+                // ── Movements tabs ────────────────────────────────────────────────────────
+                const movTabsContainer = document.querySelectorAll('.mov-tab');
+                if (movTabsContainer.length > 0) {
+                    movTabsContainer.forEach(function(btn) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const tabName = this.dataset.movtab;
+
+                            // Update button styling
+                            document.querySelectorAll('.mov-tab').forEach(function(t) {
+                                t.classList.remove('border-blue-600', 'text-blue-600',
+                                    'dark:text-blue-400', 'dark:border-blue-400');
+                                t.classList.add('border-transparent', 'text-gray-500',
+                                    'dark:text-gray-400');
+                            });
+                            this.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400',
+                                'dark:border-blue-400');
+                            this.classList.remove('border-transparent', 'text-gray-500',
+                                'dark:text-gray-400');
+
+                            // Toggle panels
+                            document.querySelectorAll('.mov-panel').forEach(function(p) {
+                                p.classList.add('hidden');
+                            });
+                            const targetPanel = document.getElementById('mov-' + tabName);
+                            if (targetPanel) {
+                                targetPanel.classList.remove('hidden');
+                            }
+                        });
+                    });
+                }
+
+            });
+        </script>
+    @endsection

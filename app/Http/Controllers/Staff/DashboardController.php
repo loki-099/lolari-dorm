@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Models\Boarder;
 use App\Models\Transaction;
+use App\Models\BoarderActivity;
+use App\Models\Expense;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     /**
-     * Display the staff dashboard with stat cards and action buttons.
+     * Display the admin dashboard with comprehensive stats.
      */
     public function index()
     {
@@ -19,25 +23,178 @@ class DashboardController extends Controller
         $occupiedRooms = Room::where('status', 'occupied')->count();
         $occupancyRate = $totalRooms > 0 ? round(($occupiedRooms / $totalRooms) * 100, 2) : 0;
 
-        // Get pending payments count
-        $pendingPayments = Transaction::where('status', 'pending')->count();
-
         // Get available rooms count
         $availableRooms = Room::where('status', 'available')->count();
 
-        // Get recent transactions
-        $recentTransactions = Transaction::with('boarder')
+        // Get payment stats
+        $pendingPayments = Transaction::where('status', 'pending')->count();
+        $completedPayments = Transaction::where('status', 'completed')->count();
+
+        // Get total revenue (sum of all completed transactions)
+        $totalRevenue = Transaction::where('status', 'completed')->sum('amount');
+
+        // Get boarder stats
+        $totalBoarders = Boarder::count();
+
+        // Get new boarders this month
+        $newBoardersThisMonth = Boarder::whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+        // ── Monthly revenue for the last 12 months (for the chart) ──────────────
+        // Build an ordered list of the last 12 months (oldest → newest)
+        $monthlyRevenue = collect();
+        for ($i = 11; $i >= 0; $i--) {
+            $month = Carbon::now('Asia/Manila')->startOfMonth()->subMonths($i);
+            $monthlyRevenue->push([
+                'label'   => $month->format('M Y'),       // e.g. "Apr 2025"
+                'short'   => $month->format('M'),          // e.g. "Apr"  – used on the chart x-axis
+                'year'    => (int) $month->format('Y'),
+                'month'   => (int) $month->format('n'),
+                'revenue' => 0,                            // filled below
+            ]);
+        }
+
+        // Fetch completed transaction totals grouped by year+month
+        $rawRevenue = Transaction::where('status', 'completed')
+            ->where('created_at', '>=', Carbon::now('Asia/Manila')->subMonths(11)->startOfMonth())
+            ->selectRaw("YEAR(created_at) as yr, MONTH(created_at) as mo, SUM(amount) as total")
+            ->groupByRaw("YEAR(created_at), MONTH(created_at)")
+            ->get()
+            ->keyBy(fn ($r) => $r->yr . '-' . $r->mo);   // key: "2025-4"
+
+        // Merge real data into the skeleton
+        $monthlyRevenue = $monthlyRevenue->map(function ($item) use ($rawRevenue) {
+            $key = $item['year'] . '-' . $item['month'];
+            $item['revenue'] = $rawRevenue->has($key)
+                ? (float) $rawRevenue[$key]->total
+                : 0;
+            return $item;
+        });
+
+        // Get recent transactions with relationships (Philippine timezone)
+        $recentTransactions = Transaction::with(['boarder', 'room', 'staff'])
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($transaction) {
+                // Determine status: overdue if billing_month is in the past and not completed
+                if ($transaction->status === 'completed') {
+                    $transaction->display_status = 'Completed';
+                } elseif ($transaction->billing_month < Carbon::now('Asia/Manila')->startOfMonth()) {
+                    $transaction->display_status = 'Overdue';
+                } else {
+                    $transaction->display_status = 'Pending';
+                }
+
+                // Get staff name from Staff model relationship
+                $transaction->staff_name = $transaction->staff?->name ?? 'N/A';
+
+                // Format payment method for display
+                $methodLabels = [
+                    'cash'          => 'Cash',
+                    'bank_transfer' => 'Bank Transfer',
+                    'check'         => 'Check',
+                    'online'        => 'G-Cash/PayMaya',
+                ];
+                $transaction->method_display = $methodLabels[$transaction->method] ?? $transaction->method;
+
+                // Format type for display
+                $transaction->type_display = ucfirst($transaction->type ?? 'rent');
+
+                // Format date in Philippine timezone
+                $transaction->transaction_date = $transaction->created_at
+                    ->timezone('Asia/Manila')
+                    ->format('M d, Y');
+
+                // Format billing month for display
+                $transaction->billing_month_display = Carbon::parse($transaction->billing_month)
+                    ->timezone('Asia/Manila')
+                    ->format('F Y');
+
+                return $transaction;
+            });
+
+        // Get recent check-ins and check-outs
+        $recentCheckIns = BoarderActivity::with('boarder.user')
+            ->where('activity_name', 'entry')
             ->orderBy('created_at', 'desc')
             ->limit(5)
+            ->get()
+            ->map(function ($activity) {
+                $activity->boarder_name = $activity->boarder->user->first_name . ' ' . $activity->boarder->user->last_name;
+                $activity->room_number = $activity->boarder->assignments()
+                    ->where('status', 'active')
+                    ->latest('start_date')
+                    ->value('room_id');
+                // Get room number from room_id
+                if ($activity->room_number) {
+                    $activity->room_number = Room::find($activity->room_number)->number ?? 'N/A';
+                }
+                $activity->time_ago = $activity->created_at->diffForHumans();
+                return $activity;
+            });
+
+        $recentCheckOuts = BoarderActivity::with('boarder.user')
+            ->where('activity_name', 'exit')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get()
+            ->map(function ($activity) {
+                $activity->boarder_name = $activity->boarder->user->first_name . ' ' . $activity->boarder->user->last_name;
+                $activity->room_number = $activity->boarder->assignments()
+                    ->where('status', 'active')
+                    ->latest('start_date')
+                    ->value('room_id');
+                // Get room number from room_id
+                if ($activity->room_number) {
+                    $activity->room_number = Room::find($activity->room_number)->number ?? 'N/A';
+                }
+                $activity->time_ago = $activity->created_at->diffForHumans();
+                return $activity;
+            });
+
+        // Get all recent activities combined
+        $recentAllActivities = BoarderActivity::with('boarder.user')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($activity) {
+                $activity->boarder_name = $activity->boarder->user->first_name . ' ' . $activity->boarder->user->last_name;
+                $activity->room_number = $activity->boarder->assignments()
+                    ->where('status', 'active')
+                    ->latest('start_date')
+                    ->value('room_id');
+                // Get room number from room_id
+                if ($activity->room_number) {
+                    $activity->room_number = Room::find($activity->room_number)->number ?? 'N/A';
+                }
+                $activity->time_ago = $activity->created_at->diffForHumans();
+                return $activity;
+            });
+
+        // Get recent expenses
+        $recentExpenses = Expense::with(['room', 'staff'])
+            ->orderBy('expense_date', 'desc')
+            ->limit(10)
             ->get();
 
         return view('staff.dashboard', compact(
             'occupancyRate',
-            'pendingPayments',
-            'availableRooms',
             'occupiedRooms',
             'totalRooms',
-            'recentTransactions'
+            'availableRooms',
+            'pendingPayments',
+            'completedPayments',
+            'totalRevenue',
+            'totalBoarders',
+            'newBoardersThisMonth',
+            'recentTransactions',
+            'recentCheckIns',
+            'recentCheckOuts',
+            'recentAllActivities',
+            'monthlyRevenue',          // ← new
+            'recentExpenses'           // ← new
         ));
     }
 }

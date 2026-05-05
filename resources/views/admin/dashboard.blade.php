@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="mt-4">
-                <a href="{{ route('staff.payments.create') }}" class="inline-flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
+                <a href="" class="inline-flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
                     View pending
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
@@ -81,6 +81,7 @@
     <div class="grid grid-cols-1 xl:grid-cols-1 gap-4">
 
         {{-- Revenue Chart --}}
+        @if(auth()->user()->role !== 'staff')
         <div class="p-5 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="flex items-start justify-between mb-4">
                 <div>
@@ -131,6 +132,7 @@
                 <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">Data will appear once payments are completed</p>
             </div>
         </div>
+        @endif
 
         {{-- Quick Actions + Stats --}}
         <div class="flex flex-col gap-4">
