@@ -28,7 +28,6 @@
                     <th scope="col" class="px-6 py-3">Date & Time</th>
                     <th scope="col" class="px-6 py-3">Email</th>
                     <th scope="col" class="px-6 py-3">Contact</th>
-                    <th scope="col" class="px-6 py-3">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -58,15 +57,6 @@
                         </td>
                         <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
                             {{ $activity->boarder->user->contact_number ?? '-' }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <form action="{{ route('staff.activity.destroy', $activity) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this activity?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium transition-colors">Delete</button>
-                                </form>
-                            </div>
                         </td>
                     </tr>
                 @empty

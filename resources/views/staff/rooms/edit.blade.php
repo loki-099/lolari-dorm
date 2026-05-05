@@ -29,7 +29,7 @@
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                     <label for="number" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Room Number <span class="text-red-500">*</span></label>
-                    <input type="text" id="number" name="number" value="{{ old('number', $room->number) }}" required
+                    <input disabled type="text" id="number" name="number" value="{{ old('number', $room->number) }}" required
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white @error('number') border-red-500 @enderror">
                     @error('number')
                         <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
@@ -38,7 +38,7 @@
 
                 <div>
                     <label for="capacity" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Capacity <span class="text-red-500">*</span></label>
-                    <input type="number" id="capacity" name="capacity" min="1" value="{{ old('capacity', $room->capacity) }}" required
+                    <input disabled type="number" id="capacity" name="capacity" min="1" value="{{ old('capacity', $room->capacity) }}" required
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white @error('capacity') border-red-500 @enderror">
                     @error('capacity')
                         <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
@@ -49,7 +49,7 @@
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                     <label for="monthly_rent" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Monthly Rent <span class="text-red-500">*</span></label>
-                    <input type="number" id="monthly_rent" name="monthly_rent" step="0.01" min="0" value="{{ old('monthly_rent', $room->monthly_rent) }}" required
+                    <input disabled type="number" id="monthly_rent" name="monthly_rent" step="0.01" min="0" value="{{ old('monthly_rent', $room->monthly_rent) }}" required
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white @error('monthly_rent') border-red-500 @enderror">
                     @error('monthly_rent')
                         <p class="mt-2 text-sm text-red-500">{{ $message }}</p>

@@ -10,12 +10,12 @@
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Rooms</h1>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage all room records and occupancy details.</p>
             </div>
-            <a href="{{ route('staff.rooms.create') }}" class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            {{-- <a href="{{ route('staff.rooms.create') }}" class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
                 Add Room
-            </a>
+            </a> --}}
         </div>
     </div>
 

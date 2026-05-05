@@ -170,13 +170,6 @@
                                     <a href="{{ route('staff.bills.edit', $bill) }}" class="font-medium text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
                                         Edit
                                     </a>
-                                    <form action="{{ route('staff.bills.destroy', $bill) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure? This cannot be undone.');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="font-medium text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
-                                            Delete
-                                        </button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>

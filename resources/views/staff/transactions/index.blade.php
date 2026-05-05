@@ -82,11 +82,11 @@
                             <div class="flex items-center gap-3">
                                 <a href="{{ route('staff.transactions.show', $transaction) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors">View</a>
                                 <a href="{{ route('staff.transactions.edit', $transaction) }}" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium transition-colors">Edit</a>
-                                <form action="{{ route('staff.transactions.destroy', $transaction) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this transaction?')">
+                                {{-- <form action="{{ route('staff.transactions.destroy', $transaction) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this transaction?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium transition-colors">Delete</button>
-                                </form>
+                                </form> --}}
                             </div>
                         </td>
                     </tr>

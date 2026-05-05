@@ -89,11 +89,6 @@
                                 <a href="{{ route('staff.boarders.show', $boarder) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors">View</a>
                                 <a href="{{ route('staff.boarders.edit', $boarder) }}" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium transition-colors">Edit</a>
                                 @if($boarder->assignments->where('status', 'active')->isEmpty())
-                                    <form action="{{ route('staff.boarders.destroy', $boarder) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this boarder? This action cannot be undone.');" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium transition-colors">Delete</button>
-                                    </form>
                                 @endif
                             </div>
                         </td>

@@ -77,7 +77,7 @@ Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->grou
     Route::resource('/bills', App\Http\Controllers\Staff\BillController::class);
 
     // Reports
-    Route::get('/reports', [App\Http\Controllers\Staff\ReportsController::class, 'index'])->name('reports.index');
+    // Route::get('/reports', [App\Http\Controllers\Staff\ReportsController::class, 'index'])->name('reports.index');
 
     // Activities
     Route::get('/activities', [App\Http\Controllers\Staff\ActivityController::class, 'index'])->name('activity.index');
