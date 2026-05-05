@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BoarderController extends Controller
 {
@@ -61,6 +62,7 @@ class BoarderController extends Controller
             'home_address' => $validated['home_address'] ?? null,
             'parent_contact' => $validated['parent_contact'] ?? null,
             'status' => 'active',
+            'qrcode_value' => Str::random(10),
         ]);
 
         return redirect()->route('admin.assignments.index')
