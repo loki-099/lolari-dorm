@@ -51,9 +51,9 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <a href=""
+                    <a href="{{ route('staff.rooms.index') }}"
                         class="inline-flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline dark:text-amber-500">
-                        View pending
+                        View rooms
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" />
                         </svg>
